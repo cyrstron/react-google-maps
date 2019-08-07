@@ -1,9 +1,25 @@
 import { createPortal } from 'react-dom';
 import {observer} from 'mobx-react';
-import React, {Component} from 'react';
-import {TilesOverlayProps} from './types';
+import React, {Component, ReactNode, ComponentType} from 'react';
 import {WrappedProps} from './hocs/with-full-tiles-overlay-ctx';
 import {TilesOverlayStore} from './stores';
+
+export interface TilesOverlayProps {
+  children?: (props: {
+    tileCoord: google.maps.Point,
+    zoom: number,
+    width: number,
+    height: number,
+  }) => ReactNode | null;
+  TileComponent?: ComponentType<{
+    tileCoord: google.maps.Point,
+    zoom: number,
+    width: number,
+    height: number,
+  }>;  
+  width: number,
+  height?: number,
+}
 
 type Props = TilesOverlayProps & WrappedProps<TilesOverlayStore>;
 

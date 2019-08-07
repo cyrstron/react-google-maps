@@ -1,6 +1,6 @@
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import React, {Component, createContext} from 'react';
+import React, {Component, createContext, ComponentType} from 'react';
 import {GoogleMapsStore} from '../../stores';
 import {MapStore} from '../components/map';
 
@@ -18,6 +18,12 @@ export interface ContextValue {
 
 export const MapContext = createContext<ContextValue>({});
 
+export interface SmartMapCtx<Props extends GoogleStoreProps, State, Store extends MapStore> extends Component<Props, State> {
+  isStoreCreated: boolean;
+  googleMapsStore: GoogleMapsStore;
+  mapStore?: Store;
+}
+
 export const withSmartMapCtx = <Store extends MapStore>(
   Store: new(google: Google) => Store,
 ) => <Props extends {}>(
@@ -25,7 +31,7 @@ export const withSmartMapCtx = <Store extends MapStore>(
 ) => {
   @inject('googleMapsStore')
   @observer
-  class WithSmartMapCtx extends Component<Props & GoogleStoreProps, {}> {
+  class WithSmartMapCtx extends Component<Props & GoogleStoreProps, {}> implements SmartMapCtx<Props & GoogleStoreProps, {}, Store> {
     @observable isStoreCreated: boolean = false;
     googleMapsStore: GoogleMapsStore;
     mapStore?: Store;
@@ -68,6 +74,5 @@ export const withSmartMapCtx = <Store extends MapStore>(
       );
     }
   }
-
   return WithSmartMapCtx;
 };

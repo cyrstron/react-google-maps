@@ -1,5 +1,4 @@
-import {TilesOverlay} from './tiles-overlay';
-import {TilesOverlayProps} from './types';
+import {TilesOverlay, TilesOverlayProps} from './tiles-overlay';
 import {withDumbTilesOverlayCtx} from './hocs';
 import {withFullTilesOverlayCtx} from './hocs';
 import {withSmartTilesOverlayCtx} from './hocs';

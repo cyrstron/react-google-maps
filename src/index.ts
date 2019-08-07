@@ -1,3 +1,5 @@
+/// <reference types="../src/@types" />
+
 export {
   DumbMap, 
   Map, 
