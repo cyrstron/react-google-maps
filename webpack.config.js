@@ -39,7 +39,7 @@ module.exports = (env, argv) => ({
       amd: "mobx",          
       root: "mobx"      
     },      
-    'react-dom': {          
+    'mobx-react': {          
       commonjs: "mobx-react",          
       commonjs2: "mobx-react",          
       amd: "mobx-react",          

@@ -1,4 +1,4 @@
-import { createPortal } from 'react-dom';
+import {createPortal} from 'react-dom';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode, ComponentType} from 'react';
 import {WrappedProps} from './hocs/with-full-tiles-overlay-ctx';
