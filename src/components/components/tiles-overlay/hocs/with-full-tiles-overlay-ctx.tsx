@@ -21,7 +21,7 @@ export const withFullTilesOverlayCtx = <Store extends {
   OverlayStore: new(google: Google, mapService: MapService) => Store,
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
-) => {
+): React.ComponentType<Props> => {
   @inject('googleMapsStore')
   @observer
   class WithFullTilesOverlayCtx extends Component<Props & WrappedMapProps<MapStore> & GoogleStoreProps, {}> {

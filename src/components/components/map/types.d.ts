@@ -17,7 +17,8 @@ type MapEventsProps = MapsObjectEventProps & {
 }
 
 type MapProps = MapEventsProps & google.maps.MapOptions & {
-  className?: string;
+  className?: string; 
+  apiKey: string;
   bounds?: google.maps.LatLngBoundsLiteral;
   defaultCenter: google.maps.LatLngLiteral;
   zoom: number;

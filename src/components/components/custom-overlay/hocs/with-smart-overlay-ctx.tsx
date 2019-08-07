@@ -14,7 +14,7 @@ export const withSmartOverlayCtx = <Store extends {
   OverlayStore: new(google: Google, mapStore: MapService) => Store,
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<WrappedProps<Store> & Props>,
-) => {
+): React.ComponentType<Props> => {
   const WithSmartFeatureCtx = (props: Props & WrappedProps<Store>) => (
     <OverlayContext.Provider
       value={{overlayStore: props.overlayStore}}

@@ -7,7 +7,7 @@ import { MapStore } from '..';
 
 export const withDumbMapCtx = <Store extends MapStore, Props extends {}>(
   Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
-) => {
+): React.ComponentType<Props> => {
   const WithDumbMapCtx = (props: Props) => (
     <MapContext.Consumer>
     {({mapStore}) => {

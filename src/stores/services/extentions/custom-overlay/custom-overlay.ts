@@ -1,4 +1,4 @@
-export const createCustomOverlayClass = (google: Google) => {
+export const createCustomOverlayClass = (google: Google): google.custom.CustomOverlayConstructor => {
   class CustomOverlay extends google.maps.OverlayView implements google.custom.CustomOverlay {
     private bounds: google.maps.LatLngBounds;
     private container?: HTMLDivElement;

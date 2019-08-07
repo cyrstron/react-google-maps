@@ -14,7 +14,7 @@ export const withSmartTilesOverlayCtx = <Store extends {
   TilesOverlayStore: new(google: Google, mapStore: MapService) => Store,
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<WrappedProps<Store> & Props>,
-) => {
+): React.ComponentType<Props> => {
   const WithSmartMapTypeCtx = (props: Props & WrappedProps<Store>) => (
     <TilesOverlayContext.Provider
       value={{overlayStore: props.overlayStore}}

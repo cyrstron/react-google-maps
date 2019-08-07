@@ -43,7 +43,7 @@ export const withFullFeatureCtx = <
   ComponentStore: new(google: Google, mapService: MapService) => Store,
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
-) => {
+): React.ComponentType<Props> => {
   @inject('googleMapsStore')
   @observer
   class WithFullFeatureCtx extends Component<Props & WrappedMapProps<MapStore> & GoogleStoreProps, {}> {

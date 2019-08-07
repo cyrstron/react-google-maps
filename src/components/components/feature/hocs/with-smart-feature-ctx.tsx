@@ -38,7 +38,7 @@ export const withSmartFeatureCtx = <
   ComponentStore: new(google: Google, mapStore: MapService) => Store,
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<WrappedProps<Store> & Props>,
-) => {
+): React.ComponentType<Props> => {
   const WithSmartFeatureCtx = (props: Props & WrappedProps<Store>) => (
     <FeatureContext.Provider
       value={{featureStore: props.featureStore}}

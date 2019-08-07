@@ -9,7 +9,7 @@ export const withDumbTilesOverlayCtx = <
   Props extends {}
 >(
   Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
-) => {
+): React.ComponentType<Props> => {
   const WithDumbTilesOverlayCtx = (props: Props) => (
     <TilesOverlayContext.Consumer>
       {({overlayStore}) => {

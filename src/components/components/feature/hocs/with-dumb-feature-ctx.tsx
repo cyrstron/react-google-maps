@@ -31,7 +31,7 @@ export const withDumbFeatureCtx = <
   Props extends {}
 >(
   Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
-) => {
+): React.ComponentType<Props> => {
   const WithDumbFeatureCtx = (props: Props) => (
     <FeatureContext.Consumer>
       {({featureStore}) => {
