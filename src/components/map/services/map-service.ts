@@ -7,13 +7,13 @@ export class MapService extends MapsObjectService<
   MapEventHandler
 > {
   constructor(
-    google: Google,
+    googleApi: Google,
     container: HTMLDivElement,
     options: google.maps.MapOptions,
   ) {
-    const object: google.maps.Map = new google.maps.Map(container, options);
+    const object: google.maps.Map = new googleApi.maps.Map(container, options);
 
-    super(google, object);
+    super(googleApi, object);
   }
 
   setCenter(center: google.maps.LatLngLiteral) {

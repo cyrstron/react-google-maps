@@ -1,4 +1,4 @@
-export class MapsObjectService<
+export abstract class MapsObjectService<
   MapsObject extends google.maps.MapsObject<
     MapsObjectEventName,
     MapsObjectOptions,
@@ -21,6 +21,11 @@ export class MapsObjectService<
     this.object = object;
   }
 
+  abstract groupProps(props: MapsObjectOptions & MapsObjectEventHandler): {
+    options: MapsObjectOptions,
+    handlers: MapsObjectEventHandler
+  }
+
   addListener(
     eventName: MapsObjectEventName,
     handler: MapsObjectEventHandler,
@@ -36,5 +41,21 @@ export class MapsObjectService<
 
   getObject(): MapsObject {
     return this.object;
+  }
+
+  updateProps(
+    prevProps: MapsObjectOptions & MapsObjectEventHandler,
+    props: MapsObjectOptions & MapsObjectEventHandler
+  ) {
+    const {
+      options, 
+      handlers
+    } = this.groupProps(props);
+    
+    const {
+      options: prevOptions, 
+      handlers: prevHandlers
+    } = this.groupProps(prevProps);
+
   }
 }

@@ -1,49 +1,56 @@
-import {observer} from 'mobx-react';
-import React, { Component, ReactNode } from 'react';
-import {WrappedProps} from '../../hocs/with-smart-map-ctx';
+import React, { Component, ReactNode, RefObject, createRef } from 'react';
+import {WrappedProps} from './hocs/with-smart-map-ctx';
 import {MapStore} from './stores';
+import { MapService, groupMapProps } from './services';
 
-export type MapComponentProps = MapProps & {
+export type MapComponentProps = MapProps & WrappedProps & {
   children?: ReactNode | null;
 };
 
-type Props = WrappedProps<MapStore> & MapComponentProps;
+type Props = MapComponentProps;
 
-@observer
 export class Map extends Component<Props, {}> {
-  mapContainer?: HTMLDivElement;
+  map: RefObject<HTMLDivElement> = createRef();
+  mapService?: MapService;
 
   componentDidMount() {
     const {
       defaultCenter,
-      mapStore,
       children,
       className,
+      createMapService,
       ...props
     } = this.props;
 
-    mapStore.setMap(this.mapContainer!, {
-      ...props,
-      center: defaultCenter,
-    });
+    this.mapService = createMapService(this.map.current!, props);
   }
 
   componentDidUpdate({
     defaultCenter: _defaultCenter,
-    mapStore: _mapStore,
     children: _children,
     className: _className,
     ...prevProps
   }: Props) {
     const {
       defaultCenter,
-      mapStore,
       children,
       className,
       ...props
     } = this.props;
 
-    mapStore.updateProps(prevProps, props);
+    const {mapService} = this;
+
+    if (!mapService) return;
+
+    const {
+      options, 
+      handlers
+    } = groupMapProps(this.props);
+    
+    const {
+      options: prevOptions, 
+      handlers: prevHandlers
+    } = groupMapProps(prevProps);
   }
 
   mapRef = (mapContainer: HTMLDivElement) => {
@@ -60,7 +67,7 @@ export class Map extends Component<Props, {}> {
     } = this.props;
 
     return (
-      <div className={className} ref={this.mapRef} >
+      <div className={className} ref={this.map} >
         {mapStore.isLoaded && children}
       </div>
     );

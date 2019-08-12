@@ -1,6 +1,14 @@
 /// <reference types="../src/@types" />
 
 export {
+  GoogleApiCtxConsumer,
+  GoogleApiCtxProvider,
+  GoogleApiProvider,
+  withGoogleApi,
+} from './components/google-api';
+
+
+export {
   DumbMap, 
   Map, 
   MapStore, 
@@ -9,16 +17,22 @@ export {
   CtrlMap,
   CtrlMapStore,
   withCtrlMapCtx,
+} from './components/map';
+export {
   CustomOverlay,
   SmartCustomOverlay,
   DumbCustomOverlay,
   withSmartCustomOverlayCtx,
   CustomOverlayStore,
+} from './components/custom-overlay';
+export {
   TilesOverlay,
   SmartTilesOverlay,
   DumbGridMapType,
   withSmartGridMapTypeCtx,
   TilesOverlayStore,
+} from './components/tiles-overlay';
+export {
   Polygon,
   SmartPolygon,
   DumbPolygon,
@@ -38,8 +52,4 @@ export {
   withSmartFeatureCtx,
   withDumbFeatureCtx,
   withFullFeatureCtx,
-} from './components';
-export { 
-  GoogleMapsActions, 
-  GoogleMapsStore 
-} from './stores';
+} from './components/feature';

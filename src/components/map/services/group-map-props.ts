@@ -1,6 +1,6 @@
 import {filterObject} from '../../../services';
 
-interface SortedMapProps {
+export interface SortedMapProps {
   options?: google.maps.MapOptions;
   handlers?: {[key: string]: MapEventHandler};
 }

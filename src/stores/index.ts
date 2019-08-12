@@ -1,2 +1,3 @@
-export { GoogleMapsActions } from './services';
-export { GoogleMapsStore } from './google-maps.store';
+export {
+  MapsObjectStore,
+} from './maps-object'
