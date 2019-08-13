@@ -1,7 +1,7 @@
 import {MapsObjectService} from '../../../services';
 import {MapService} from '../../map';
 
-export class FeatureService<
+export abstract class FeatureService<
   Feature extends google.maps.Feature<
     EventName,
     Options,
@@ -17,7 +17,6 @@ export class FeatureService<
   EventHandler
 > {
   mapService: MapService;
-
   constructor(
     google: Google,
     object: Feature,

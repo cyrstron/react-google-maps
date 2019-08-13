@@ -1,3 +1,5 @@
+import { pickUpdated } from "./pick-updated";
+
 export abstract class MapsObjectService<
   MapsObject extends google.maps.MapsObject<
     MapsObjectEventName,
@@ -12,6 +14,8 @@ export abstract class MapsObjectService<
   maps: google.Maps;
   object: MapsObject;
 
+  listeners: Map<MapsObjectEventHandler, google.maps.MapsEventListener> = new Map();
+
   constructor(
     google: Google,
     object: MapsObject,
@@ -21,31 +25,91 @@ export abstract class MapsObjectService<
     this.object = object;
   }
 
-  abstract groupProps(props: MapsObjectOptions & MapsObjectEventHandler): {
-    options: MapsObjectOptions,
-    handlers: MapsObjectEventHandler
-  }
+  abstract eventNames: {
+    [key in MapsObjectHandlerName]: MapsObjectEventName
+  };
+  
+  abstract groupProps(props: MapsObjectOptions & {
+    [key in MapsObjectHandlerName]?: MapsObjectEventHandler
+  }): {
+    handlers?: {
+      [key: string]: MapsObjectEventHandler,
+    },
+    options?: MapsObjectOptions,
+  };
 
   addListener(
     eventName: MapsObjectEventName,
     handler: MapsObjectEventHandler,
   ) {
-    return this.object.addListener(eventName, handler);
+    const listener = this.object.addListener(eventName, handler);
+
+    this.listeners.set(handler, listener);
   }
 
-  setOptions(options: MapsObjectOptions) {
-    if (!this.object.setOptions) return;
+  removeListener(
+    handler: MapsObjectEventHandler,
+  ): void {
+    const listener = this.listeners.get(handler);
+
+    if (!listener) return;
+
+    listener.remove();
+    this.listeners.delete(handler);
+  }
+
+  resetListeners(): void {
+    this.listeners.forEach((listener) => {
+      listener.remove();
+    });
+
+    this.listeners = new Map();
+  }
+
+  setOptions(options: MapsObjectOptions | undefined) {
+    if (!options || !this.object.setOptions) return;
 
     this.object.setOptions(options);
+  }
+
+  setListeners(handlers: {
+    [key: string]: MapsObjectEventHandler,
+  }| undefined) {
+    if (!handlers) return;
+
+    Object.keys(handlers).forEach((handlerName) => {
+      const handler: MapsObjectEventHandler = handlers[handlerName];
+      const eventName: MapsObjectEventName = this.eventNames[
+        handlerName as MapsObjectHandlerName
+      ];
+
+      this.addListener(eventName, handler);
+    });
   }
 
   getObject(): MapsObject {
     return this.object;
   }
 
+  setProps(props: MapsObjectOptions & {
+    [key in MapsObjectHandlerName]?: MapsObjectEventHandler
+  }) {
+    const {
+      handlers,
+      options,
+    } = this.groupProps(props);
+
+    this.setOptions(options);
+    this.setListeners(handlers);
+  }
+
   updateProps(
-    prevProps: MapsObjectOptions & MapsObjectEventHandler,
-    props: MapsObjectOptions & MapsObjectEventHandler
+    prevProps: MapsObjectOptions & {
+      [key in MapsObjectHandlerName]?: MapsObjectEventHandler;
+    },
+    props: MapsObjectOptions & {
+      [key in MapsObjectHandlerName]?: MapsObjectEventHandler;
+    }
   ) {
     const {
       options, 
@@ -57,5 +121,63 @@ export abstract class MapsObjectService<
       handlers: prevHandlers
     } = this.groupProps(prevProps);
 
+    this.updateOptions(prevOptions, options);
+    this.updateListeners(prevHandlers, handlers);
+  }
+
+  updateOptions(
+    prevOptions: MapsObjectOptions & {
+      [key: string]: any,
+    } | undefined,
+    options: MapsObjectOptions & {
+      [key: string]: any,
+    } | undefined,
+  ) {
+    if (!prevOptions || !options) return;
+
+    const updatedOptions = pickUpdated<MapsObjectOptions>(prevOptions, options);
+
+    if (!updatedOptions) return;
+
+    this.setOptions(updatedOptions);
+  }
+
+  updateListeners(
+    prevHandlers: {
+      [key: string]: MapsObjectEventHandler,
+    } | undefined,
+    handlers: {
+      [key: string]: MapsObjectEventHandler,
+    } | undefined,
+  ): void {
+    if (!handlers && !prevHandlers) return;
+
+    if (!handlers) {
+      this.resetListeners();
+      return;
+    }
+
+    if (!prevHandlers) {
+      this.setListeners(handlers);
+      return;
+    }
+
+    Object.keys({
+      ...prevHandlers,
+      ...handlers,
+    }).forEach((handlerName) => {
+      const eventName = this.eventNames[handlerName as MapsObjectHandlerName];
+      const handler = handlers[handlerName];
+      const prevHandler = prevHandlers[handlerName];
+
+      if (handler === prevHandler) return;
+
+      if (handler) {
+        this.addListener(eventName, handler);
+      }
+      if (prevHandler) {
+        this.removeListener(prevHandler);
+      }
+    });
   }
 }

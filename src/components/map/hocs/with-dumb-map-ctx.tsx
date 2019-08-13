@@ -13,9 +13,9 @@ export const withDumbMapCtx = <Props extends {}>(
 ): React.ComponentType<Props> => {
   const WithDumbMapCtx = (props: Props) => (
     <MapConsumer>
-      {(value) => value && (
+      {(mapService) => mapService && (
         <Wrapped 
-          mapService={value.mapService} 
+          mapService={mapService} 
           {...props}
         />
       )}

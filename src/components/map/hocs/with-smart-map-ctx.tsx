@@ -10,28 +10,27 @@ export interface GoogleApiProps {
   googleApi: Google;
 }
 
-export interface WithSmartMapState {
-  mapService: MapService | null;
+export interface MapServiceProps {
+  mapService?: MapService;
 }
 
-export interface WrappedProps {
-  createMapService: (
-    container: HTMLDivElement, 
-    options: google.maps.MapOptions
-  ) => MapService,
-}
+export type WithSmartMapState = MapServiceProps;
 
-export interface MapCtxValue {
-  mapService: MapService,
-}
+export type CreateMapCtxValue = (
+  container: HTMLDivElement, 
+  options: google.maps.MapOptions
+) => void;
 
-const MapCtx = createContext<MapCtxValue | null>(null);
+const MapCtx = createContext<MapService | undefined>(undefined);
+const CreateMapCtx = createContext<CreateMapCtxValue | undefined>(undefined);
 
 export const MapProvider = MapCtx.Provider;
 export const MapConsumer = MapCtx.Consumer;
+export const CreateMapProvider = CreateMapCtx.Provider;
+export const CreateMapConsumer = CreateMapCtx.Consumer;
 
 export const withSmartMapCtx = <Props extends {}>(
-  Wrapped: ComponentType<Props & WrappedProps>
+  Wrapped: ComponentType<Props & MapServiceProps>
 ): ComponentType<Props> => {
 
   class WithSmartMapCtx extends Component<Props & GoogleApiProps, WithSmartMapState> {
@@ -39,14 +38,14 @@ export const withSmartMapCtx = <Props extends {}>(
       super(props);
 
       this.state = {
-        mapService: null,
+        mapService: undefined,
       }
     }
 
     createMapService = (
       container: HTMLDivElement, 
       options: google.maps.MapOptions
-    ): MapService => {
+    ): void => {
       const {googleApi} = this.props;
 
       const mapService = new MapService(googleApi, container, options);
@@ -54,8 +53,6 @@ export const withSmartMapCtx = <Props extends {}>(
       this.setState({
         mapService,
       });
-
-      return mapService;
     }
 
     render() {
@@ -67,14 +64,16 @@ export const withSmartMapCtx = <Props extends {}>(
       } = this.props;
       
       return (
-        <MapCtx.Provider
-          value={mapService && {mapService}}
-        >
-          <Wrapped
-            createMapService={this.createMapService}
-            {...props as Props}
-          />
-        </MapCtx.Provider>
+        <CreateMapProvider value={this.createMapService}>
+          <MapProvider
+            value={mapService}
+          >
+            <Wrapped
+              mapService={mapService}
+              {...props as Props}
+            />
+          </MapProvider>
+        </CreateMapProvider>
       );
     }
   }

@@ -1,12 +1,12 @@
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {GoogleMapsStore} from '../../../../stores';
-import {withDumbMapCtx} from '../../../hocs/with-dumb-map-ctx';
+import {GoogleMapsStore} from '../../../stores';
+import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
 import {
   GoogleStoreProps,
   WrappedProps as WrappedMapProps,
-} from '../../../hocs/with-smart-map-ctx';
+} from '../../map/hocs/with-smart-map-ctx';
 import {MapService, MapStore} from '../../map';
 
 export interface WrappedProps<Store> {

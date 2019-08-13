@@ -9,9 +9,9 @@ export const withGoogleApi = <Props extends {}>(
   Wrapped: ComponentType<GoogleApiProps & Props>
 ) => (props: Props) => (
   <GoogleApiCtxConsumer>
-    {(value) => value && (
+    {(googleApi) => googleApi && (
       <Wrapped 
-        googleApi={value.googleApi}
+        googleApi={googleApi}
         {...props}
       />
     )}

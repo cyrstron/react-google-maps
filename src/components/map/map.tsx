@@ -1,7 +1,6 @@
 import React, { Component, ReactNode, RefObject, createRef } from 'react';
-import {WrappedProps} from './hocs/with-smart-map-ctx';
-import {MapStore} from './stores';
-import { MapService, groupMapProps } from './services';
+import {WrappedProps} from './hocs/with-dumb-create-map-ctx';
+import { MapService } from './services';
 
 export type MapComponentProps = MapProps & WrappedProps & {
   children?: ReactNode | null;
@@ -19,56 +18,57 @@ export class Map extends Component<Props, {}> {
       children,
       className,
       createMapService,
+      mapService,
       ...props
     } = this.props;
 
-    this.mapService = createMapService(this.map.current!, props);
+    createMapService(this.map.current!, {
+      center: defaultCenter, 
+      ...props
+    });
   }
 
   componentDidUpdate({
     defaultCenter: _defaultCenter,
     children: _children,
     className: _className,
+    createMapService: _createMapService,
+    mapService: _mapService,
     ...prevProps
   }: Props) {
     const {
       defaultCenter,
       children,
       className,
+      createMapService,
+      mapService,
       ...props
     } = this.props;
 
-    const {mapService} = this;
-
     if (!mapService) return;
 
-    const {
-      options, 
-      handlers
-    } = groupMapProps(this.props);
-    
-    const {
-      options: prevOptions, 
-      handlers: prevHandlers
-    } = groupMapProps(prevProps);
+    mapService.updateProps(
+      prevProps,
+      props
+    );
   }
 
-  mapRef = (mapContainer: HTMLDivElement) => {
-    if (this.mapContainer) return;
+  componentWillUnmount() {
+    if (!this.mapService) return;
 
-    this.mapContainer = mapContainer;
+    this.mapService.resetListeners();
   }
 
   render() {
     const {
       children,
       className,
-      mapStore,
+      mapService,
     } = this.props;
 
     return (
       <div className={className} ref={this.map} >
-        {mapStore.isLoaded && children}
+        {mapService && children}
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import {MapService} from '../../../../map';
 import {FeatureService} from '../../../services';
+import { markerEventNames } from './event-names';
+import { groupMarkerProps } from './group-marker-props';
 
 export class MarkerService extends FeatureService<
   google.maps.Marker,
@@ -12,9 +14,13 @@ export class MarkerService extends FeatureService<
     mapService: MapService,
     options: google.maps.MarkerOptions,
   ) {
-    const map = mapService.getObject();
-    const object = new google.maps.Marker({map, ...options});
-
-    super(google, object, mapService);
+    super(
+      google, 
+      new google.maps.Marker({map: mapService.getObject(), ...options}), 
+      mapService
+    );
   }
+
+  eventNames = markerEventNames;
+  groupProps = groupMarkerProps;
 }

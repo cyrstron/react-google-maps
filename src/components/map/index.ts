@@ -1,19 +1,11 @@
-import {withDumbMapCtx} from '../../hocs/with-dumb-map-ctx';
-import {withSmartMapCtx} from '../../hocs/with-smart-map-ctx';
-import {Map, MapComponentProps} from './map';
-import {MapStore} from './stores';
+import {Map} from './map';
+import {withSmartMapCtx} from './hocs/with-smart-map-ctx';
+import { withDumbCreateMapCtx } from './hocs/with-dumb-create-map-ctx';
 
-export const withMapCtx = withSmartMapCtx<MapStore>(MapStore);
+export {Map, withSmartMapCtx, withDumbCreateMapCtx};
 
-export const DumbMap = withDumbMapCtx<MapStore, MapComponentProps>(Map);
-export const SmartMap = withMapCtx<MapProps>(Map);
+export const DumbMap = withDumbCreateMapCtx<MapProps>(Map);
+export const SmartMap = withSmartMapCtx<MapProps>(DumbMap);
 
-export {MapStore} from './stores';
 export {MapService} from './services';
-export {Map};
-export {  
-  DumbCtrlMap,
-  CtrlMap,
-  CtrlMapStore,
-  withCtrlMapCtx,
-} from './components/ctrl-map';
+export {withDumbMapCtx} from './hocs/with-dumb-map-ctx';

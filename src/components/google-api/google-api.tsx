@@ -1,11 +1,6 @@
 import React, {Component, createContext, ReactNode} from 'react';
 import {GoogleApiService} from './services/google-api.service';
 
-
-export interface ContextValue {
-  googleApi: any;
-}
-
 export interface GoogleProps {
   apiKey: string;
   children: ReactNode;
@@ -13,11 +8,11 @@ export interface GoogleProps {
 
 export interface GoogleState {
   isPending: boolean;
-  googleApi: Google | null;
+  googleApi?: Google;
   err: Error | null;
 }
 
-const GoogleApiCtx = createContext<ContextValue | null>(null);
+const GoogleApiCtx = createContext<Google | undefined>(undefined);
 
 export const GoogleApiCtxProvider = GoogleApiCtx.Provider;
 export const GoogleApiCtxConsumer = GoogleApiCtx.Consumer;
@@ -35,7 +30,7 @@ export class GoogleApiProvider extends Component<GoogleProps, GoogleState> {
     this.state = {
       isPending: false,
       err: null,
-      googleApi: null
+      googleApi: undefined
     }
   }
 
@@ -76,7 +71,7 @@ export class GoogleApiProvider extends Component<GoogleProps, GoogleState> {
 
     return (
       <GoogleApiCtxProvider
-        value={{googleApi}}
+        value={googleApi}
       >
         {children}
       </GoogleApiCtxProvider>
