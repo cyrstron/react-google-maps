@@ -1,8 +1,6 @@
-import {observer} from 'mobx-react';
 import { Component } from 'react';
 import { MarkerService } from './services/marker-service';
 
-@observer
 export class Marker extends Component<
   MarkerProps & {
     featureService?: MarkerService
