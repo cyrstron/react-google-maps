@@ -1,5 +1,5 @@
 type MarkerEventHandler = google.maps.MapEventHandler | 
-  google.maps.MouseEvent;
+  google.maps.MapMouseEventHandler;
 
 type MarkerEventsProps = FeatureEventsProps & {
   onAnimationChanged?: google.maps.MapEventHandler;
@@ -19,7 +19,7 @@ type MarkerEventsProps = FeatureEventsProps & {
 
 type MarkerProps = google.maps.MarkerOptions & 
   MarkerEventsProps & {
-    position: geo.Location;
+    position: google.maps.LatLngLiteral;
     title: string;
   };
 

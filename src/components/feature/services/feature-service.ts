@@ -19,12 +19,17 @@ export abstract class FeatureService<
   mapService: MapService;
   constructor(
     google: Google,
-    object: Feature,
     mapService: MapService,
+    Object: new(options: Options) => Feature,
+    options: Options & MapEventsProps,
   ) {
-    super(google, object);
+    super(google, new Object(options));
 
     this.mapService = mapService;
+
+    const {handlers} = this.groupProps(options)
+
+    this.setListeners(handlers);
   }
 
   remove() {

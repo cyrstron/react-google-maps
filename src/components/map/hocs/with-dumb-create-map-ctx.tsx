@@ -9,7 +9,7 @@ export interface WrappedProps {
   mapService?: MapService;
   createMapService: (
     container: HTMLDivElement, 
-    options: google.maps.MapOptions
+    options: google.maps.MapOptions & MapEventsProps 
   ) => void
 }
 

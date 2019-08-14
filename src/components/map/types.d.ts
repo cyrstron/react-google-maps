@@ -22,7 +22,7 @@ type MapProps = MapEventsProps & google.maps.MapOptions & {
   bounds?: google.maps.LatLngBoundsLiteral;
   defaultCenter: google.maps.LatLngLiteral;
   zoom: number;
-} ;
+};
 
 type MapMouseHandlerName = MapsObjectHandlerName |
   'onMouseMove';

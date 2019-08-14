@@ -44,7 +44,7 @@ export const withSmartMapCtx = <Props extends {}>(
 
     createMapService = (
       container: HTMLDivElement, 
-      options: google.maps.MapOptions
+      options: google.maps.MapOptions & MapEventsProps
     ): void => {
       const {googleApi} = this.props;
 

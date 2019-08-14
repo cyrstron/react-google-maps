@@ -10,6 +10,8 @@ export class GoogleApiService {
   constructor(private apiKey: string) {}
 
   loadApi(): Promise<Google> {
+    if (window.google) return Promise.resolve(window.google);
+
     const script: HTMLScriptElement = document.createElement('script');
     script.type = 'text/javascript';
     script.src = `https://maps.google.com/maps/api/js?key=${this.apiKey}`;

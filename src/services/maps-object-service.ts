@@ -33,7 +33,7 @@ export abstract class MapsObjectService<
     [key in MapsObjectHandlerName]?: MapsObjectEventHandler
   }): {
     handlers?: {
-      [key: string]: MapsObjectEventHandler,
+      [key in MapsObjectHandlerName]: MapsObjectEventHandler;
     },
     options?: MapsObjectOptions,
   };
@@ -73,12 +73,12 @@ export abstract class MapsObjectService<
   }
 
   setListeners(handlers: {
-    [key: string]: MapsObjectEventHandler,
-  }| undefined) {
+    [key in MapsObjectHandlerName]: MapsObjectEventHandler;
+  } | undefined) {
     if (!handlers) return;
 
-    Object.keys(handlers).forEach((handlerName) => {
-      const handler: MapsObjectEventHandler = handlers[handlerName];
+    (Object.keys(handlers)).forEach((handlerName) => {
+      const handler: MapsObjectEventHandler = handlers[handlerName as MapsObjectHandlerName];
       const eventName: MapsObjectEventName = this.eventNames[
         handlerName as MapsObjectHandlerName
       ];
@@ -144,10 +144,10 @@ export abstract class MapsObjectService<
 
   updateListeners(
     prevHandlers: {
-      [key: string]: MapsObjectEventHandler,
+      [key in MapsObjectHandlerName]: MapsObjectEventHandler;
     } | undefined,
     handlers: {
-      [key: string]: MapsObjectEventHandler,
+      [key in MapsObjectHandlerName]: MapsObjectEventHandler;
     } | undefined,
   ): void {
     if (!handlers && !prevHandlers) return;
@@ -167,8 +167,8 @@ export abstract class MapsObjectService<
       ...handlers,
     }).forEach((handlerName) => {
       const eventName = this.eventNames[handlerName as MapsObjectHandlerName];
-      const handler = handlers[handlerName];
-      const prevHandler = prevHandlers[handlerName];
+      const handler = handlers[handlerName as MapsObjectHandlerName];
+      const prevHandler = prevHandlers[handlerName as MapsObjectHandlerName];
 
       if (handler === prevHandler) return;
 

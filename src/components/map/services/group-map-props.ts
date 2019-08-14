@@ -2,7 +2,7 @@ import {filterObject} from '../../../services';
 
 export interface SortedMapProps {
   options?: google.maps.MapOptions;
-  handlers?: {[key: string]: MapEventHandler};
+  handlers?: {[key in MapHandlerName]: MapEventHandler};
 }
 
 export const groupMapProps = ({
@@ -49,7 +49,7 @@ export const groupMapProps = ({
     onTilesLoaded,
     onTiltChanged,
     onZoomChanged,
-  });
+  }) as {[key in MapHandlerName]: MapEventHandler} | undefined;
 
   if (handlers) {
     result.handlers = handlers;

@@ -1,19 +1,8 @@
-import {observable} from 'mobx';
-import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {GoogleMapsStore} from '../../../stores';
 import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
-import {
-  GoogleStoreProps,
-  WrappedProps as WrappedMapProps,
-} from '../../map/hocs/with-smart-map-ctx';
-import {MapService, MapStore} from '../../map';
+import {MapService} from '../../map';
 import {FeatureService} from '../services';
-import {FeatureStore} from '../stores';
-
-export interface WrappedProps<Store> {
-  featureStore: Store;
-}
+import { withGoogleApi } from 'components/google-api';
 
 export const withFullFeatureCtx = <
   EventName,
@@ -31,33 +20,37 @@ export const withFullFeatureCtx = <
     Options,
     EventHandler
   >,
-  Store extends FeatureStore<
-    Feature,
-    Options,
-    EventName,
-    HandlerName,
-    EventHandler,
-    Service
-  >
 >(
-  ComponentStore: new(google: Google, mapService: MapService) => Store,
+  ComponentService: new(google: Google, mapService: MapService) => Service,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
+  Wrapped: React.ComponentType<Props & {featureService: Service}>,
 ): React.ComponentType<Props> => {
-  @inject('googleMapsStore')
-  @observer
-  class WithFullFeatureCtx extends Component<Props & WrappedMapProps<MapStore> & GoogleStoreProps, {}> {
-    @observable featureStore?: Store;
+  class WithFullFeatureCtx extends Component<
+    Props & {mapService: MapService} & {googleApi: Google}, 
+    {featureService?: Service}
+  > {
+    constructor(props: Props & {mapService: MapService} & {googleApi: Google}) {
+      super(props);
+
+      this.state = {
+        featureService: undefined
+      };
+    }
+
+    createService(options: Options) {
+
+    }
 
     componentDidMount() {
       const {
-        mapStore,
-        googleMapsStore,
+        mapService,
+        googleApi,
       } = this.props;
 
-      const {google} = googleMapsStore as GoogleMapsStore;
+      this.setState({
 
-      this.featureStore = new ComponentStore(google as Google, mapStore.service as MapService);
+      })
+      this.featureStore = new ComponentService(googleApi, mapService);
     }
 
     componentWillUnmount() {
@@ -84,5 +77,5 @@ export const withFullFeatureCtx = <
     }
   }
 
-  return withDumbMapCtx<MapStore, Props>(WithFullFeatureCtx);
+  return withGoogleApi(withDumbMapCtx<Props & {googleApi: Google}>(WithFullFeatureCtx));
 };
