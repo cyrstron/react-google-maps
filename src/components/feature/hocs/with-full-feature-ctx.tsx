@@ -8,7 +8,7 @@ export const withFullFeatureCtx = <
   EventName,
   Options,
   EventHandler,
-  HandlerName,
+  FeatureHandlers,
   Feature extends google.maps.Feature<
     EventName,
     Options,
@@ -21,9 +21,13 @@ export const withFullFeatureCtx = <
     EventHandler
   >,
 >(
-  ComponentService: new(google: Google, mapService: MapService) => Service,
+  ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & {featureService: Service}>,
+  Wrapped: React.ComponentType<Props & {
+    featureService?: Service
+  } & {
+    createFeatureService: (props: Options & FeatureHandlers) => void
+  }>,
 ): React.ComponentType<Props> => {
   class WithFullFeatureCtx extends Component<
     Props & {mapService: MapService} & {googleApi: Google}, 
@@ -37,42 +41,31 @@ export const withFullFeatureCtx = <
       };
     }
 
-    createService(options: Options) {
-
-    }
-
-    componentDidMount() {
-      const {
-        mapService,
-        googleApi,
-      } = this.props;
+    createFeatureService = (props: Options & FeatureHandlers): void => {
+      const {googleApi, mapService} = this.props;
 
       this.setState({
-
+        featureService: new ComponentService(googleApi, mapService, props),
       })
-      this.featureStore = new ComponentService(googleApi, mapService);
-    }
-
-    componentWillUnmount() {
-      const {featureStore} = this;
-
-      if (!featureStore) return;
-
-      featureStore.remove();
     }
 
     render() {
-      const {featureStore} = this;
       const {
-        mapStore,
-        googleMapsStore,
+        featureService,
+      } = this.state;
+
+      const {
+        googleApi,
+        mapService,
         ...props
       } = this.props;
 
-      if (!featureStore) return null;
-
       return (
-        <Wrapped featureStore={featureStore} {...props as Props}/>
+        <Wrapped 
+          featureService={featureService} 
+          createFeatureService={this.createFeatureService}
+          {...props as Props}
+        />
       );
     }
   }

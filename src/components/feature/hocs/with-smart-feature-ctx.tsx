@@ -1,20 +1,24 @@
 import React, {createContext} from 'react';
 import {MapService} from '../../map';
 import {FeatureService} from '../services';
-import {FeatureStore} from '../stores';
-import {withFullFeatureCtx, WrappedProps} from './with-full-feature-ctx';
+import {withFullFeatureCtx} from './with-full-feature-ctx';
 
-interface ContextValue {
-  featureStore?: any;
-}
+export type FeatureCtxValue = any | undefined;
+export type CreateFeatureCtxValue = any | undefined;
 
-export const FeatureContext = createContext<ContextValue>({});
+const FeatureCtx = createContext<FeatureCtxValue>(undefined);
+const CreateFeatureCtx = createContext<CreateFeatureCtxValue>(undefined);
+
+export const FeatureCtxProvider = FeatureCtx.Provider;
+export const FeatureCtxConsumer = FeatureCtx.Consumer;
+export const CreateFeatureCtxProvider = CreateFeatureCtx.Provider;
+export const CreateFeatureCtxConsumer = CreateFeatureCtx.Consumer;
 
 export const withSmartFeatureCtx = <
   EventName,
   Options,
   EventHandler,
-  HandlerName,
+  FeatureHandlers,
   Feature extends google.maps.Feature<
     EventName,
     Options,
@@ -25,36 +29,38 @@ export const withSmartFeatureCtx = <
     EventName,
     Options,
     EventHandler
-  >,
-  Store extends FeatureStore<
-    Feature,
-    Options,
-    EventName,
-    HandlerName,
-    EventHandler,
-    Service
   >
 >(
-  ComponentStore: new(google: Google, mapStore: MapService) => Store,
+  ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<WrappedProps<Store> & Props>,
+  Wrapped: React.ComponentType<Props>,
 ): React.ComponentType<Props> => {
-  const WithSmartFeatureCtx = (props: Props & WrappedProps<Store>) => (
-    <FeatureContext.Provider
-      value={{featureStore: props.featureStore}}
+  const WithSmartFeatureCtx = (
+    {createFeatureService, featureService, ...props}: Props & {
+      featureService?: Service
+    } & {
+      createFeatureService: (props: Options & FeatureHandlers) => void
+    }
+  ) => (
+    <CreateFeatureCtxProvider
+      value={createFeatureService}
     >
-      <Wrapped
-        {...props}
-      />
-    </FeatureContext.Provider>
+      <FeatureCtxProvider
+        value={featureService}
+      >
+        <Wrapped
+          {...props as unknown as Props}
+        />
+      </FeatureCtxProvider>
+    </CreateFeatureCtxProvider>
   );
+
   return withFullFeatureCtx<
     EventName,
     Options,
     EventHandler,
-    HandlerName,
+    FeatureHandlers,
     Feature,
-    Service,
-    Store
-  >(ComponentStore)<Props>(WithSmartFeatureCtx);
+    Service
+  >(ComponentService)<Props>(WithSmartFeatureCtx);
 };

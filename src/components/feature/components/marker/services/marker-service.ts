@@ -12,12 +12,13 @@ export class MarkerService extends FeatureService<
   constructor(
     google: Google,
     mapService: MapService,
-    options: google.maps.MarkerOptions,
+    options: google.maps.MarkerOptions & MarkerEventsProps,
   ) {
     super(
       google, 
+      mapService,
       new google.maps.Marker({map: mapService.getObject(), ...options}), 
-      mapService
+      options
     );
   }
 

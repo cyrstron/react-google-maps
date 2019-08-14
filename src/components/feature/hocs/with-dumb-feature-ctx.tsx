@@ -1,14 +1,11 @@
 import React from 'react';
 import {FeatureService} from '../services';
-import {FeatureStore} from '../stores';
-import {WrappedProps} from './with-full-feature-ctx';
-import {FeatureContext} from './with-smart-feature-ctx';
+import {FeatureCtxConsumer} from './with-smart-feature-ctx';
 
 export const withDumbFeatureCtx = <
   EventName,
   Options,
   EventHandler,
-  HandlerName,
   Feature extends google.maps.Feature<
     EventName,
     Options,
@@ -20,26 +17,16 @@ export const withDumbFeatureCtx = <
     Options,
     EventHandler
   >,
-  Store extends FeatureStore<
-    Feature,
-    Options,
-    EventName,
-    HandlerName,
-    EventHandler,
-    Service
-  >,
   Props extends {}
 >(
-  Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
+  Wrapped: React.ComponentType<Props & {featureService: Service}>,
 ): React.ComponentType<Props> => {
   const WithDumbFeatureCtx = (props: Props) => (
-    <FeatureContext.Consumer>
-      {({featureStore}) => {
-        if (!featureStore) return null;
-
-        return <Wrapped featureStore={featureStore as Store} {...props}/>;
-      }}
-    </FeatureContext.Consumer>
+    <FeatureCtxConsumer>
+      {(featureService: Service) => featureService && (
+        <Wrapped featureService={featureService as Service} {...props}/>
+      )}
+    </FeatureCtxConsumer>
   );
 
   return WithDumbFeatureCtx;

@@ -20,10 +20,10 @@ export abstract class FeatureService<
   constructor(
     google: Google,
     mapService: MapService,
-    Object: new(options: Options) => Feature,
+    object: Feature,
     options: Options & MapEventsProps,
   ) {
-    super(google, new Object(options));
+    super(google, object);
 
     this.mapService = mapService;
 

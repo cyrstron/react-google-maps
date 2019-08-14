@@ -2,7 +2,7 @@ import {filterObject} from '../../../../../services';
 
 export interface SortedMarkerProps {
   options?: google.maps.MarkerOptions;
-  handlers?: {[key: string]: MarkerEventHandler};
+  handlers?: {[key in MarkerHandlerName]: MarkerEventHandler};
 }
 
 export const groupMarkerProps = ({
@@ -58,7 +58,7 @@ export const groupMarkerProps = ({
   });
 
   if (handlers) {
-    result.handlers = handlers;
+    result.handlers = handlers as {[key in MarkerHandlerName]: MarkerEventHandler};
   }
 
   return result;

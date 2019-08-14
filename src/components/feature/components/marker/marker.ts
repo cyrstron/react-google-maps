@@ -1,30 +1,45 @@
 import {observer} from 'mobx-react';
 import { Component } from 'react';
-import {WrappedProps} from '../../hocs/with-full-feature-ctx';
+import { MarkerService } from './services/marker-service';
 
 @observer
-export class Marker extends Component<MarkerProps & WrappedProps<MarkerStore>, {}> {
+export class Marker extends Component<
+  MarkerProps & {
+    featureService?: MarkerService
+  } & {
+    createFeatureService: (props: google.maps.MarkerOptions & MarkerEventsProps) => void
+  }, 
+  {}
+> {
   componentDidUpdate({
-    featureStore: _featureStore,
+    featureService: _featureService,
+    createFeatureService: _createFeatureService,
     ...prevProps
-  }: MarkerProps & WrappedProps<MarkerStore>) {
+  }: MarkerProps & {
+    featureService?: MarkerService
+    } & {
+      createFeatureService: (props: google.maps.MarkerOptions & MarkerEventsProps) => void
+    }
+  ) {
     const {
-      featureStore,
+      featureService,
+      createFeatureService,
       ...props
     } = this.props;
 
-    featureStore.updateOptions(prevProps, props);
+    if (!featureService) return;
+
+    featureService.updateOptions(prevProps, props);
   }
 
   componentDidMount() {
     const {
-      featureStore,
+      featureService,
+      createFeatureService,
       ...markerOptions
     } = this.props;
 
-    featureStore.setMarker({
-      ...markerOptions,
-    });
+    createFeatureService(markerOptions);
   }
 
   render() {
