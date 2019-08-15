@@ -1,8 +1,8 @@
 import {filterObject} from '../../../../../services';
 
-interface SortedPolygonProps {
+export interface SortedPolygonProps {
   options?: google.maps.PolygonOptions;
-  handlers?: {[key: string]: PolygonEventHandler};
+  handlers?: {[key in PolygonHandlerName]: PolygonEventHandler};
 }
 
 export const groupPolygonProps = ({
@@ -37,7 +37,7 @@ export const groupPolygonProps = ({
   });
 
   if (handlers) {
-    result.handlers = handlers;
+    result.handlers = handlers as {[key in PolygonHandlerName]: PolygonEventHandler};
   }
 
   return result;

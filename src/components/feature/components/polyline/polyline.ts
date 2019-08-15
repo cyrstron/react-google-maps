@@ -1,31 +1,47 @@
-import {observer} from 'mobx-react';
 import {Component} from 'react';
-import {WrappedProps} from '../../hocs/with-full-feature-ctx';
-import {PolylineStore} from './stores';
+import { PolylineService } from './services/polyline-service';
+import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
 
-@observer
-export class Polyline extends Component<PolylineProps & WrappedProps<PolylineStore>, {}> {
+export type FullPolylineProps = PolylineProps & CreateServiceProps<
+  google.maps.PolylineOptions & PolylineEventsProps, 
+  PolylineService
+>;
+
+export class Polyline extends Component<FullPolylineProps, {}> {
   componentDidUpdate({
-    featureStore: _featureStore,
+    featureService: _featureService,
+    createFeatureService: _createFeatureService,
     ...prevProps
-  }: PolylineProps & WrappedProps<PolylineStore>) {
+  }: FullPolylineProps) {
     const {
-      featureStore,
+      featureService,
+      createFeatureService,
       ...props
     } = this.props;
 
-    featureStore.updateOptions(prevProps, props);
+    if (!featureService) return;
+
+    featureService.updateOptions(prevProps, props);
   }
 
   componentDidMount() {
     const {
-      featureStore,
-      ...markerOptions
+      featureService,
+      createFeatureService,
+      ...polygonOptions
     } = this.props;
 
-    featureStore.setPolyline({
-      ...markerOptions,
-    });
+    createFeatureService(polygonOptions);
+  }
+
+  componentWillUnmount() {
+    const {
+      featureService,
+    } = this.props;
+
+    if (!featureService) return;
+
+    featureService.remove();
   }
 
   render() {

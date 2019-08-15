@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
 import {MapService} from '../../map';
 import {FeatureService} from '../services';
-import { withGoogleApi } from 'components/google-api';
+import { withGoogleApi } from '../../../components/google-api';
+
+export type CreateFeatureService<Props> = (props: Props) => void
+
+export interface CreateServiceProps<Props, Service> {
+  createFeatureService: CreateFeatureService<Props>;
+  featureService?: Service;
+}
 
 export const withFullFeatureCtx = <
   EventName,
@@ -23,11 +30,7 @@ export const withFullFeatureCtx = <
 >(
   ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & {
-    featureService?: Service
-  } & {
-    createFeatureService: (props: Options & FeatureHandlers) => void
-  }>,
+  Wrapped: React.ComponentType<Props & CreateServiceProps<Options & FeatureHandlers, Service>>,
 ): React.ComponentType<Props> => {
   class WithFullFeatureCtx extends Component<
     Props & {mapService: MapService} & {googleApi: Google}, 

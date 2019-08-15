@@ -1,7 +1,7 @@
 import React, {createContext} from 'react';
 import {MapService} from '../../map';
 import {FeatureService} from '../services';
-import {withFullFeatureCtx} from './with-full-feature-ctx';
+import {withFullFeatureCtx, CreateServiceProps} from './with-full-feature-ctx';
 
 export type FeatureCtxValue = any | undefined;
 export type CreateFeatureCtxValue = any | undefined;
@@ -35,13 +35,11 @@ export const withSmartFeatureCtx = <
 ) => <Props extends {}>(
   Wrapped: React.ComponentType<Props>,
 ): React.ComponentType<Props> => {
-  const WithSmartFeatureCtx = (
-    {createFeatureService, featureService, ...props}: Props & {
-      featureService?: Service
-    } & {
-      createFeatureService: (props: Options & FeatureHandlers) => void
-    }
-  ) => (
+  const WithSmartFeatureCtx = ({
+    createFeatureService, 
+    featureService, 
+    ...props
+  }: Props & CreateServiceProps<Options & FeatureHandlers, Service>) => (
     <CreateFeatureCtxProvider
       value={createFeatureService}
     >

@@ -1,20 +1,30 @@
 import {MapService} from '../../../../map';
 import { FeatureService } from '../../../services';
+import { polygonEventNames } from './event-names';
+import { groupPolygonProps } from './group-polygon-props';
 
 export class PolygonService extends FeatureService<
   google.maps.Polygon,
   PolygonEventName,
   google.maps.PolygonOptions,
-  PolygonEventHandler> {
-
+  PolygonEventHandler
+> {
   constructor(
     google: Google,
     mapService: MapService,
-    options: google.maps.PolygonOptions,
+    options: google.maps.PolygonOptions & PolygonEventsProps,
   ) {
-    const map = mapService.getObject();
-    const object = new google.maps.Polygon({map, ...options});
+    super(
+      google, 
+      mapService,
+      new google.maps.Polygon({map: mapService.getObject(), ...options})
+    );
 
-    super(google, object, mapService);
+    const {handlers} = this.groupProps(options);
+
+    this.setListeners(handlers);
   }
+
+  eventNames = polygonEventNames;
+  groupProps = groupPolygonProps;
 }

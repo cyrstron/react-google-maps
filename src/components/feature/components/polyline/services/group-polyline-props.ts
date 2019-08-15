@@ -1,8 +1,8 @@
 import {filterObject} from '../../../../../services';
 
-interface SortedPolylineProps {
+export interface SortedPolylineProps {
   options?: google.maps.PolylineOptions;
-  handlers?: {[key: string]: PolylineEventHandler};
+  handlers?: {[key in PolylineHandlerName]: PolylineEventHandler};
 }
 
 export const groupPolylineProps = ({
@@ -37,7 +37,7 @@ export const groupPolylineProps = ({
   });
 
   if (handlers) {
-    result.handlers = handlers;
+    result.handlers = handlers as {[key in PolylineHandlerName]: PolylineEventHandler};
   }
 
   return result;

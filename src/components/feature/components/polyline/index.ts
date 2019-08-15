@@ -1,40 +1,54 @@
-import {withDumbFeatureCtx} from '../../hocs/with-dumb-feature-ctx';
-import {withFullFeatureCtx} from '../../hocs/with-full-feature-ctx';
-import {withSmartFeatureCtx} from '../../hocs/with-smart-feature-ctx';
-import {Polyline} from './polyline';
+import {Polyline as PolylineWrapped} from './polyline';
 import {PolylineService} from './services';
-import {PolylineStore} from './stores';
+import { 
+  withDumbFeatureCtx, 
+  FeatureServiceProps,
+  withCreateDumbFeatureCtx,
+  withSmartFeatureCtx,
+  withFullFeatureCtx,
+} from '../../hocs';
 
-export const SmartPolyline = withFullFeatureCtx<
+export const Polyline = withFullFeatureCtx<
   PolylineEventName,
   google.maps.PolylineOptions,
   PolylineEventHandler,
-  PolylineHandlerName,
+  PolylineEventsProps,
   google.maps.Polyline,
-  PolylineService,
-  PolylineStore
->(PolylineStore)<PolylineProps>(Polyline);
-export const DumbPolyline = withDumbFeatureCtx<
+  PolylineService
+>(PolylineService)<PolylineProps>(PolylineWrapped);
+
+export const DumbPolyline = withCreateDumbFeatureCtx<
   PolylineEventName,
   google.maps.PolylineOptions,
   PolylineEventHandler,
-  PolylineHandlerName,
+  PolylineEventsProps,
   google.maps.Polyline,
   PolylineService,
-  PolylineStore,
   PolylineProps
->(Polyline);
+>(PolylineWrapped);
+
 export const withSmartPolylineCtx = withSmartFeatureCtx<
   PolylineEventName,
   google.maps.PolylineOptions,
   PolylineEventHandler,
-  PolylineHandlerName,
+  PolylineEventsProps,
   google.maps.Polyline,
-  PolylineService,
-  PolylineStore
->(PolylineStore);
+  PolylineService
+>(PolylineService);
+
+export const withDumbPolylineCtx = <Props extends {}>(
+  Wrapped: React.ComponentType<Props & FeatureServiceProps<PolylineService>>,
+) => (
+  withDumbFeatureCtx<
+    PolylineEventName,
+    google.maps.PolylineOptions,
+    PolylineEventHandler,
+    google.maps.Polyline,
+    PolylineService,
+    Props
+  >(Wrapped)
+);
 
 export {
-  PolylineStore,
-  Polyline,
+  PolylineService,
 };

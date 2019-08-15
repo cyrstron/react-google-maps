@@ -1,40 +1,54 @@
-import {withDumbFeatureCtx} from '../../hocs/with-dumb-feature-ctx';
-import {withFullFeatureCtx} from '../../hocs/with-full-feature-ctx';
-import {withSmartFeatureCtx} from '../../hocs/with-smart-feature-ctx';
-import {Polygon} from './polygon';
+import {Polygon as PolygonWrapped} from './polygon';
 import {PolygonService} from './services';
-import {PolygonStore} from './stores';
+import { 
+  withDumbFeatureCtx, 
+  FeatureServiceProps,
+  withCreateDumbFeatureCtx,
+  withSmartFeatureCtx,
+  withFullFeatureCtx,
+} from '../../hocs';
 
-export const SmartPolygon = withFullFeatureCtx<
+export const Polygon = withFullFeatureCtx<
   PolygonEventName,
   google.maps.PolygonOptions,
   PolygonEventHandler,
-  PolygonHandlerName,
+  PolygonEventsProps,
   google.maps.Polygon,
-  PolygonService,
-  PolygonStore
->(PolygonStore)<PolygonProps>(Polygon);
-export const DumbPolygon = withDumbFeatureCtx<
+  PolygonService
+>(PolygonService)<PolygonProps>(PolygonWrapped);
+
+export const DumbPolygon = withCreateDumbFeatureCtx<
   PolygonEventName,
   google.maps.PolygonOptions,
   PolygonEventHandler,
-  PolygonHandlerName,
+  PolygonEventsProps,
   google.maps.Polygon,
   PolygonService,
-  PolygonStore,
   PolygonProps
->(Polygon);
+>(PolygonWrapped);
+
 export const withSmartPolygonCtx = withSmartFeatureCtx<
   PolygonEventName,
   google.maps.PolygonOptions,
   PolygonEventHandler,
-  PolygonHandlerName,
+  PolygonEventsProps,
   google.maps.Polygon,
-  PolygonService,
-  PolygonStore
->(PolygonStore);
+  PolygonService
+>(PolygonService);
+
+export const withDumbPolygonCtx = <Props extends {}>(
+  Wrapped: React.ComponentType<Props & FeatureServiceProps<PolygonService>>,
+) => (
+  withDumbFeatureCtx<
+    PolygonEventName,
+    google.maps.PolygonOptions,
+    PolygonEventHandler,
+    google.maps.Polygon,
+    PolygonService,
+    Props
+  >(Wrapped)
+);
 
 export {
-  PolygonStore,
-  Polygon,
+  PolygonService,
 };

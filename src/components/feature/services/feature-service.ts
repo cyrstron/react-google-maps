@@ -21,18 +21,22 @@ export abstract class FeatureService<
     google: Google,
     mapService: MapService,
     object: Feature,
-    options: Options & MapEventsProps,
   ) {
     super(google, object);
 
     this.mapService = mapService;
-
-    const {handlers} = this.groupProps(options)
-
-    this.setListeners(handlers);
   }
 
   remove() {
     this.object.setMap(null);
+    this.resetListeners();
+  }
+
+  hide() {    
+    this.object.setMap(null);
+  }
+
+  show() {    
+    this.object.setMap(this.mapService.object);
   }
 }

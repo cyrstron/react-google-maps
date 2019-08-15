@@ -1,27 +1,34 @@
 export {
   Polygon,
-  SmartPolygon,
   DumbPolygon,
   withSmartPolygonCtx,
-  PolygonStore,
+  withDumbPolygonCtx,
+  PolygonService,
 } from './components/polygon';
 export {
   Polyline,
-  SmartPolyline,
   DumbPolyline,
   withSmartPolylineCtx,
-  PolylineStore,
+  withDumbPolylineCtx,
+  PolylineService,
 } from './components/polyline';
 export {
   Marker,
-  SmartMarker,
   DumbMarker,
   withSmartMarkerCtx,
-  MarkerStore,
+  withDumbMarkerCtx,
+  MarkerService,
 } from './components/marker';
 export {
-  FeatureContext,
+  FeatureCtxProvider,
+  FeatureCtxConsumer,
+  CreateFeatureCtxProvider,
+  CreateFeatureCtxConsumer,
   withSmartFeatureCtx,
-  withDumbFeatureCtx,
   withFullFeatureCtx,
+  CreateServiceProps,
+  CreateFeatureService,
+  withDumbFeatureCtx,
+  FeatureServiceProps,
+  withCreateDumbFeatureCtx,
 } from './hocs';

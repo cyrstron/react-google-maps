@@ -1,24 +1,21 @@
 import { Component } from 'react';
 import { MarkerService } from './services/marker-service';
+import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
+
+export type FullMarkerProps = MarkerProps & CreateServiceProps<
+  google.maps.MarkerOptions & MarkerEventsProps, 
+  MarkerService
+>;
 
 export class Marker extends Component<
-  MarkerProps & {
-    featureService?: MarkerService
-  } & {
-    createFeatureService: (props: google.maps.MarkerOptions & MarkerEventsProps) => void
-  }, 
+  FullMarkerProps,
   {}
 > {
   componentDidUpdate({
     featureService: _featureService,
     createFeatureService: _createFeatureService,
     ...prevProps
-  }: MarkerProps & {
-    featureService?: MarkerService
-    } & {
-      createFeatureService: (props: google.maps.MarkerOptions & MarkerEventsProps) => void
-    }
-  ) {
+  }: FullMarkerProps) {
     const {
       featureService,
       createFeatureService,
@@ -38,6 +35,16 @@ export class Marker extends Component<
     } = this.props;
 
     createFeatureService(markerOptions);
+  }
+
+  componentWillUnmount() {
+    const {
+      featureService,
+    } = this.props;
+
+    if (!featureService) return;
+
+    featureService.remove();
   }
 
   render() {

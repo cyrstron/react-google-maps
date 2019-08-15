@@ -1,6 +1,7 @@
 import React from 'react';
 import {FeatureService} from '../services';
 import {FeatureCtxConsumer, CreateFeatureCtxConsumer} from './with-smart-feature-ctx';
+import {CreateFeatureService, CreateServiceProps} from './with-full-feature-ctx';
 
 export const withCreateDumbFeatureCtx = <
   EventName,
@@ -21,18 +22,14 @@ export const withCreateDumbFeatureCtx = <
   Props extends {}
 >(
   Wrapped: React.ComponentType<
-    Props & {
-      featureService?: Service
-    } & {
-      createFeatureService: (props: Options & FeatureHandlers) => void
-    }
-  >,
+    Props & CreateServiceProps<Options & FeatureHandlers, Service>
+  >
 ): React.ComponentType<Props> => {
   const WithCreateDumbFeatureCtx = (props: Props) => (
     <CreateFeatureCtxConsumer>
-      {(createFeatureService: (props: Options & FeatureHandlers) => void) => createFeatureService && (
+      {(createFeatureService?: CreateFeatureService<Options & FeatureHandlers>) => createFeatureService && (
         <FeatureCtxConsumer>
-          {(featureService: Service | undefined) => (
+          {(featureService?: Service) => (
             <Wrapped 
               featureService={featureService} 
               createFeatureService={createFeatureService}

@@ -1,20 +1,31 @@
 import {MapService} from '../../../../map';
 import { FeatureService } from '../../../services';
+import { polylineEventNames } from './event-names';
+import { groupPolylineProps } from './group-polyline-props';
 
 export class PolylineService extends FeatureService<
   google.maps.Polyline,
   PolylineEventName,
   google.maps.PolylineOptions,
-  PolylineEventHandler> {
+  PolylineEventHandler
+> {
 
   constructor(
     google: Google,
     mapService: MapService,
-    options: google.maps.PolylineOptions,
+    options: google.maps.PolylineOptions & PolylineEventsProps,
   ) {
-    const map = mapService.getObject();
-    const object = new google.maps.Polyline({map, ...options});
+    super(
+      google, 
+      mapService,
+      new google.maps.Polyline({map: mapService.getObject(), ...options})
+    );
 
-    super(google, object, mapService);
+    const {handlers} = this.groupProps(options);
+
+    this.setListeners(handlers);
   }
+
+  eventNames = polylineEventNames;
+  groupProps = groupPolylineProps;
 }

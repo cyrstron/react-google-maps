@@ -1,31 +1,47 @@
-import {observer} from 'mobx-react';
 import {Component} from 'react';
-import {WrappedProps} from '../../hocs/with-full-feature-ctx';
-import {PolygonStore} from './stores';
+import { PolygonService } from './services/polygon-service';
+import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
 
-@observer
-export class Polygon extends Component<PolygonProps & WrappedProps<PolygonStore>, {}> {
+export type FullPolygonProps = PolygonProps & CreateServiceProps<
+  google.maps.PolygonOptions & PolygonEventsProps, 
+  PolygonService
+>;
+
+export class Polygon extends Component<FullPolygonProps, {}> {
   componentDidUpdate({
-    featureStore: _featureStore,
+    featureService: _featureService,
+    createFeatureService: _createFeatureService,
     ...prevProps
-  }: PolygonProps & WrappedProps<PolygonStore>) {
+  }: FullPolygonProps) {
     const {
-      featureStore,
+      featureService,
+      createFeatureService,
       ...props
     } = this.props;
 
-    featureStore.updateOptions(prevProps, props);
+    if (!featureService) return;
+
+    featureService.updateOptions(prevProps, props);
   }
 
   componentDidMount() {
     const {
-      featureStore,
-      ...markerOptions
+      featureService,
+      createFeatureService,
+      ...polygonOptions
     } = this.props;
 
-    featureStore.setPolygon({
-      ...markerOptions,
-    });
+    createFeatureService(polygonOptions);
+  }
+
+  componentWillUnmount() {
+    const {
+      featureService,
+    } = this.props;
+
+    if (!featureService) return;
+
+    featureService.remove();
   }
 
   render() {

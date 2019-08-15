@@ -17,9 +17,12 @@ export class MarkerService extends FeatureService<
     super(
       google, 
       mapService,
-      new google.maps.Marker({map: mapService.getObject(), ...options}), 
-      options
+      new google.maps.Marker({map: mapService.getObject(), ...options})
     );
+
+    const {handlers} = this.groupProps(options);
+
+    this.setListeners(handlers);
   }
 
   eventNames = markerEventNames;
