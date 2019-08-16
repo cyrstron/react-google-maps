@@ -1,4 +1,5 @@
 import { pickUpdated } from "./pick-updated";
+import { MapsObjectHandlerName } from "../";
 
 export abstract class MapsObjectService<
   MapsObject extends google.maps.MapsObject<

@@ -1,4 +1,9 @@
 import {filterObject} from '../../../../../services';
+import { 
+  PolylineHandlerName, 
+  PolylineEventHandler, 
+  PolylineEventsProps 
+} from '../';
 
 export interface SortedPolylineProps {
   options?: google.maps.PolylineOptions;

@@ -1,19 +1,25 @@
-type FeatureEventsProps =  MapsObjectEventProps & {
+import {
+	 MapsObjectHandlerName, 
+	 MapsObjectEventName, 
+	 MapsObjectEventProps 
+} from "../../";
+
+export type FeatureEventsProps =  MapsObjectEventProps & {
 	onMouseDown?: google.maps.MouseEvent,
 	onMouseMove?: google.maps.MouseEvent,
 	onMouseUp?: google.maps.MouseEvent,    
 }
   
-type FeatureEventName = MapsObjectEventName | 
+export type FeatureEventName = MapsObjectEventName | 
 	'mousedown' |
 	'mousemove'	|
 	'mouseup';
 	
-type FeatureHandlerName = MapsObjectHandlerName |
+export type FeatureHandlerName = MapsObjectHandlerName |
 	'onMouseDown' |
 	'onMouseMove' | 
 	'onMouseUp';
 
-type FeatureEventNames = {
+export type FeatureEventNames = {
 	[key in FeatureHandlerName]: FeatureEventName;
 }

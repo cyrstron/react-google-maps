@@ -52,3 +52,37 @@ export const withDumbPolylineCtx = <Props extends {}>(
 export {
   PolylineService,
 };
+import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
+
+export type PolylineEventsProps = FeatureEventsProps & {
+	onMouseDown?: google.maps.MapPolyEventHandler,
+	onMouseMove?: google.maps.MapPolyEventHandler,
+	onMouseUp?: google.maps.MapPolyEventHandler,    
+	onClick?: google.maps.MapPolyEventHandler,
+	onDblClick?: google.maps.MapPolyEventHandler,
+	onMouseOut?: google.maps.MapPolyEventHandler,
+	onMouseOver?: google.maps.MapPolyEventHandler,
+	onRightClick?: google.maps.MapPolyEventHandler,
+}
+  
+export type PolylineEventHandler = google.maps.MapMouseEventHandler |
+	google.maps.MapPolyEventHandler;
+
+export type PolylineProps = google.maps.PolylineOptions & 
+	PolylineEventsProps & {
+		path: google.maps.LatLngLiteral[]
+	};
+  
+export type PolylineEventName = FeatureEventName |  
+	'mousedown' |
+	'mousemove'	|
+	'mouseup';
+	
+export type PolylineHandlerName = FeatureHandlerName |
+	'onMouseDown' |
+	'onMouseMove' | 
+	'onMouseUp';
+
+export type PolylineEventNames = {
+	[key in PolylineHandlerName]: PolylineEventName;
+};

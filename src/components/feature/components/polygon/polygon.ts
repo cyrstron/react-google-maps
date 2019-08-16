@@ -1,6 +1,10 @@
 import {Component} from 'react';
 import { PolygonService } from './services/polygon-service';
 import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
+import { 
+  PolygonProps, 
+  PolygonEventsProps 
+} from './';
 
 export type FullPolygonProps = PolygonProps & CreateServiceProps<
   google.maps.PolygonOptions & PolygonEventsProps, 

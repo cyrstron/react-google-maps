@@ -2,6 +2,11 @@ import {MapService} from '../../../../map';
 import { FeatureService } from '../../../services';
 import { polylineEventNames } from './event-names';
 import { groupPolylineProps } from './group-polyline-props';
+import { 
+  PolylineEventsProps, 
+  PolylineEventName, 
+  PolylineEventHandler 
+} from '../';
 
 export class PolylineService extends FeatureService<
   google.maps.Polyline,

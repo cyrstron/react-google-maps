@@ -1,6 +1,10 @@
 import { Component } from 'react';
 import { MarkerService } from './services/marker-service';
 import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
+import { 
+  MarkerProps, 
+  MarkerEventsProps 
+} from './';
 
 export type FullMarkerProps = MarkerProps & CreateServiceProps<
   google.maps.MarkerOptions & MarkerEventsProps, 

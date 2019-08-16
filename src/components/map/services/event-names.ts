@@ -1,4 +1,5 @@
 import {mapsObjectEventNames} from '../../../services';
+import { MapEventNames } from '../';
 
 export const mapEventNames: MapEventNames = {
   ...mapsObjectEventNames,

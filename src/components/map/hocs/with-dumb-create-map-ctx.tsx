@@ -4,6 +4,7 @@ import {
   CreateMapConsumer
 } from './with-smart-map-ctx';
 import { MapService } from '../services';
+import { MapEventsProps } from '../';
 
 export interface WrappedProps {
   mapService?: MapService;

@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 import { MapService } from '../services';
 import {withGoogleApi} from '../../google-api';
+import { MapEventsProps } from '../';
 
 export interface GoogleApiProps {
   googleApi: Google;

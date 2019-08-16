@@ -1,7 +1,9 @@
-type MarkerEventHandler = google.maps.MapEventHandler | 
+import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
+
+export type MarkerEventHandler = google.maps.MapEventHandler | 
   google.maps.MapMouseEventHandler;
 
-type MarkerEventsProps = FeatureEventsProps & {
+export type MarkerEventsProps = FeatureEventsProps & {
   onAnimationChanged?: google.maps.MapEventHandler;
   onClickableChanged?: google.maps.MapEventHandler;
   onCursorChanged?: google.maps.MapEventHandler;
@@ -17,13 +19,13 @@ type MarkerEventsProps = FeatureEventsProps & {
   onZIndexChanged?: google.maps.MapEventHandler;
 }
 
-type MarkerProps = google.maps.MarkerOptions & 
+export type MarkerProps = google.maps.MarkerOptions & 
   MarkerEventsProps & {
     position: google.maps.LatLngLiteral;
     title: string;
   };
 
-type MarkerEventName = FeatureEventName |
+export type MarkerEventName = FeatureEventName |
   'animation_changed' | 
   'clickable_changed' | 
   'cursor_changed' | 
@@ -38,7 +40,7 @@ type MarkerEventName = FeatureEventName |
   'visible_changed' | 
   'zindex_changed';
   
-type MarkerHandlerName = FeatureHandlerName |
+export type MarkerHandlerName = FeatureHandlerName |
   'onAnimationChanged' | 
   'onClickableChanged' | 
   'onCursorChanged' | 
@@ -53,6 +55,6 @@ type MarkerHandlerName = FeatureHandlerName |
   'onVisibleChanged' | 
   'onZIndexChanged';
 
-type MarkerEventNames = {
+export type MarkerEventNames = {
   [key in MarkerHandlerName]: MarkerEventName;
 }

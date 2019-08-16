@@ -1,6 +1,7 @@
 import { MapsObjectService } from '../../../services';
 import { mapEventNames } from './event-names';
 import { groupMapProps } from './group-map-props';
+import { MapEventName, MapEventsProps, MapEventHandler } from '../';
 
 export class MapService extends MapsObjectService<
   google.maps.Map,

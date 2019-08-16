@@ -1,12 +1,13 @@
 import React, { Component, ReactNode, RefObject, createRef } from 'react';
 import {WrappedProps} from './hocs/with-dumb-create-map-ctx';
 import { MapService } from './services';
+import { MapProps } from './';
 
 export type MapComponentProps = MapProps & WrappedProps & {
   children?: ReactNode | null;
 };
 
-type Props = MapComponentProps;
+export type Props = MapComponentProps;
 
 export class Map extends Component<Props, {}> {
   map: RefObject<HTMLDivElement> = createRef();

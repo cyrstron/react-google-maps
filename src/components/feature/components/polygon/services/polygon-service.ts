@@ -2,6 +2,11 @@ import {MapService} from '../../../../map';
 import { FeatureService } from '../../../services';
 import { polygonEventNames } from './event-names';
 import { groupPolygonProps } from './group-polygon-props';
+import {
+  PolygonEventName, 
+  PolygonEventsProps, 
+  PolygonEventHandler 
+} from '../';
 
 export class PolygonService extends FeatureService<
   google.maps.Polygon,

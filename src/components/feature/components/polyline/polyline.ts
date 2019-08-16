@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import { PolylineService } from './services/polyline-service';
 import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
+import { PolylineProps, PolylineEventsProps } from './';
 
 export type FullPolylineProps = PolylineProps & CreateServiceProps<
   google.maps.PolylineOptions & PolylineEventsProps, 
