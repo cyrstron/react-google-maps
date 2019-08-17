@@ -2,10 +2,10 @@ import React from 'react';
 import {OverlayCtxConsumer, CreateOverlayCtxConsumer} from './with-smart-overlay-ctx';
 import {CreateServiceProps} from './with-full-overlay-ctx';
 
-export const withCreateDumbFeatureCtx = <Props extends {}>(
+export const withCreateDumbOverlayCtx = <Props extends {}>(
   Wrapped: React.ComponentType<Props & CreateServiceProps>
 ): React.ComponentType<Props> => {
-  const WithCreateDumbFeatureCtx = (props: Props) => (
+  const WithCreateDumbOverlayCtx = (props: Props) => (
     <CreateOverlayCtxConsumer>
       {(createOverlayService) => createOverlayService && (
         <OverlayCtxConsumer>
@@ -21,5 +21,5 @@ export const withCreateDumbFeatureCtx = <Props extends {}>(
     </CreateOverlayCtxConsumer>
   );
 
-  return WithCreateDumbFeatureCtx;
+  return WithCreateDumbOverlayCtx;
 };

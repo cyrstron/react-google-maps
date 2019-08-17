@@ -31,8 +31,5 @@
   "include": [
     "./src/**/*",
     "tsconfig.json"
-  ],
-  "exclude": [
-    "./src/components/tiles-overlay",
   ]
 }

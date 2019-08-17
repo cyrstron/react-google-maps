@@ -20,7 +20,10 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       widthUnit,
       tagName,
       map,
-    }: google.custom.TilesOverlayOptions) {
+    }: google.custom.TilesOverlayOptions & {
+      registerTile: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
+      unregisterTile: (node: Node) => void,
+    }) {
       this.index = index;
       this.tagName = tagName || 'div';
       this.registerTile = registerTile;

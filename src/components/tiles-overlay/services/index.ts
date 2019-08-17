@@ -1,1 +1,1 @@
-export {TilesOverlayService} from './tiles-overlay-service';
+export {TilesOverlayService, UpdateTilesCallback} from './tiles-overlay-service';

@@ -16,7 +16,7 @@ export const CreateOverlayCtxConsumer = CreateOverlayCtx.Consumer;
 export const withSmartOverlayCtx = <Props extends {}>(
   Wrapped: React.ComponentType<Props & {overlayService?: CustomOverlayService}>,
 ): React.ComponentType<Props> => {
-  const WithSmartFeatureCtx = ({
+  const WithSmartOverlayCtx = ({
     createOverlayService, 
     ...props
   }: Props & CreateServiceProps) => (
@@ -32,5 +32,5 @@ export const withSmartOverlayCtx = <Props extends {}>(
       </OverlayCtxProvider>
     </CreateOverlayCtxProvider>
   );
-  return withFullOverlayCtx<Props>(WithSmartFeatureCtx);
+  return withFullOverlayCtx<Props>(WithSmartOverlayCtx);
 };

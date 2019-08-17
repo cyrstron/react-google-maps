@@ -111,11 +111,6 @@ declare namespace google.custom {
   }
 
   export interface TilesOverlayOptions {
-    registerTile: (
-      node: Node, 
-      payload: {tileCoord: google.maps.Point, zoom: number}
-    ) => void,
-    unregisterTile: (node: Node) => void,
     tagName?: string,
     width: number,
     height?: number,
@@ -127,7 +122,12 @@ declare namespace google.custom {
     map?: google.maps.Map,
   }
 
-  export type TilesOverlayConstructor = new(options: TilesOverlayOptions) => TilesOverlay;
+  export type TilesOverlayConstructor = new(
+    options: TilesOverlayOptions & {      
+      registerTile: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
+      unregisterTile: (node: Node) => void,
+    }
+  ) => TilesOverlay;
 
   export interface CustomOverlayOptions {
     map?: google.maps.Map;

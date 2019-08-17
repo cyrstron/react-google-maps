@@ -1,21 +1,21 @@
-import {TilesOverlay, TilesOverlayProps} from './tiles-overlay';
-import {withDumbTilesOverlayCtx} from './hocs';
-import {withFullTilesOverlayCtx} from './hocs';
-import {withSmartTilesOverlayCtx} from './hocs';
-import {TilesOverlayStore} from './stores';
-
-export const SmartTilesOverlay = withFullTilesOverlayCtx<
-  TilesOverlayStore
->(TilesOverlayStore)<TilesOverlayProps>(TilesOverlay);
-export const DumbGridMapType = withDumbTilesOverlayCtx<
-  TilesOverlayStore,
+import {
+  TilesOverlay as TilesOverlayWrapped, 
   TilesOverlayProps
->(TilesOverlay);
-export const withSmartGridMapTypeCtx = withSmartTilesOverlayCtx<
-  TilesOverlayStore
->(TilesOverlayStore);
+} from './tiles-overlay';
+import {
+  withDumbTilesCtx,
+  withFullTilesCtx,
+  withSmartTilesCtx,
+  withCreateDumbTilesCtx,
+} from './hocs';
+export {TilesOverlayService} from './services';
+
+export const TilesOverlay = withFullTilesCtx<TilesOverlayProps>(TilesOverlayWrapped);
+export const DumbTilesOverlay = withCreateDumbTilesCtx<
+  TilesOverlayProps
+>(TilesOverlayWrapped);
 
 export {
-  TilesOverlayStore,
-  TilesOverlay,
-};
+  withDumbTilesCtx,
+  withSmartTilesCtx,
+}

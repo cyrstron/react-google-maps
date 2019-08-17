@@ -6,12 +6,12 @@ import {
   withDumbOverlayCtx,
   withFullOverlayCtx,
   withSmartOverlayCtx,
-  withCreateDumbFeatureCtx,
+  withCreateDumbOverlayCtx,
 } from './hocs';
 export {CustomOverlayService} from './services';
 
 export const CustomOverlay = withFullOverlayCtx<CustomOverlayProps>(CustomOverlayWrapped);
-export const DumbCustomOverlay = withCreateDumbFeatureCtx<
+export const DumbCustomOverlay = withCreateDumbOverlayCtx<
   CustomOverlayProps
 >(CustomOverlayWrapped);
 

@@ -28,9 +28,7 @@ export const withFullOverlayCtx = <Props extends {}>(
       };
     }
 
-    createOverlayService: CreateCustomOverlayService = (
-      props
-    ) => {
+    createOverlayService: CreateCustomOverlayService = (props) => {
       const {googleApi, mapService} = this.props;
 
       const overlayService = new CustomOverlayService(googleApi, mapService, props);

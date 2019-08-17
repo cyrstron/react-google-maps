@@ -1,10 +1,19 @@
 export {
-  TilesOverlayContext,
-  withSmartTilesOverlayCtx,
-} from './with-smart-tiles-overlay-ctx';
+  TilesCtxProvider,
+  TilesCtxConsumer,
+  CreateTilesCtxProvider,
+  CreateTilesCtxConsumer,
+  withSmartTilesCtx,
+} from './with-smart-tiles-ctx';
 export {
-  withFullTilesOverlayCtx,
-} from './with-full-tiles-overlay-ctx';
+  withFullTilesCtx,
+  CreateServiceProps,
+  CreateTilesOverlayService,
+} from './with-full-tiles-ctx';
 export {
-  withDumbTilesOverlayCtx,
-} from './with-dumb-tiles-overlay-ctx';
+  withDumbTilesCtx,
+  TilesServiceProps,
+} from './with-dumb-tiles-ctx';
+export {
+  withCreateDumbTilesCtx,
+} from './with-create-dumb-tiles-ctx';

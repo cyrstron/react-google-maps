@@ -16,5 +16,5 @@ export {
   OverlayServiceProps,
 } from './with-dumb-overlay-ctx';
 export {
-  withCreateDumbFeatureCtx,
+  withCreateDumbOverlayCtx,
 } from './with-create-dumb-overlay-ctx';

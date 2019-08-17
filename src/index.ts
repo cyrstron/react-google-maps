@@ -51,13 +51,13 @@ export {
   withSmartOverlayCtx,
   CustomOverlayService,
 } from './components/custom-overlay';
-// export {
-//   TilesOverlay,
-//   SmartTilesOverlay,
-//   DumbGridMapType,
-//   withSmartGridMapTypeCtx,
-//   TilesOverlayStore,
-// } from './components/tiles-overlay';
+export {
+  TilesOverlay,
+  DumbTilesOverlay,
+  withDumbTilesCtx,
+  withSmartTilesCtx,
+  TilesOverlayService,
+} from './components/tiles-overlay';
 export {
   Polygon,
   DumbPolygon,

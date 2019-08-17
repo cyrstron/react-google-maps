@@ -1,10 +1,9 @@
-import {createPortal} from 'react-dom';
-import {observer} from 'mobx-react';
 import React, {Component, ReactNode, ComponentType} from 'react';
-import {WrappedProps} from './hocs/with-full-tiles-overlay-ctx';
-import {TilesOverlayStore} from './stores';
+import {createPortal} from 'react-dom';
+import {CreateServiceProps} from './hocs/with-full-tiles-ctx';
+import { TilePayload } from './services/tiles-overlay-service';
 
-export interface TilesOverlayProps {
+export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
   children?: (props: {
     tileCoord: google.maps.Point,
     zoom: number,
@@ -21,66 +20,84 @@ export interface TilesOverlayProps {
   height?: number,
 }
 
-type Props = TilesOverlayProps & WrappedProps<TilesOverlayStore>;
+export type FullTilesOverlayProps = TilesOverlayProps & CreateServiceProps;
 
-@observer
-export class TilesOverlay extends Component<Props, {}> {
+export interface TilesOverlayState {
+  tiles: Map<Node, TilePayload>;
+}
+
+export class TilesOverlay extends Component<
+  FullTilesOverlayProps, 
+  TilesOverlayState
+> {
+  constructor(props: FullTilesOverlayProps) {
+    super(props);
+
+    this.state = {
+      tiles: new Map<Node, TilePayload>(),
+    };
+  }
+
   registerTile = (
     node: Node, 
     payload: {
       tileCoord: google.maps.Point,
       zoom: number,
     }
-  ) => {
+  ): void => {
     const {
-      overlayStore,
+      tilesService,
     } = this.props;
 
-    overlayStore.registerTile(node, payload);
+    if (!tilesService) return;
+
+    tilesService.registerTile(node, payload);
   }
 
-  unregisterTile = (node: Node) => {
+  unregisterTile = (node: Node): void => {
     const {
-      overlayStore,
+      tilesService,
     } = this.props;
 
-    overlayStore.unregisterTile(node);
+    if (!tilesService) return;
+
+    tilesService.unregisterTile(node);
+  }
+
+  updateTiles = (tiles: Map<Node, TilePayload>) => {
+    this.setState({tiles});
   }
 
   componentDidMount() {
     const {
-      overlayStore,
+      createTilesService,
+      tilesService,
       children,
-      width,
-      height,
+      TileComponent,
       ...options
     } = this.props;
 
-    if (!overlayStore) return;
-
-    overlayStore.setOverlay({
-      index: 1,
-      width: width,
-      height: height,
-      registerTile: this.registerTile,
-      unregisterTile: this.unregisterTile,
-    });
+    createTilesService(options, this.updateTiles)
   }
 
   render() {
     const {
-      overlayStore,
       TileComponent,
       children,
       width,
       height,
     } = this.props;
-    const tiles = [...overlayStore.tiles.keys()];  
-    
-    return tiles.map((tile) => {
-      const payload = overlayStore.tiles.get(tile);
 
-      if (children && payload) {
+    const {tiles} = this.state;
+
+    const tileNodes = [...tiles.keys()];  
+    
+    return tileNodes.map((tile) => {
+      const payload = tiles.get(tile);
+
+      if (!payload) return null;
+
+      if (children) {
         return createPortal((
           children({
             ...payload, 
@@ -88,7 +105,7 @@ export class TilesOverlay extends Component<Props, {}> {
             height: height || width
           })
         ), tile as Element)
-      } else if (TileComponent && payload) {
+      } else if (TileComponent) {
         return createPortal((
           <TileComponent 
             {...payload} 
