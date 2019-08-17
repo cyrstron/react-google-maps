@@ -1,66 +1,65 @@
-import {observable} from 'mobx';
-import {inject, observer} from 'mobx-react';
 import React, {Component} from 'react';
-import {GoogleMapsStore} from '../../../stores';
 import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
-import {
-  GoogleStoreProps,
-  WrappedProps as WrappedMapProps,
-} from '../../map/hocs/with-smart-map-ctx';
-import {MapService, MapStore} from '../../map';
+import {MapService} from '../../map';
+import {CustomOverlayService} from '../services';
+import { withGoogleApi } from '../../../components/google-api';
 
-export interface WrappedProps<Store> {
-  overlayStore: Store & {
-    remove(): void;
-  };
+export type CreateCustomOverlayService = (
+  props: google.custom.CustomOverlayOptions
+) => void;
+
+export interface CreateServiceProps {
+  createOverlayService: CreateCustomOverlayService;
+  overlayService?: CustomOverlayService;
 }
 
-export const withFullOverlayCtx = <Store extends {
-  remove(): void;
-}>(
-  OverlayStore: new(google: Google, mapService: MapService) => Store,
-) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
+export const withFullOverlayCtx = <Props extends {}>(
+  Wrapped: React.ComponentType<Props & CreateServiceProps>,
 ): React.ComponentType<Props> => {
-  @inject('googleMapsStore')
-  @observer
-  class WithFullOverlayCtx extends Component<Props & WrappedMapProps<MapStore> & GoogleStoreProps, {}> {
-    @observable overlayStore?: Store;
+  class WithFullOverlayCtx extends Component<
+    Props & {mapService: MapService} & {googleApi: Google}, 
+    {overlayService?: CustomOverlayService}
+  > {
+    constructor(props: Props & {mapService: MapService} & {googleApi: Google}) {
+      super(props);
 
-    componentDidMount() {
-      const {
-        mapStore,
-        googleMapsStore,
-      } = this.props;
-
-      const {google} = googleMapsStore as GoogleMapsStore;
-
-      this.overlayStore = new OverlayStore(google as Google, mapStore.service as MapService);
+      this.state = {
+        overlayService: undefined
+      };
     }
 
-    componentWillUnmount() {
-      const {overlayStore} = this;
+    createOverlayService: CreateCustomOverlayService = (
+      props
+    ) => {
+      const {googleApi, mapService} = this.props;
 
-      if (!overlayStore) return;
+      const overlayService = new CustomOverlayService(googleApi, mapService, props);
 
-      overlayStore.remove();
+      this.setState({
+        overlayService,
+      });
     }
 
     render() {
-      const {overlayStore} = this;
       const {
-        mapStore,
-        googleMapsStore,
+        overlayService,
+      } = this.state;
+
+      const {
+        googleApi,
+        mapService,
         ...props
       } = this.props;
 
-      if (!overlayStore) return null;
-
       return (
-        <Wrapped overlayStore={overlayStore} {...props as Props}/>
+        <Wrapped 
+          overlayService={overlayService} 
+          createOverlayService={this.createOverlayService}
+          {...props as Props}
+        />
       );
     }
   }
 
-  return withDumbMapCtx<MapStore, Props>(WithFullOverlayCtx);
+  return withGoogleApi(withDumbMapCtx<Props & {googleApi: Google}>(WithFullOverlayCtx));
 };

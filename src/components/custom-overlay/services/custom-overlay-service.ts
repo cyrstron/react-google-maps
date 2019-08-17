@@ -1,4 +1,5 @@
 import {MapService} from '../../map';
+import { pickUpdated } from '../../../services';
 
 export class CustomOverlayService {
   mapService: MapService;
@@ -24,5 +25,28 @@ export class CustomOverlayService {
 
   remove() {
     this.object.setMap(null);
+  }
+
+  setOptions(options: google.custom.CustomOverlayOptions | undefined) {
+    if (!options || !this.object.setOptions) return;
+
+    this.object.setOptions(options);
+  }
+
+  updateOptions(
+    prevOptions: google.custom.CustomOverlayOptions & {
+      [key: string]: any,
+    } | undefined,
+    options: google.custom.CustomOverlayOptions & {
+      [key: string]: any,
+    } | undefined,
+  ) {
+    if (!prevOptions || !options) return;
+
+    const updatedOptions = pickUpdated<google.custom.CustomOverlayOptions>(prevOptions, options);
+
+    if (!updatedOptions) return;
+
+    this.setOptions(updatedOptions);
   }
 }

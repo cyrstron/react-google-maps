@@ -33,21 +33,20 @@ export const withSmartFeatureCtx = <
 >(
   ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props>,
+  Wrapped: React.ComponentType<Props & {featureService?: Service}>,
 ): React.ComponentType<Props> => {
   const WithSmartFeatureCtx = ({
     createFeatureService, 
-    featureService, 
     ...props
   }: Props & CreateServiceProps<Options & FeatureHandlers, Service>) => (
     <CreateFeatureCtxProvider
       value={createFeatureService}
     >
       <FeatureCtxProvider
-        value={featureService}
+        value={props.featureService}
       >
         <Wrapped
-          {...props as unknown as Props}
+          {...props as Props}
         />
       </FeatureCtxProvider>
     </CreateFeatureCtxProvider>

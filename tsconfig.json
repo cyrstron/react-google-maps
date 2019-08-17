@@ -33,7 +33,6 @@
     "tsconfig.json"
   ],
   "exclude": [
-    "./src/components/custom-overlay",
     "./src/components/tiles-overlay",
   ]
 }

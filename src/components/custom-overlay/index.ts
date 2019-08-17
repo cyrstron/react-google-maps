@@ -1,23 +1,21 @@
-import {CustomOverlay, CustomOverlayProps} from './custom-overlay';
-import {withDumbOverlayCtx} from './hocs';
-import {withFullOverlayCtx} from './hocs';
-import {withSmartOverlayCtx} from './hocs';
-import {CustomOverlayStore} from './stores';
-
-export const SmartCustomOverlay = withFullOverlayCtx<
-  CustomOverlayStore
->(CustomOverlayStore)<CustomOverlayProps>(CustomOverlay);
-
-export const DumbCustomOverlay = withDumbOverlayCtx<
-  CustomOverlayStore,
+import {
+  CustomOverlay as CustomOverlayWrapped, 
   CustomOverlayProps
->(CustomOverlay);
+} from './custom-overlay';
+import {
+  withDumbOverlayCtx,
+  withFullOverlayCtx,
+  withSmartOverlayCtx,
+  withCreateDumbFeatureCtx,
+} from './hocs';
+export {CustomOverlayService} from './services';
 
-export const withSmartCustomOverlayCtx = withSmartOverlayCtx<
-  CustomOverlayStore
->(CustomOverlayStore);
+export const CustomOverlay = withFullOverlayCtx<CustomOverlayProps>(CustomOverlayWrapped);
+export const DumbCustomOverlay = withCreateDumbFeatureCtx<
+  CustomOverlayProps
+>(CustomOverlayWrapped);
 
 export {
-  CustomOverlayStore,
-  CustomOverlay,
-};
+  withDumbOverlayCtx,
+  withSmartOverlayCtx,
+}

@@ -1,28 +1,36 @@
 import React, {createContext} from 'react';
-import {MapService} from '../../map';
-import {withFullOverlayCtx, WrappedProps} from './with-full-overlay-ctx';
+import {CustomOverlayService} from '../services';
+import {withFullOverlayCtx, CreateCustomOverlayService, CreateServiceProps} from './with-full-overlay-ctx';
 
-interface ContextValue {
-  overlayStore?: any;
-}
+export type OverlayCtxValue = CustomOverlayService | undefined;
+export type CreateOverlayCtxValue = CreateCustomOverlayService | undefined;
 
-export const OverlayContext = createContext<ContextValue>({});
+const OverlayCtx = createContext<OverlayCtxValue>(undefined);
+const CreateOverlayCtx = createContext<CreateOverlayCtxValue>(undefined);
 
-export const withSmartOverlayCtx = <Store extends {
-  remove(): void;
-}>(
-  OverlayStore: new(google: Google, mapStore: MapService) => Store,
-) => <Props extends {}>(
-  Wrapped: React.ComponentType<WrappedProps<Store> & Props>,
+export const OverlayCtxProvider = OverlayCtx.Provider;
+export const OverlayCtxConsumer = OverlayCtx.Consumer;
+export const CreateOverlayCtxProvider = CreateOverlayCtx.Provider;
+export const CreateOverlayCtxConsumer = CreateOverlayCtx.Consumer;
+
+export const withSmartOverlayCtx = <Props extends {}>(
+  Wrapped: React.ComponentType<Props & {overlayService?: CustomOverlayService}>,
 ): React.ComponentType<Props> => {
-  const WithSmartFeatureCtx = (props: Props & WrappedProps<Store>) => (
-    <OverlayContext.Provider
-      value={{overlayStore: props.overlayStore}}
+  const WithSmartFeatureCtx = ({
+    createOverlayService, 
+    ...props
+  }: Props & CreateServiceProps) => (
+    <CreateOverlayCtxProvider
+      value={createOverlayService}
     >
-      <Wrapped
-        {...props}
-      />
-    </OverlayContext.Provider>
+      <OverlayCtxProvider
+        value={props.overlayService}
+      >
+        <Wrapped
+          {...props as Props}
+        />
+      </OverlayCtxProvider>
+    </CreateOverlayCtxProvider>
   );
-  return withFullOverlayCtx<Store>(OverlayStore)<Props>(WithSmartFeatureCtx);
+  return withFullOverlayCtx<Props>(WithSmartFeatureCtx);
 };

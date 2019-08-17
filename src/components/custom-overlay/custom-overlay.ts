@@ -1,42 +1,61 @@
-import {observer} from 'mobx-react';
-import React, {Component, ReactNode} from 'react';
+import {Component, ReactNode} from 'react';
 import {createPortal} from 'react-dom';
-import {WrappedProps} from './hocs/with-full-overlay-ctx';
-import {CustomOverlayStore} from './stores';
+import {CreateServiceProps} from './hocs/with-full-overlay-ctx';
 
 export type CustomOverlayProps = google.custom.CustomOverlayOptions & {
-  children?: ReactNode | null;
+  children?: ReactNode;
 };
 
-type Props = CustomOverlayProps & WrappedProps<CustomOverlayStore>;
+export type FullCutomOverlayProps = CustomOverlayProps & CreateServiceProps;
 
-@observer
-export class CustomOverlay extends Component<Props, {}> {
-  container?: HTMLDivElement;
-
+export class CustomOverlay extends Component<FullCutomOverlayProps, {}> {
   componentDidMount() {
     const {
-      overlayStore,
+      overlayService,
+      createOverlayService,
       children,
-      ...options
+      ...overlayOptions
     } = this.props;
 
-    if (!overlayStore) return;
+    createOverlayService(overlayOptions);
+  }
 
-    overlayStore.setCustomOverlay(options);
+  componentDidUpdate({
+    overlayService: _overlayService,
+    createOverlayService: _createOverlayService,
+    children: _children,
+    ...prevProps
+  }: FullCutomOverlayProps) {
+    const {
+      overlayService,
+      createOverlayService,
+      children,
+      ...props
+    } = this.props;
 
-    const container = overlayStore.getContainer();
+    if (!overlayService) return;
 
-    if (!container) return;
+    overlayService.updateOptions(prevProps, props);
+  }
 
-    this.container = container;
+  componentWillUnmount() {
+    const {
+      overlayService,
+    } = this.props;
+
+    if (!overlayService) return;
+
+    overlayService.remove();    
   }
 
   render() {
-    const {container} = this;
-    const {children, overlayStore} = this.props;
+    const {children, overlayService} = this.props;
 
-    if (!overlayStore.isLoaded || !container) return null;
+    if (!overlayService) return null;
+
+    const container = overlayService.getContainer();
+
+    if (!container) return null;
 
     return createPortal(children || null, container);
   }

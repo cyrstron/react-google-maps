@@ -102,6 +102,9 @@ export const createCustomOverlayClass = (google: Google): google.custom.CustomOv
       if (!container) return;
 
       const overlayProjection = this.getProjection();
+
+      if (!overlayProjection) return;
+      
       const southWest = bounds.getSouthWest();
       const northEast = bounds.getNorthEast();
 

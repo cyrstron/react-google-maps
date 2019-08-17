@@ -44,13 +44,13 @@ export {
   withSmartMapCtx,
   withDumbCreateMapCtx,
 } from './components/map';
-// export {
-//   CustomOverlay,
-//   SmartCustomOverlay,
-//   DumbCustomOverlay,
-//   withSmartCustomOverlayCtx,
-//   CustomOverlayStore,
-// } from './components/custom-overlay';
+export {
+  CustomOverlay,
+  DumbCustomOverlay,
+  withDumbOverlayCtx,
+  withSmartOverlayCtx,
+  CustomOverlayService,
+} from './components/custom-overlay';
 // export {
 //   TilesOverlay,
 //   SmartTilesOverlay,

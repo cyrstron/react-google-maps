@@ -1,23 +1,23 @@
 import React from 'react';
-import {WrappedProps} from './with-full-overlay-ctx';
-import {OverlayContext} from './with-smart-overlay-ctx';
+import {CustomOverlayService} from '../services';
+import {OverlayCtxConsumer} from './with-smart-overlay-ctx';
 
-export const withDumbOverlayCtx = <
-  Store extends {
-    remove(): void;
-  },
-  Props extends {}
->(
-  Wrapped: React.ComponentType<Props & WrappedProps<Store>>,
+export interface OverlayServiceProps {
+  overlayService: CustomOverlayService
+}
+
+export const withDumbOverlayCtx = <Props extends {}>(
+  Wrapped: React.ComponentType<Props & OverlayServiceProps>,
 ): React.ComponentType<Props> => {
   const WithDumbOverlayCtx = (props: Props) => (
-    <OverlayContext.Consumer>
-      {({overlayStore}) => {
-        if (!overlayStore) return null;
-
-        return <Wrapped overlayStore={overlayStore as Store} {...props}/>;
-      }}
-    </OverlayContext.Consumer>
+    <OverlayCtxConsumer>
+      {(overlayService) => overlayService && (
+        <Wrapped 
+          overlayService={overlayService} 
+          {...props}
+        />
+      )}
+    </OverlayCtxConsumer>
   );
 
   return WithDumbOverlayCtx;
