@@ -10,7 +10,8 @@ import {
 } from './hocs';
 export {TilesOverlayService} from './services';
 
-export const TilesOverlay = withFullTilesCtx<TilesOverlayProps>(TilesOverlayWrapped);
+export const TilesOverlay = withFullTilesCtx<TilesOverlayProps>(TilesOverlayWrapped)
+
 export const DumbTilesOverlay = withCreateDumbTilesCtx<
   TilesOverlayProps
 >(TilesOverlayWrapped);

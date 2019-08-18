@@ -10,13 +10,16 @@ export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
     zoom: number,
     width: number,
     height: number,
+    data?: any,
   }) => ReactNode | null;
   TileComponent?: ComponentType<{
     tileCoord: google.maps.Point,
     zoom: number,
     width: number,
     height: number,
+    data?: any,
   }>;  
+  extendPayload?: (payload: TilePayload) => Promise<any>,
   width: number,
   height?: number,
 }
@@ -24,7 +27,7 @@ export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
 export type FullTilesOverlayProps = TilesOverlayProps & CreateServiceProps;
 
 export interface TilesOverlayState {
-  tiles: Map<Node, TilePayload>;
+  tiles: Map<Node, TilePayload & {data?: any}>;
 }
 
 export class TilesOverlay extends Component<
@@ -39,33 +42,34 @@ export class TilesOverlay extends Component<
     };
   }
 
-  registerTile = (
-    node: Node, 
-    payload: {
-      tileCoord: google.maps.Point,
-      zoom: number,
-    }
-  ): void => {
-    const {
-      tilesService,
-    } = this.props;
+  // registerTile = (
+  //   node: Node, 
+  //   payload: {
+  //     tileCoord: google.maps.Point,
+  //     zoom: number,
+  //   }
+  // ): void => {
+  //   const {
+  //     tilesService,
+  //     extendPayload,
+  //   } = this.props;
 
-    if (!tilesService) return;
+  //   if (!tilesService) return;
 
-    tilesService.registerTile(node, payload);
-  }
+  //   tilesService.registerTile(node, payload, extendPayload);
+  // }
 
-  unregisterTile = (node: Node): void => {
-    const {
-      tilesService,
-    } = this.props;
+  // unregisterTile = (node: Node): void => {
+  //   const {
+  //     tilesService,
+  //   } = this.props;
 
-    if (!tilesService) return;
+  //   if (!tilesService) return;
 
-    tilesService.unregisterTile(node);
-  }
+  //   tilesService.unregisterTile(node);
+  // }
 
-  updateTiles = (tiles: Map<Node, TilePayload>) => {
+  updateTiles = (tiles: Map<Node, TilePayload & {data?: any}>) => {
     this.setState({tiles});
   }
 
@@ -75,10 +79,11 @@ export class TilesOverlay extends Component<
       tilesService,
       children,
       TileComponent,
+      extendPayload,
       ...options
     } = this.props;
 
-    createTilesService(options, this.updateTiles)
+    createTilesService(options, this.updateTiles, extendPayload);
   }
 
   render() {
@@ -101,6 +106,7 @@ export class TilesOverlay extends Component<
       const {
         tileCoord: {x, y},
         zoom,
+        data,
       } = payload;
 
       return (
@@ -114,11 +120,12 @@ export class TilesOverlay extends Component<
             >
               {(props) => {
                 if (children) {
-                  return children(props)
+                  return children({data, ...props})
                 } else if (TileComponent) {
                   return (                  
                     <TileComponent
                       {...props}
+                      data={data}
                     />
                   )
                 } else {

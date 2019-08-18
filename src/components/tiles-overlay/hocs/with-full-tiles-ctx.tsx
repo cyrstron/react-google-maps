@@ -3,10 +3,12 @@ import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
 import {MapService} from '../../map';
 import {TilesOverlayService, UpdateTilesCallback} from '../services';
 import { withGoogleApi } from '../../google-api';
+import { TilePayload } from '../services/tiles-overlay-service';
 
 export type CreateTilesOverlayService = (
   props: google.custom.TilesOverlayOptions,
   updateTiles: UpdateTilesCallback,
+  extendPayload?: (payload: TilePayload) => Promise<any>,
 ) => void;
 
 export interface CreateServiceProps {
@@ -29,14 +31,15 @@ export const withFullTilesCtx = <Props extends {}>(
       };
     }
 
-    createTilesService: CreateTilesOverlayService = (props, updateTiles) => {
+    createTilesService: CreateTilesOverlayService = (props, updateTiles, extendPayload) => {
       const {googleApi, mapService} = this.props;
 
       const tilesService = new TilesOverlayService(
         googleApi, 
         mapService, 
         updateTiles, 
-        props
+        props,
+        extendPayload,
       );
 
       this.setState({

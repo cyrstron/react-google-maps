@@ -12,14 +12,14 @@ export type UpdateTilesCallback = (tiles: Map<Node, TilePayload>) => void;
 export class TilesOverlayService {
   object: google.custom.TilesOverlay;
 
-  tiles = new Map<Node, TilePayload>();
+  tiles = new Map<Node, TilePayload & {data?: any}>();
   tilesByKey: {[key: string]: Node | undefined} = {};
   tilesForAddByKey: {[key: string]: Node | undefined} = {};
 
   tilesForDelete: Node[] = [];
   tilesForAdd: Array<{
     node: Node,
-    payload: TilePayload
+    payload: TilePayload & {data?: any}
   }> = [];
 
   constructor(
@@ -27,6 +27,7 @@ export class TilesOverlayService {
     public mapService: MapService,
     public updateTiles: UpdateTilesCallback,
     options: google.custom.TilesOverlayOptions,
+    public extendPayload?: (payload: TilePayload) => Promise<any>,
   ) {
     const {TilesOverlay} = google.custom;
 
@@ -42,7 +43,16 @@ export class TilesOverlayService {
     this.object = object;
   }
 
-  registerTile = (node: Node, payload: TilePayload) => {
+  registerTile = async (
+    node: Node, 
+    payload: TilePayload, 
+  ) => {
+    let extendedPayload: any | undefined;
+
+    if (this.extendPayload) {
+      extendedPayload = await this.extendPayload(payload);
+    }
+
     const key = tileToKey(payload);
 
     const tileForAdd = this.tilesForAddByKey[key];
@@ -57,7 +67,12 @@ export class TilesOverlayService {
       this.unregisterTile(addedTile);
     }
 
-    this.tilesForAdd.push({node, payload});
+    const fullPayload = {
+      ...payload,
+      data: extendedPayload
+    }
+
+    this.tilesForAdd.push({node, payload: fullPayload});
 
     this.recalcTiles();
   }

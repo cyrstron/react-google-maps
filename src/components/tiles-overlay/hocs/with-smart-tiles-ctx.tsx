@@ -17,7 +17,7 @@ export const TilesCtxConsumer = TilesCtx.Consumer;
 export const CreateTilesCtxProvider = CreateTilesCtx.Provider;
 export const CreateTilesCtxConsumer = CreateTilesCtx.Consumer;
 
-export const withSmartTilesCtx = <Props extends {}>(
+export const withSmartTilesCtx = <Props, ExtendedPayload extends {}>(
   Wrapped: React.ComponentType<Props & {tilesService?: TilesOverlayService}>,
 ): React.ComponentType<Props> => {
   const WithSmartTilesCtx = ({
@@ -28,7 +28,7 @@ export const withSmartTilesCtx = <Props extends {}>(
       value={createTilesService}
     >
       <TilesCtxProvider
-        value={props.tilesService}
+        value={props.tilesService as TilesOverlayService}
       >
         <Wrapped
           {...props as Props}
