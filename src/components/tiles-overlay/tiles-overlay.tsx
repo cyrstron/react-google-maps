@@ -1,7 +1,8 @@
-import React, {Component, ReactNode, ComponentType} from 'react';
+import React, {Component, ReactNode, ComponentType, Fragment} from 'react';
 import {createPortal} from 'react-dom';
 import {CreateServiceProps} from './hocs/with-full-tiles-ctx';
 import { TilePayload } from './services/tiles-overlay-service';
+import {Tile} from './components/tile';
 
 export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
   children?: (props: {
@@ -97,25 +98,38 @@ export class TilesOverlay extends Component<
 
       if (!payload) return null;
 
-      if (children) {
-        return createPortal((
-          children({
-            ...payload, 
-            width, 
-            height: height || width
-          })
-        ), tile as Element)
-      } else if (TileComponent) {
-        return createPortal((
-          <TileComponent 
-            {...payload} 
-            width={width} 
-            height={height || width} 
-          />
-        ), tile as Element)
-      } else {
-        return null;
-      }
-    });
+      const {
+        tileCoord: {x, y},
+        zoom,
+      } = payload;
+
+      return (
+        <Fragment key={`${x}-${y}-${zoom}-${width}-${height || width}`}>
+          {
+            createPortal((
+            <Tile
+              {...payload} 
+              width={width} 
+              height={height || width}           
+            >
+              {(props) => {
+                if (children) {
+                  return children(props)
+                } else if (TileComponent) {
+                  return (                  
+                    <TileComponent
+                      {...props}
+                    />
+                  )
+                } else {
+                  return null;
+                }
+              }}
+            </Tile>
+          ), tile as Element)
+        }
+      </Fragment>
+    );
+  });
   }
 }

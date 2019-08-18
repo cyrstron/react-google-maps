@@ -1,5 +1,6 @@
 import {MapService} from '../../map/services';
 import debounce from 'lodash/debounce';
+import { tileToKey } from './tiles-overlay-utils';
 
 export interface TilePayload {
   tileCoord: google.maps.Point,
@@ -12,6 +13,8 @@ export class TilesOverlayService {
   object: google.custom.TilesOverlay;
 
   tiles = new Map<Node, TilePayload>();
+  tilesByKey: {[key: string]: Node | undefined} = {};
+  tilesForAddByKey: {[key: string]: Node | undefined} = {};
 
   tilesForDelete: Node[] = [];
   tilesForAdd: Array<{
@@ -40,33 +43,58 @@ export class TilesOverlayService {
   }
 
   registerTile = (node: Node, payload: TilePayload) => {
+    const key = tileToKey(payload);
+
+    const tileForAdd = this.tilesForAddByKey[key];
+
+    if (tileForAdd) {
+      this.tilesForAdd = this.tilesForAdd.filter(({node}) => node !== tileForAdd);
+    }
+
+    const addedTile = this.tilesByKey[key];
+
+    if (addedTile) {
+      this.unregisterTile(addedTile);
+    }
+
     this.tilesForAdd.push({node, payload});
 
-    this.addRegisteredTiles();
+    this.recalcTiles();
   }
 
   unregisterTile = (node: Node) => {
     this.tilesForDelete.push(node);
 
-    this.removeUnregisteredTiles();
+    this.recalcTiles();
   }
 
-  addRegisteredTiles = debounce(() => {
+
+  recalcTiles = debounce(() => {
+    this.tilesForDelete.forEach((tile) => {
+      this.tiles.delete(tile);
+    });
+
     this.tilesForAdd.forEach(({node, payload}) => {
       this.tiles.set(node, payload);
     });
     
-    this.tilesForAdd = [];
-
-    this.updateTiles(this.tiles);
-  }, 20);
-
-  removeUnregisteredTiles = debounce(() => {
-    this.tilesForDelete.forEach((tile) => {
-      this.tiles.delete(tile);
-    });
-    
     this.tilesForDelete = [];
+    this.tilesForAdd = [];    
+    this.tilesForAddByKey = {};
+
+    this.tilesByKey = {};
+
+    const tileNodes = this.tiles.keys();
+    
+    for (const node of tileNodes) {
+      const payload = this.tiles.get(node);
+
+      if (!payload) continue;
+
+      const key = tileToKey(payload);
+
+      this.tilesByKey[key] = node;
+    }
 
     this.updateTiles(this.tiles);
   }, 20);
