@@ -52,9 +52,6 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       zoom: number,
       ownerDocument: Document,
     ): Element | null {
-      const x = tileCoord.x / Math.pow(2, zoom);
-      const y = tileCoord.y / Math.pow(2, zoom);
-
       const container = ownerDocument.createElement(this.tagName);
 
       container.style.width = '100%';
@@ -85,25 +82,6 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       if (!this.map) return;
 
       this.map.overlayMapTypes.removeAt(this.index);
-    }
-
-    private setTileSize({
-      width,
-      height,
-      widthUnit,
-      heightUnit,
-    }: {
-      width: number,
-      height?: number,
-      widthUnit?: string,
-      heightUnit?: string,
-    }) {
-      this.size = this.calcTileSize({
-        height,
-        heightUnit,
-        width,
-        widthUnit,
-      });
     }
 
     private calcTileSize({

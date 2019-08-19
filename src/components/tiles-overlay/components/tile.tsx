@@ -14,20 +14,20 @@ export interface TileProps {
 }
 
 export class Tile extends Component<TileProps, {}> {
-    shouldComponentUpdate(nextProps: TileProps) {
-        const {
-            width,
-            height,
-            zoom,
-            tileCoord: {x, y},
-        } = this.props;
+    // shouldComponentUpdate(nextProps: TileProps) {
+    //     const {
+    //         width,
+    //         height,
+    //         zoom,
+    //         tileCoord: {x, y},
+    //     } = this.props;
 
-        return x !== nextProps.tileCoord.x || 
-          y !== nextProps.tileCoord.y || 
-          zoom !== nextProps.zoom || 
-          width !== width || 
-          height !== height;
-    }
+    //     return x !== nextProps.tileCoord.x || 
+    //       y !== nextProps.tileCoord.y || 
+    //       zoom !== nextProps.zoom || 
+    //       width !== width || 
+    //       height !== height;
+    // }
 
     render() {
         const {children, ...props} = this.props;

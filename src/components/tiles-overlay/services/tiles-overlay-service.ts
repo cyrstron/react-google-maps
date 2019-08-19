@@ -9,17 +9,18 @@ export interface TilePayload {
 
 export type UpdateTilesCallback = (tiles: Map<Node, TilePayload>) => void;
 
-export class TilesOverlayService {
+export class TilesOverlayService<ExtendedPayload = any> {
   object: google.custom.TilesOverlay;
+  isUnmounted: boolean = false;
 
-  tiles = new Map<Node, TilePayload & {data?: any}>();
+  tiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
   tilesByKey: {[key: string]: Node | undefined} = {};
   tilesForAddByKey: {[key: string]: Node | undefined} = {};
 
   tilesForDelete: Node[] = [];
   tilesForAdd: Array<{
     node: Node,
-    payload: TilePayload & {data?: any}
+    payload: TilePayload & {data?: ExtendedPayload}
   }> = [];
 
   constructor(
@@ -27,7 +28,7 @@ export class TilesOverlayService {
     public mapService: MapService,
     public updateTiles: UpdateTilesCallback,
     options: google.custom.TilesOverlayOptions,
-    public extendPayload?: (payload: TilePayload) => Promise<any>,
+    public extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>,
   ) {
     const {TilesOverlay} = google.custom;
 
@@ -47,31 +48,30 @@ export class TilesOverlayService {
     node: Node, 
     payload: TilePayload, 
   ) => {
-    let extendedPayload: any | undefined;
+    let extendedPayload: ExtendedPayload | undefined;
 
-    if (this.extendPayload) {
-      extendedPayload = await this.extendPayload(payload);
-    }
+    extendedPayload = await this.extendPayload(payload) as ExtendedPayload;
 
     const key = tileToKey(payload);
-
     const tileForAdd = this.tilesForAddByKey[key];
 
     if (tileForAdd) {
       this.tilesForAdd = this.tilesForAdd.filter(({node}) => node !== tileForAdd);
     }
 
+    this.tilesForAddByKey[key] = node;
+
     const addedTile = this.tilesByKey[key];
 
     if (addedTile) {
       this.unregisterTile(addedTile);
-    }
+    }  
 
     const fullPayload = {
       ...payload,
       data: extendedPayload
     }
-
+    
     this.tilesForAdd.push({node, payload: fullPayload});
 
     this.recalcTiles();
@@ -83,14 +83,52 @@ export class TilesOverlayService {
     this.recalcTiles();
   }
 
+  async recalcData() {
+    const nodes: Node[] = [];
+    const dataPromises: Promise<ExtendedPayload>[] = [];
+
+    for (const [node, {data, ...payload}] of this.tiles) {
+      const dataPromise = this.extendPayload(payload)
+      dataPromises.push(dataPromise);
+      nodes.push(node);
+    }
+
+    const dataArray = await Promise.all(dataPromises);
+
+    if (this.isUnmounted) return;
+
+    const newTiles = new Map<Node, TilePayload & {data?: any}>();
+
+    nodes.forEach((node, index) => {
+      const data = dataArray[index];
+      const value = this.tiles.get(node);
+
+      if (!value) return;
+
+      const {
+        data: prevData, 
+        ...payload
+      } = value
+
+      newTiles.set(node, {...payload, data})
+    });
+
+    this.updateTiles(newTiles);
+  }
 
   recalcTiles = debounce(() => {
+    const newTiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
+
+    for (const [node, payload] of this.tiles) {
+      newTiles.set(node, payload);
+    }
+
     this.tilesForDelete.forEach((tile) => {
-      this.tiles.delete(tile);
+      newTiles.delete(tile);
     });
 
     this.tilesForAdd.forEach(({node, payload}) => {
-      this.tiles.set(node, payload);
+      newTiles.set(node, payload);
     });
     
     this.tilesForDelete = [];
@@ -99,10 +137,10 @@ export class TilesOverlayService {
 
     this.tilesByKey = {};
 
-    const tileNodes = this.tiles.keys();
+    const tileNodes = newTiles.keys();
     
     for (const node of tileNodes) {
-      const payload = this.tiles.get(node);
+      const payload = newTiles.get(node);
 
       if (!payload) continue;
 
@@ -111,10 +149,16 @@ export class TilesOverlayService {
       this.tilesByKey[key] = node;
     }
 
-    this.updateTiles(this.tiles);
+    this.tiles = newTiles;
+    this.updateTiles(newTiles);
   }, 20);
 
   remove() {
     this.object.setMap(null);
+  }
+
+  unmount() {
+    this.remove();
+    this.isUnmounted = true;
   }
 }

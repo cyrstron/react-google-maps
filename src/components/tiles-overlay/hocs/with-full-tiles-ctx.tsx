@@ -8,7 +8,7 @@ import { TilePayload } from '../services/tiles-overlay-service';
 export type CreateTilesOverlayService = (
   props: google.custom.TilesOverlayOptions,
   updateTiles: UpdateTilesCallback,
-  extendPayload?: (payload: TilePayload) => Promise<any>,
+  extendPayload: (payload: TilePayload) => Promise<any>,
 ) => void;
 
 export interface CreateServiceProps {
@@ -16,12 +16,12 @@ export interface CreateServiceProps {
   tilesService?: TilesOverlayService;
 }
 
-export const withFullTilesCtx = <Props extends {}>(
+export const withFullTilesCtx = <Props, ExtendedPayload = any>(
   Wrapped: React.ComponentType<Props & CreateServiceProps>,
 ): React.ComponentType<Props> => {
   class WithFullTilesOverlayCtx extends Component<
     Props & {mapService: MapService} & {googleApi: Google}, 
-    {tilesService?: TilesOverlayService}
+    {tilesService?: TilesOverlayService<ExtendedPayload>}
   > {
     constructor(props: Props & {mapService: MapService} & {googleApi: Google}) {
       super(props);

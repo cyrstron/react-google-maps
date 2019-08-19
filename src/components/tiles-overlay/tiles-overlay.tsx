@@ -19,7 +19,10 @@ export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
     height: number,
     data?: any,
   }>;  
-  extendPayload?: (payload: TilePayload) => Promise<any>,
+  extendPayload?: (payload: TilePayload & {
+    width: number,
+    height: number,
+  }) => Promise<any>,
   width: number,
   height?: number,
 }
@@ -34,6 +37,7 @@ export class TilesOverlay extends Component<
   FullTilesOverlayProps, 
   TilesOverlayState
 > {
+
   constructor(props: FullTilesOverlayProps) {
     super(props);
 
@@ -42,35 +46,46 @@ export class TilesOverlay extends Component<
     };
   }
 
-  // registerTile = (
-  //   node: Node, 
-  //   payload: {
-  //     tileCoord: google.maps.Point,
-  //     zoom: number,
-  //   }
-  // ): void => {
-  //   const {
-  //     tilesService,
-  //     extendPayload,
-  //   } = this.props;
-
-  //   if (!tilesService) return;
-
-  //   tilesService.registerTile(node, payload, extendPayload);
-  // }
-
-  // unregisterTile = (node: Node): void => {
-  //   const {
-  //     tilesService,
-  //   } = this.props;
-
-  //   if (!tilesService) return;
-
-  //   tilesService.unregisterTile(node);
-  // }
-
   updateTiles = (tiles: Map<Node, TilePayload & {data?: any}>) => {
     this.setState({tiles});
+  }
+
+  async componentDidUpdate(
+    _prevProps: FullTilesOverlayProps,
+    prevState: TilesOverlayState,
+  ) {
+    const {
+      extendPayload,
+      tilesService,
+    } = this.props;
+
+    const {
+      tiles,
+    } = this.state;
+
+    if (
+      !extendPayload || 
+      !tilesService ||
+      tiles !== prevState.tiles
+    ) return;
+
+    tilesService.recalcData();
+  }
+
+  extendPayload = async (payload: TilePayload): Promise<any> => {
+    const {
+      extendPayload,
+      width,
+      height,
+    } = this.props;
+
+    if (!extendPayload) return undefined;
+
+    return extendPayload({
+      ...payload, 
+      width, 
+      height: height || width
+    });
   }
 
   componentDidMount() {
@@ -83,7 +98,17 @@ export class TilesOverlay extends Component<
       ...options
     } = this.props;
 
-    createTilesService(options, this.updateTiles, extendPayload);
+    createTilesService(options, this.updateTiles, this.extendPayload);
+  }
+
+  componentWillUnmount() {
+    const {
+      tilesService,
+    } = this.props;
+
+    if (!tilesService) return;
+
+    tilesService.remove();
   }
 
   render() {
@@ -103,39 +128,32 @@ export class TilesOverlay extends Component<
 
       if (!payload) return null;
 
-      const {
-        tileCoord: {x, y},
-        zoom,
-        data,
-      } = payload;
+      let node: ReactNode;
+
+      if (children) {
+        node = children({
+          ...payload,
+          width: width,
+          height: height || width,
+        })
+      } else if (TileComponent) {
+        node = (                  
+          <TileComponent
+            {...payload}
+            width={width}
+            height={height || width}
+          />
+        )
+      } else {
+        node =  null;
+      }
+
+      const {tileCoord: {x, y}, zoom} = payload;
 
       return (
         <Fragment key={`${x}-${y}-${zoom}-${width}-${height || width}`}>
-          {
-            createPortal((
-            <Tile
-              {...payload} 
-              width={width} 
-              height={height || width}           
-            >
-              {(props) => {
-                if (children) {
-                  return children({data, ...props})
-                } else if (TileComponent) {
-                  return (                  
-                    <TileComponent
-                      {...props}
-                      data={data}
-                    />
-                  )
-                } else {
-                  return null;
-                }
-              }}
-            </Tile>
-          ), tile as Element)
-        }
-      </Fragment>
+          {createPortal(node, tile as Element)}
+        </Fragment>
     );
   });
   }
