@@ -12,13 +12,7 @@ module.exports = (env, argv) => ({
       umdNamedDefine: true,
   },  
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],  
-    alias: {
-      'react': path.resolve(__dirname, './node_modules/react'),
-      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),    
-      'mobx': path.resolve(__dirname, './node_modules/mobx'),    
-      'mobx-react': path.resolve(__dirname, './node_modules/mobx-react'),      
-    }  
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   externals: {  
     'react': {          
@@ -32,19 +26,7 @@ module.exports = (env, argv) => ({
       commonjs2: "react-dom",          
       amd: "ReactDOM",          
       root: "ReactDOM"      
-    },      
-    'mobx': {          
-      commonjs: "mobx",          
-      commonjs2: "mobx",          
-      amd: "mobx",          
-      root: "mobx"      
-    },      
-    'mobx-react': {          
-      commonjs: "mobx-react",          
-      commonjs2: "mobx-react",          
-      amd: "mobx-react",          
-      root: "mobx-react"      
-    }    
+    },
   },
   module: {
     rules: [

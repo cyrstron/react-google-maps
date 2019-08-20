@@ -30,10 +30,10 @@ export interface MapsObjectEventProps {
 }
 
 export {
-  GoogleApiCtxConsumer,
-  GoogleApiCtxProvider,
   GoogleApiProvider,
   withGoogleApi,
+  useGoogleCtx,
+  useGoogleApi
 } from './components/google-api';
 
 export {

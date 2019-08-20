@@ -1,5 +1,6 @@
-import React, {Component, createContext, ReactNode} from 'react';
-import {GoogleApiService} from './services/google-api.service';
+import React, { ReactNode} from 'react';
+import { useGoogleApi } from './hooks/use-google-api';
+import { GoogleApiCtxProvider } from './hooks/use-google-ctx';
 
 export interface GoogleProps {
   apiKey: string;
@@ -12,69 +13,25 @@ export interface GoogleState {
   err: Error | null;
 }
 
-const GoogleApiCtx = createContext<Google | undefined>(undefined);
+export const GoogleApiProvider = ({
+  apiKey, 
+  children
+}: GoogleProps) => {
+  const {
+    isPending,
+    err,
+    googleApi
+  } = useGoogleApi(apiKey);
 
-export const GoogleApiCtxProvider = GoogleApiCtx.Provider;
-export const GoogleApiCtxConsumer = GoogleApiCtx.Consumer;
+  if (isPending) return <div>Loading...</div>;
 
-export class GoogleApiProvider extends Component<GoogleProps, GoogleState> {
-  googleService: GoogleApiService;
+  if (err) return <div>{err.message}</div>;
 
-  constructor(props: GoogleProps) {
-    super(props);
-
-    const {apiKey} = props;
-
-    this.googleService = new GoogleApiService(apiKey);
-
-    this.state = {
-      isPending: false,
-      err: null,
-      googleApi: undefined
-    }
-  }
-
-  async componentDidMount() {
-    this.setState({
-      isPending: true,
-    });
-
-    try {
-      const googleApi = await this.googleService.loadApi();
-
-      this.setState({
-        isPending: false,
-        googleApi,
-      });
-    } catch (err) {
-      this.setState({
-        isPending: false,
-        err,
-      });
-    }
-  }
-
-  render() {
-    const {
-      isPending,
-      err,
-      googleApi,
-    } = this.state;
-
-    const {
-      children,
-    } = this.props;
-
-    if (isPending) return 'Loading...';
-
-    if (err) return err.message;
-
-    return (
-      <GoogleApiCtxProvider
-        value={googleApi}
-      >
-        {children}
-      </GoogleApiCtxProvider>
-    )
-  }
+  return (    
+    <GoogleApiCtxProvider
+      value={googleApi}
+    >
+      {children}
+    </GoogleApiCtxProvider>
+  )
 }

@@ -1,5 +1,5 @@
 import React, {ComponentType} from 'react';
-import {GoogleApiCtxConsumer} from '../google-api';
+import { useGoogleCtx } from '../hooks/use-google-ctx';
 
 export interface GoogleApiProps {
   googleApi: Google;
@@ -7,13 +7,15 @@ export interface GoogleApiProps {
 
 export const withGoogleApi = <Props extends {}>(
   Wrapped: ComponentType<GoogleApiProps & Props>
-) => (props: Props) => (
-  <GoogleApiCtxConsumer>
-    {(googleApi) => googleApi && (
+) => (props: Props) => {
+  const googleApi = useGoogleCtx();
+
+  if (!googleApi) return null;
+
+  return (
       <Wrapped 
         googleApi={googleApi}
         {...props}
       />
-    )}
-  </GoogleApiCtxConsumer>
-);
+  )
+};
