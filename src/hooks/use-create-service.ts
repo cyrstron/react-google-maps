@@ -30,9 +30,6 @@ export const useCreateService = <
     }
   }, []);
 
-  useEffect(() => {
-    service && service.updateProps(serviceProps)
-  }, serviceProps);
 
   return service;
 }
