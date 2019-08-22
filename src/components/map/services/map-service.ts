@@ -12,13 +12,13 @@ export class MapService extends MapsObjectService<
   constructor(
     googleApi: Google,
     container: HTMLDivElement,
-    options: google.maps.MapOptions & MapEventsProps,
+    props: google.maps.MapOptions & MapEventsProps,
   ) {
-    super(googleApi, new googleApi.maps.Map(container, options));
-    
-    const {handlers} = this.groupProps(options);
-
-    this.setListeners(handlers);
+    super(
+      googleApi, 
+      new googleApi.maps.Map(container, props), 
+      groupMapProps(props)
+    );
   }
 	
   eventNames = mapEventNames;	

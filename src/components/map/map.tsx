@@ -48,16 +48,13 @@ export class Map extends Component<Props, {}> {
 
     if (!mapService) return;
 
-    mapService.updateProps(
-      prevProps,
-      props
-    );
+    mapService.updateProps(props);
   }
 
   componentWillUnmount() {
     if (!this.mapService) return;
 
-    this.mapService.resetListeners();
+    this.mapService.resetHandlers();
   }
 
   render() {
