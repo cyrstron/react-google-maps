@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  MapConsumer,
-} from './with-smart-map-ctx';
+import {useMapCtx} from '../hooks/use-map-ctx';
 import { MapService } from '../services';
 
 export interface WrappedProps {
@@ -11,16 +9,18 @@ export interface WrappedProps {
 export const withDumbMapCtx = <Props extends {}>(
   Wrapped: React.ComponentType<Props & WrappedProps>,
 ): React.ComponentType<Props> => {
-  const WithDumbMapCtx = (props: Props) => (
-    <MapConsumer>
-      {(mapService) => mapService && (
-        <Wrapped 
-          mapService={mapService} 
-          {...props}
-        />
-      )}
-    </MapConsumer>
-  );
+  const WithDumbMapCtx = (props: Props) => {
+    const service = useMapCtx();
+
+    if (!service) return null;
+
+    return (
+      <Wrapped 
+        mapService={service} 
+        {...props}
+      />
+    )
+  };
 
   return WithDumbMapCtx;
 };

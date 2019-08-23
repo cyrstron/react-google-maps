@@ -1,73 +1,31 @@
-import React, { Component, ReactNode, RefObject, createRef } from 'react';
-import {WrappedProps} from './hocs/with-dumb-create-map-ctx';
-import { MapService } from './services';
+import React, { ReactNode, useContext, useEffect } from 'react';
 import { MapProps } from './';
+import { CreateMapCtx } from './hocs/with-smart-map-ctx';
 
-export type MapComponentProps = MapProps & WrappedProps & {
+export type MapComponentProps = MapProps & {
   children?: ReactNode | null;
 };
 
 export type Props = MapComponentProps;
 
-export class Map extends Component<Props, {}> {
-  map: RefObject<HTMLDivElement> = createRef();
-  mapService?: MapService;
+export const Map = ({
+  children,
+  className,
+  ...props
+}: MapComponentProps) => {
+  const createCtx = useContext(CreateMapCtx);
 
-  componentDidMount() {
-    const {
-      defaultCenter,
-      children,
-      className,
-      createMapService,
-      mapService,
-      ...props
-    } = this.props;
+  if (!createCtx) return null;
 
-    createMapService(this.map.current!, {
-      center: defaultCenter, 
-      ...props
-    });
-  }
+  const {ref, service, setProps} = createCtx;
 
-  componentDidUpdate({
-    defaultCenter: _defaultCenter,
-    children: _children,
-    className: _className,
-    createMapService: _createMapService,
-    mapService: _mapService,
-    ...prevProps
-  }: Props) {
-    const {
-      defaultCenter,
-      children,
-      className,
-      createMapService,
-      mapService,
-      ...props
-    } = this.props;
-
-    if (!mapService) return;
-
-    mapService.updateProps(props);
-  }
-
-  componentWillUnmount() {
-    if (!this.mapService) return;
-
-    this.mapService.resetHandlers();
-  }
-
-  render() {
-    const {
-      children,
-      className,
-      mapService,
-    } = this.props;
-
-    return (
-      <div className={className} ref={this.map} >
-        {mapService && children}
-      </div>
-    );
-  }
+  useEffect(() => {
+    setProps(props);
+  }, Object.values(props))
+  
+  return (
+    <div className={className} ref={ref} >
+      {service && children}
+    </div>
+  )
 }

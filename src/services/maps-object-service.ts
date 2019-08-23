@@ -1,6 +1,5 @@
 import { pickUpdated } from "./pick-updated";
 import { MapsObjectHandlerName } from "../";
-import { MapsService } from "hooks/use-create-service";
 
 export abstract class MapsObjectService<
   MapsObject extends google.maps.MapsObject<
@@ -11,9 +10,7 @@ export abstract class MapsObjectService<
   MapsObjectEventName,
   MapsObjectOptions,
   MapsObjectEventHandler
-> implements MapsService<MapsObjectOptions & {
-  [key in MapsObjectHandlerName]?: MapsObjectEventHandler;
-}> {
+> {
   google: Google;
   maps: google.Maps;
   object: MapsObject;

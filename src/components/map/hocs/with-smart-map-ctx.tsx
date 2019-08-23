@@ -1,83 +1,50 @@
 import React, {
-  Component, 
   createContext, 
   ComponentType,
+  Ref,
 } from 'react';
 import { MapService } from '../services';
-import {withGoogleApi} from '../../google-api';
-import { MapEventsProps } from '../';
-
-export interface GoogleApiProps {
-  googleApi: Google;
-}
+import { MapProps } from '../';
+import { useMap } from '../hooks/use-map';
 
 export interface MapServiceProps {
   mapService?: MapService;
 }
 
-export type WithSmartMapState = MapServiceProps;
+export interface CreateMapCtxValue {
+  ref: Ref<HTMLDivElement>;
+  service: MapService | undefined;
+  setProps: (props: MapProps) => void;
+};
 
-export type CreateMapCtxValue = (
-  container: HTMLDivElement, 
-  options: google.maps.MapOptions
-) => void;
+export const MapCtx = createContext<MapService | undefined>(undefined);
+export const CreateMapCtx = createContext<CreateMapCtxValue | undefined>(undefined);
 
-const MapCtx = createContext<MapService | undefined>(undefined);
-const CreateMapCtx = createContext<CreateMapCtxValue | undefined>(undefined);
+const MapProvider = MapCtx.Provider;
+const CreateMapProvider = CreateMapCtx.Provider;
 
-export const MapProvider = MapCtx.Provider;
 export const MapConsumer = MapCtx.Consumer;
-export const CreateMapProvider = CreateMapCtx.Provider;
 export const CreateMapConsumer = CreateMapCtx.Consumer;
 
 export const withSmartMapCtx = <Props extends {}>(
   Wrapped: ComponentType<Props & MapServiceProps>
-): ComponentType<Props> => {
+): ComponentType<Props> => (props: Props) => {
+  const [ref, service, setProps] = useMap();
 
-  class WithSmartMapCtx extends Component<Props & GoogleApiProps, WithSmartMapState> {
-    constructor(props: Props & GoogleApiProps) {
-      super(props);
-
-      this.state = {
-        mapService: undefined,
-      }
-    }
-
-    createMapService = (
-      container: HTMLDivElement, 
-      options: google.maps.MapOptions & MapEventsProps
-    ): void => {
-      const {googleApi} = this.props;
-
-      const mapService = new MapService(googleApi, container, options);
-
-      this.setState({
-        mapService,
-      });
-    }
-
-    render() {
-      const {mapService} = this.state;
-
-      const {
-        googleApi: _googleApi,
-        ...props
-      } = this.props;
-      
-      return (
-        <CreateMapProvider value={this.createMapService}>
-          <MapProvider
-            value={mapService}
-          >
-            <Wrapped
-              mapService={mapService}
-              {...props as Props}
-            />
-          </MapProvider>
-        </CreateMapProvider>
-      );
-    }
-  }
-
-  return withGoogleApi<Props>(WithSmartMapCtx);
-};
+  return (
+    <CreateMapProvider value={{
+      ref,
+      service,
+      setProps
+    }}>
+      <MapProvider
+        value={service}
+      >
+        <Wrapped
+          mapService={service}
+          {...props as Props}
+        />
+      </MapProvider>
+    </CreateMapProvider>
+  );
+}
