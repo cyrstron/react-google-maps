@@ -18,29 +18,42 @@ export const withSmartFeatureCtx = <
   EventName,
   Options,
   EventHandler,
-  FeatureHandlers,
-  Feature extends google.maps.Feature<
-    EventName,
-    Options,
-    EventHandler
-  >,
-  Service extends FeatureService<
-    Feature,
-    EventName,
-    Options,
-    EventHandler
-  >
+  HandlerName extends string,
 >(
-  ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
+  ComponentService: new(
+    googleApi: Google, 
+    mapService: MapService, 
+    props: Options & {[key in HandlerName]?: EventHandler}
+  ) => FeatureService<
+    EventName,
+    Options,
+    EventHandler,
+    HandlerName
+  >,
 ) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & {featureService?: Service}>,
+  Wrapped: React.ComponentType<Props & {
+    featureService?: FeatureService<
+      EventName,
+      Options,
+      EventHandler,
+      HandlerName
+    >
+  }>,
 ): React.ComponentType<Props> => {
   const WithSmartFeatureCtx = ({
-    createFeatureService, 
+    setProps, 
     ...props
-  }: Props & CreateServiceProps<Options & FeatureHandlers, Service>) => (
+  }: Props & CreateServiceProps<
+    Options & {[key in HandlerName]?: EventHandler},FeatureService<
+      EventName,
+      Options,
+      EventHandler,
+      HandlerName
+    >
+  >) => (
+
     <CreateFeatureCtxProvider
-      value={createFeatureService}
+      value={setProps}
     >
       <FeatureCtxProvider
         value={props.featureService}
@@ -56,8 +69,6 @@ export const withSmartFeatureCtx = <
     EventName,
     Options,
     EventHandler,
-    FeatureHandlers,
-    Feature,
-    Service
+    HandlerName
   >(ComponentService)<Props>(WithSmartFeatureCtx);
 };

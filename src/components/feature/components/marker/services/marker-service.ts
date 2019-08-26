@@ -4,30 +4,28 @@ import { markerEventNames } from './event-names';
 import { groupMarkerProps } from './group-marker-props';
 import {
   MarkerEventName, 
-  MarkerEventHandler, 
-  MarkerEventsProps 
+  MarkerEventHandler,
+  MarkerHandlerName
 } from '../';
 
 export class MarkerService extends FeatureService<
   google.maps.Marker,
   MarkerEventName,
   google.maps.MarkerOptions,
-  MarkerEventHandler
+  MarkerEventHandler,
+  MarkerHandlerName
 > {
   constructor(
     google: Google,
     mapService: MapService,
-    options: google.maps.MarkerOptions & MarkerEventsProps,
+    props: google.maps.MarkerOptions & {[key in MarkerHandlerName]?: MarkerEventHandler},
   ) {
     super(
       google, 
       mapService,
-      new google.maps.Marker({map: mapService.getObject(), ...options})
+      new google.maps.Marker({map: mapService.getObject(), ...props}),
+      groupMarkerProps(props)
     );
-
-    const {handlers} = this.groupProps(options);
-
-    this.setListeners(handlers);
   }
 
   eventNames = markerEventNames;

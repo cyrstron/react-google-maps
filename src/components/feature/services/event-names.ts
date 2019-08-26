@@ -1,5 +1,5 @@
-import {mapsObjectEventNames} from '../../../services';
-import { FeatureEventNames } from '../types.d';
+import {mapsObjectEventNames} from '../../../services/maps-object';
+import { FeatureEventNames } from '../';
 
 export const featureEventNames: FeatureEventNames = {
 	...mapsObjectEventNames,

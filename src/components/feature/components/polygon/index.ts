@@ -52,24 +52,14 @@ export const withDumbPolygonCtx = <Props extends {}>(
 export {
   PolygonService,
 };
-import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
 
-export type PolygonEventsProps = FeatureEventsProps & {
-	onMouseDown?: google.maps.MapPolyEventHandler,
-	onMouseMove?: google.maps.MapPolyEventHandler,
-	onMouseUp?: google.maps.MapPolyEventHandler,    
-	onClick?: google.maps.MapPolyEventHandler,
-	onDblClick?: google.maps.MapPolyEventHandler,
-	onMouseOut?: google.maps.MapPolyEventHandler,
-	onMouseOver?: google.maps.MapPolyEventHandler,
-	onRightClick?: google.maps.MapPolyEventHandler,
-}
+import { FeatureEventName, FeatureHandlerName } from "../../";
   
 export type PolygonEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
 
 export type PolygonProps = google.maps.PolygonOptions & 
-	PolygonEventsProps & {
+	{[key in PolygonHandlerName]?: PolygonEventHandler} & {
 		paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][]
 	};
   

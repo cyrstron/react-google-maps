@@ -42,7 +42,7 @@ export {
   MapService,
   withDumbMapCtx,
   withSmartMapCtx,
-  withDumbCreateMapCtx,
+  useMapCtx,
 } from './components/map';
 export {
   CustomOverlay,

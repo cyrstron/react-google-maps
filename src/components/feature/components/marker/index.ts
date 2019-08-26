@@ -52,29 +52,13 @@ export const withDumbMarkerCtx = <Props extends {}>(
 export {
   MarkerService,
 };
-import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
+import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../";
 
 export type MarkerEventHandler = google.maps.MapEventHandler | 
   google.maps.MapMouseEventHandler;
 
-export type MarkerEventsProps = FeatureEventsProps & {
-  onAnimationChanged?: google.maps.MapEventHandler;
-  onClickableChanged?: google.maps.MapEventHandler;
-  onCursorChanged?: google.maps.MapEventHandler;
-  onDraggableChanged?: google.maps.MapEventHandler;
-  onFlatChanged?: google.maps.MapEventHandler;
-  onIconChanged?: google.maps.MapEventHandler;
-  onMouseDown?: google.maps.MapEventHandler;
-  onMouseUp?: google.maps.MapEventHandler;
-  onPositionChanged?: google.maps.MapEventHandler;
-  onShapeChanged?: google.maps.MapEventHandler;
-  onTitleChanged?: google.maps.MapEventHandler;
-  onVisibleChanged?: google.maps.MapEventHandler;
-  onZIndexChanged?: google.maps.MapEventHandler;
-}
-
 export type MarkerProps = google.maps.MarkerOptions & 
-  MarkerEventsProps & {
+  {[key in MarkerHandlerName]?: MarkerEventHandler} & {
     position: google.maps.LatLngLiteral;
     title: string;
   };

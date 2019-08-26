@@ -1,5 +1,5 @@
-import {MapsObjectService} from '../../../services';
 import {MapService} from '../../map';
+import { MapsEventableObjectService } from 'services/maps-eventable-object';
 
 export abstract class FeatureService<
   Feature extends google.maps.Feature<
@@ -9,27 +9,35 @@ export abstract class FeatureService<
   >,
   EventName,
   Options,
-  EventHandler
-> extends MapsObjectService<
+  EventHandler,
+  EventHandlerName extends string,
+> extends MapsEventableObjectService<
   Feature,
   EventName,
   Options,
-  EventHandler
+  EventHandler,
+  EventHandlerName
 > {
   mapService: MapService;
+  
   constructor(
     google: Google,
     mapService: MapService,
     object: Feature,
+    props: {
+      options?: Options, 
+      handlers?: {[key in EventHandlerName]: EventHandler}
+    }
   ) {
-    super(google, object);
+    super(google, object, props);
 
     this.mapService = mapService;
   }
 
-  remove() {
+  unmount() {
     this.object.setMap(null);
-    this.resetListeners();
+
+    super.unmount();
   }
 
   hide() {    

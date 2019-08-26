@@ -13,7 +13,6 @@ export interface MapServiceProps {
 
 export interface CreateMapCtxValue {
   ref: Ref<HTMLDivElement>;
-  service: MapService | undefined;
   setProps: (props: MapProps) => void;
 };
 
@@ -34,7 +33,6 @@ export const withSmartMapCtx = <Props extends {}>(
   return (
     <CreateMapProvider value={{
       ref,
-      service,
       setProps
     }}>
       <MapProvider

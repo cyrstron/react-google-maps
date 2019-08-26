@@ -1,8 +1,7 @@
-import {filterObject} from '../../../../../services';
+import {filterObject} from '../../../../../services/maps-object';
 import { 
   PolylineHandlerName, 
   PolylineEventHandler, 
-  PolylineEventsProps 
 } from '../';
 
 export interface SortedPolylineProps {
@@ -23,7 +22,7 @@ export const groupPolylineProps = ({
   onMouseMove,
   onMouseUp,
   ...options
-}: PolylineEventsProps & google.maps.PolylineOptions): SortedPolylineProps => {
+}: {[key in PolylineHandlerName]?: PolylineEventHandler} & google.maps.PolylineOptions): SortedPolylineProps => {
   const result: SortedPolylineProps = {
     options,
   };

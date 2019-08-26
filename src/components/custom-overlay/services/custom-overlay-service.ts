@@ -1,22 +1,27 @@
 import {MapService} from '../../map';
-import { pickUpdated } from '../../../services';
+import { MapsObjectService } from '../../../services/maps-object';
 
-export class CustomOverlayService {
+export class CustomOverlayService extends MapsObjectService<
+  google.custom.CustomOverlayOptions,
+  google.custom.CustomOverlay
+> {
   mapService: MapService;
-  object: google.custom.CustomOverlay;
 
   constructor(
-    google: Google,
+    googleApi: Google,
     mapService: MapService,
     options: google.custom.CustomOverlayOptions,
   ) {
-    const {CustomOverlay} = google.custom;
-
-    const map = mapService.getObject();
-    const object = new CustomOverlay({map, ...options});
+    super(
+      googleApi, 
+      new googleApi.custom.CustomOverlay({
+        map: mapService.getObject(),
+        ...options
+      }), 
+      options
+    );
 
     this.mapService = mapService;
-    this.object = object;
   }
 
   getContainer(): HTMLDivElement | void {
@@ -27,26 +32,7 @@ export class CustomOverlayService {
     this.object.setMap(null);
   }
 
-  setOptions(options: google.custom.CustomOverlayOptions | undefined) {
-    if (!options || !this.object.setOptions) return;
-
-    this.object.setOptions(options);
-  }
-
-  updateOptions(
-    prevOptions: google.custom.CustomOverlayOptions & {
-      [key: string]: any,
-    } | undefined,
-    options: google.custom.CustomOverlayOptions & {
-      [key: string]: any,
-    } | undefined,
-  ) {
-    if (!prevOptions || !options) return;
-
-    const updatedOptions = pickUpdated<google.custom.CustomOverlayOptions>(prevOptions, options);
-
-    if (!updatedOptions) return;
-
-    this.setOptions(updatedOptions);
+  unmount() {
+    this.remove();
   }
 }

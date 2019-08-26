@@ -13,9 +13,9 @@ export const withGoogleApi = <Props extends {}>(
   if (!googleApi) return null;
 
   return (
-      <Wrapped 
-        googleApi={googleApi}
-        {...props}
-      />
+    <Wrapped 
+      googleApi={googleApi}
+      {...props}
+    />
   )
 };

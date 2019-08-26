@@ -1,13 +1,14 @@
-import { MapsObjectService } from '../../../services';
 import { mapEventNames } from './event-names';
 import { groupMapProps } from './group-map-props';
-import { MapEventName, MapEventsProps, MapEventHandler } from '../';
+import { MapEventName, MapEventsProps, MapEventHandler, MapHandlerName } from '../';
+import { MapsEventableObjectService } from 'services/maps-eventable-object';
 
-export class MapService extends MapsObjectService<
+export class MapService extends MapsEventableObjectService<
   google.maps.Map,
   MapEventName,
   google.maps.MapOptions,
-  MapEventHandler
+  MapEventHandler,
+  MapHandlerName
 > {
   constructor(
     googleApi: Google,

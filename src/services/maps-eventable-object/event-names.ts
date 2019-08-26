@@ -1,4 +1,4 @@
-import { MapsObjectHandlerName, MapsObjectEventName } from "../";
+import { MapsObjectHandlerName, MapsObjectEventName } from "../../";
 
 export const mapsObjectEventNames: {
   [key in MapsObjectHandlerName]: MapsObjectEventName;

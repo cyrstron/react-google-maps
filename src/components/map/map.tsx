@@ -1,6 +1,7 @@
-import React, { ReactNode, useContext, useEffect } from 'react';
-import { MapProps } from './';
-import { CreateMapCtx } from './hocs/with-smart-map-ctx';
+import React, {ReactNode} from 'react';
+import {useMapCreate} from './hooks/use-map-create';
+import { MapProps } from '.';
+import { useMapCtx } from './hooks/use-map-ctx';
 
 export type MapComponentProps = MapProps & {
   children?: ReactNode | null;
@@ -13,15 +14,8 @@ export const Map = ({
   className,
   ...props
 }: MapComponentProps) => {
-  const createCtx = useContext(CreateMapCtx);
-
-  if (!createCtx) return null;
-
-  const {ref, service, setProps} = createCtx;
-
-  useEffect(() => {
-    setProps(props);
-  }, Object.values(props))
+  const service = useMapCtx();
+  const ref = useMapCreate(props);
   
   return (
     <div className={className} ref={ref} >
