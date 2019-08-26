@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
-import {MapService} from '../../map';
+import {withDumbMapCtx} from '../../../../map/hocs/with-dumb-map-ctx';
+import {MapService} from '../../../../map';
 import {CustomOverlayService} from '../services';
-import { withGoogleApi } from '../../../components/google-api';
+import { withGoogleApi } from '../../../../google-api';
 
 export type CreateCustomOverlayService = (
   props: google.custom.CustomOverlayOptions

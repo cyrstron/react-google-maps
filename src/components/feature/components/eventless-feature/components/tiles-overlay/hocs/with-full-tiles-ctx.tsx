@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {withDumbMapCtx} from '../../map/hocs/with-dumb-map-ctx';
-import {MapService} from '../../map';
+import {withDumbMapCtx} from '../../../../map/hocs/with-dumb-map-ctx';
+import {MapService} from '../../../../map';
 import {TilesOverlayService, UpdateTilesCallback} from '../services';
-import { withGoogleApi } from '../../google-api';
+import { withGoogleApi } from '../../../../google-api';
 import { TilePayload } from '../services/tiles-overlay-service';
 
 export type CreateTilesOverlayService = (

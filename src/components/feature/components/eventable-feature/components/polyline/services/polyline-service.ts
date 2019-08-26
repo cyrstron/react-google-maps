@@ -1,14 +1,14 @@
-import {MapService} from '../../../../map';
-import { FeatureService } from '../../../services';
+import {MapService} from '../../../../../../map';
+import { EventableFeatureService } from '../../../services';
 import { polylineEventNames } from './event-names';
 import { groupPolylineProps } from './group-polyline-props';
 import {
   PolylineEventName, 
   PolylineEventHandler,
   PolylineHandlerName
-} from '../';
+} from '../../polyline';
 
-export class PolylineService extends FeatureService<
+export class PolylineService extends EventableFeatureService<
   google.maps.Polyline,
   PolylineEventName,
   google.maps.PolylineOptions,

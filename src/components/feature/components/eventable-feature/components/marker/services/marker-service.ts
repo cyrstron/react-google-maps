@@ -1,14 +1,14 @@
-import {MapService} from '../../../../map';
-import {FeatureService} from '../../../services';
+import {MapService} from '../../../../../../map';
+import {EventableFeatureService} from '../../../services';
 import { markerEventNames } from './event-names';
 import { groupMarkerProps } from './group-marker-props';
 import {
   MarkerEventName, 
   MarkerEventHandler,
   MarkerHandlerName
-} from '../';
+} from '../../marker';
 
-export class MarkerService extends FeatureService<
+export class MarkerService extends EventableFeatureService<
   google.maps.Marker,
   MarkerEventName,
   google.maps.MarkerOptions,

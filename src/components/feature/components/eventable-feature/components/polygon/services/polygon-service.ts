@@ -1,14 +1,14 @@
-import {MapService} from '../../../../map';
-import { FeatureService } from '../../../services';
+import {MapService} from '../../../../../../map';
+import { EventableFeatureService } from '../../../services';
 import { polygonEventNames } from './event-names';
 import { groupPolygonProps } from './group-polygon-props';
 import {
   PolygonEventName, 
   PolygonEventHandler,
   PolygonHandlerName
-} from '../';
+} from '../../polygon';
 
-export class PolygonService extends FeatureService<
+export class PolygonService extends EventableFeatureService<
   google.maps.Polygon,
   PolygonEventName,
   google.maps.PolygonOptions,

@@ -1,7 +1,7 @@
-import {MapService} from '../../map';
+import {MapService} from '../../../../map';
 import { MapsEventableObjectService } from 'services/maps-eventable-object';
 
-export abstract class FeatureService<
+export abstract class EventableFeatureService<
   Feature extends google.maps.Feature<
     EventName,
     Options,

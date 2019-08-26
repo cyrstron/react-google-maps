@@ -1,6 +1,7 @@
-import {MapService} from '../../map/services';
+import {MapService} from '../../../../../../map/services';
 import debounce from 'lodash/debounce';
 import { tileToKey } from './tiles-overlay-utils';
+import { EventlessFeatureService } from '../../../services/eventless-feature-service';
 
 export interface TilePayload {
   tileCoord: google.maps.Point,
@@ -9,8 +10,12 @@ export interface TilePayload {
 
 export type UpdateTilesCallback = (tiles: Map<Node, TilePayload>) => void;
 
-export class TilesOverlayService<ExtendedPayload = any> {
-  object: google.custom.TilesOverlay;
+export class TilesOverlayService<
+  ExtendedPayload = any
+> extends EventlessFeatureService<
+  google.custom.TilesOverlayOptions,
+  google.custom.TilesOverlay
+> {
   isUnmounted: boolean = false;
 
   tiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
@@ -23,25 +28,31 @@ export class TilesOverlayService<ExtendedPayload = any> {
     payload: TilePayload & {data?: ExtendedPayload}
   }> = [];
 
+  updateTiles: UpdateTilesCallback;
+  extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>;
+
   constructor(
-    public google: Google,
-    public mapService: MapService,
-    public updateTiles: UpdateTilesCallback,
+    googleApi: Google,
+    mapService: MapService,
     options: google.custom.TilesOverlayOptions,
-    public extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>,
+    updateTiles: UpdateTilesCallback,
+    extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>,
   ) {
-    const {TilesOverlay} = google.custom;
+    super(
+      googleApi,
+      mapService,
+      new googleApi.custom.TilesOverlay({
+        map: mapService.getObject(), 
+        ...options
+      }),
+      options,
+    );
+    
+    this.updateTiles = updateTiles;
+    this.extendPayload = extendPayload;
 
-    const map = mapService.getObject();
-    const object = new TilesOverlay({
-      map, 
-      registerTile: this.registerTile,
-      unregisterTile: this.unregisterTile,
-      ...options
-    });
-
-    this.mapService = mapService;
-    this.object = object;
+    this.object.onRegister(this.registerTile);
+    this.object.onUnregister(this.unregisterTile);
   }
 
   registerTile = async (
@@ -153,12 +164,8 @@ export class TilesOverlayService<ExtendedPayload = any> {
     this.updateTiles(newTiles);
   }, 20);
 
-  remove() {
-    this.object.setMap(null);
-  }
-
   unmount() {
-    this.remove();
     this.isUnmounted = true;
+    super.unmount();
   }
 }

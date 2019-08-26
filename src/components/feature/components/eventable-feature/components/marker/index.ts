@@ -52,7 +52,7 @@ export const withDumbMarkerCtx = <Props extends {}>(
 export {
   MarkerService,
 };
-import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../";
+import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../..";
 
 export type MarkerEventHandler = google.maps.MapEventHandler | 
   google.maps.MapMouseEventHandler;

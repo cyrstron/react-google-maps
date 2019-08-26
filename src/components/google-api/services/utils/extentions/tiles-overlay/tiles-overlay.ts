@@ -1,10 +1,10 @@
 export const createTilesOverlayClass = (google: Google): google.custom.TilesOverlayConstructor => {
   class TilesOverlay implements google.custom.TilesOverlay {
-    registerTile: (
+    registerTile?: (
       node: Node,      
       payload: {tileCoord: google.maps.Point, zoom: number}
     ) => void;
-    unregisterTile: (node: Node) => void;
+    unregisterTile?: (node: Node) => void;
     index: number;
     size: google.maps.Size;
     map: google.maps.Map | null = null;
@@ -21,8 +21,8 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       tagName,
       map,
     }: google.custom.TilesOverlayOptions & {
-      registerTile: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
-      unregisterTile: (node: Node) => void,
+      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
+      unregisterTile?: (node: Node) => void,
     }) {
       this.index = index;
       this.tagName = tagName || 'div';
@@ -57,13 +57,28 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       container.style.width = '100%';
       container.style.height = '100%';
 
-      this.registerTile(container, {tileCoord, zoom});
+      if (this.registerTile) {
+        this.registerTile(container, {tileCoord, zoom});
+      }
 
       return container;
     }
 
     releaseTile(tile: Node) {
+      if (!this.unregisterTile) return;
+
       this.unregisterTile(tile);
+    }
+
+    onRegister(callback: (
+      node: Node,      
+      payload: {tileCoord: google.maps.Point, zoom: number}
+    ) => void): void {
+      this.registerTile = callback;
+    }
+
+    onUnregister(callback: (node: Node) => void): void {
+      this.unregisterTile = callback;
     }
 
     setMap(map: google.maps.Map | null) {

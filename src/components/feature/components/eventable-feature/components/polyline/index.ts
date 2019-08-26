@@ -52,7 +52,7 @@ export const withDumbPolylineCtx = <Props extends {}>(
 export {
   PolylineService,
 };
-import { FeatureEventName, FeatureHandlerName } from "../../";
+import { FeatureEventName, FeatureHandlerName } from "../..";
 
   
 export type PolylineEventHandler = google.maps.MapMouseEventHandler |

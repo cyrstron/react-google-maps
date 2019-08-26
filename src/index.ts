@@ -50,14 +50,14 @@ export {
   withDumbOverlayCtx,
   withSmartOverlayCtx,
   CustomOverlayService,
-} from './components/custom-overlay';
+} from './components/feature/components/custom-overlay';
 export {
   TilesOverlay,
   DumbTilesOverlay,
   withDumbTilesCtx,
   withSmartTilesCtx,
   TilesOverlayService,
-} from './components/tiles-overlay';
+} from './components/feature/components/tiles-overlay';
 export {
   Polygon,
   DumbPolygon,
@@ -85,4 +85,4 @@ export {
   withDumbFeatureCtx,
   FeatureServiceProps,
   withCreateDumbFeatureCtx,
-} from './components/feature';
+} from './components/eventable-feature';

@@ -108,6 +108,16 @@ declare namespace google.custom {
     ): Element | null;
     setMap(map: google.maps.Map | null): void;
     remove(): void;
+    registerTile?: (
+      node: Node,      
+      payload: {tileCoord: google.maps.Point, zoom: number}
+    ) => void;
+    unregisterTile?: (node: Node) => void;
+    onRegister(callback: (
+      node: Node,      
+      payload: {tileCoord: google.maps.Point, zoom: number}
+    ) => void): void;
+    onUnregister(callback: (node: Node) => void): void;
   }
 
   export interface TilesOverlayOptions {
@@ -124,8 +134,8 @@ declare namespace google.custom {
 
   export type TilesOverlayConstructor = new(
     options: TilesOverlayOptions & {      
-      registerTile: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
-      unregisterTile: (node: Node) => void,
+      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
+      unregisterTile?: (node: Node) => void,
     }
   ) => TilesOverlay;
 

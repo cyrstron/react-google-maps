@@ -1,12 +1,10 @@
-import {MapService} from '../../map';
-import { MapsObjectService } from '../../../services/maps-object';
+import {MapService} from '../../../../../../map';
+import { EventlessFeatureService } from '../../../services/eventless-feature-service';
 
-export class CustomOverlayService extends MapsObjectService<
+export class CustomOverlayService extends EventlessFeatureService<
   google.custom.CustomOverlayOptions,
   google.custom.CustomOverlay
 > {
-  mapService: MapService;
-
   constructor(
     googleApi: Google,
     mapService: MapService,
@@ -14,25 +12,16 @@ export class CustomOverlayService extends MapsObjectService<
   ) {
     super(
       googleApi, 
+      mapService,
       new googleApi.custom.CustomOverlay({
         map: mapService.getObject(),
         ...options
       }), 
       options
     );
-
-    this.mapService = mapService;
   }
 
   getContainer(): HTMLDivElement | void {
     return this.object.getContainer();
-  }
-
-  remove() {
-    this.object.setMap(null);
-  }
-
-  unmount() {
-    this.remove();
   }
 }
