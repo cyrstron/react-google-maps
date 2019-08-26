@@ -4,7 +4,7 @@ import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
 import { 
   PolygonProps, 
   PolygonEventsProps 
-} from './';
+} from '../polygon';
 
 export type FullPolygonProps = PolygonProps & CreateServiceProps<
   google.maps.PolygonOptions & PolygonEventsProps, 

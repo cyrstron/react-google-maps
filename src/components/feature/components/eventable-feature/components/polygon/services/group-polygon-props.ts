@@ -1,8 +1,8 @@
-import {filterObject} from '../../../../../services/maps-object';
+import {filterObject} from '../../../../../../../services/maps-object';
 import { 
   PolygonEventHandler, 
   PolygonHandlerName
-} from '../';
+} from '../../polygon';
 
 export interface SortedPolygonProps {
   options?: google.maps.PolygonOptions;

@@ -1,8 +1,8 @@
-import {filterObject} from '../../../../../services/maps-object';
+import {filterObject} from '../../../../../../../services/maps-object';
 import { 
   PolylineHandlerName, 
   PolylineEventHandler, 
-} from '../';
+} from '../../polyline';
 
 export interface SortedPolylineProps {
   options?: google.maps.PolylineOptions;

@@ -1,5 +1,5 @@
 import React, {createContext} from 'react';
-import {MapService} from '../../map';
+import {MapService} from '../../../../map';
 import {FeatureService} from '../services';
 import {withFullFeatureCtx, CreateServiceProps} from './with-full-feature-ctx';
 

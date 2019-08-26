@@ -4,7 +4,7 @@ import {CreateServiceProps} from '../../hocs/with-full-feature-ctx';
 import { 
   MarkerProps, 
   MarkerEventsProps 
-} from './';
+} from '../marker';
 
 export type FullMarkerProps = MarkerProps & CreateServiceProps<
   google.maps.MarkerOptions & MarkerEventsProps, 

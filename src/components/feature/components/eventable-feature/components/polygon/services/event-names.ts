@@ -1,5 +1,5 @@
 import {featureEventNames} from '../../../services';
-import { PolygonEventNames } from '../';
+import { PolygonEventNames } from '../../polygon';
 
 export const polygonEventNames: PolygonEventNames = {
 	...featureEventNames,

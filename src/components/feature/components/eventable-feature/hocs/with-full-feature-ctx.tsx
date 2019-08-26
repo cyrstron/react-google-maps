@@ -1,5 +1,5 @@
 import React, {ComponentType} from 'react';
-import {MapService} from '../../map';
+import {MapService} from '../../../../map';
 import {FeatureService} from '../services';
 import { useFeature } from '../hooks/use-feature';
 

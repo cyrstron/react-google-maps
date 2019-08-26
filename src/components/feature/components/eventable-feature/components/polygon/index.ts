@@ -53,7 +53,7 @@ export {
   PolygonService,
 };
 
-import { FeatureEventName, FeatureHandlerName } from "../../";
+import { FeatureEventName, FeatureHandlerName } from "../..";
   
 export type PolygonEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
