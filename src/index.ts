@@ -1,34 +1,5 @@
 /// <reference path="@types/index.d.ts" />
 
-export type MapsObjectHandlerName = 'onClick' |
-  'onDblClick' |
-  'onDrag' |
-  'onDragStart' |
-  'onDragEnd' |
-  'onMouseOut' |
-  'onMouseOver' |
-  'onRightClick';
-
-export type MapsObjectEventName = 'click' |
-  'dblclick' |
-  'drag' |
-  'dragstart' |
-  'dragend' |
-  'mouseout' |
-  'mouseover' |
-  'rightclick';
-
-export interface MapsObjectEventProps {
-  onClick?: google.maps.MapMouseEventHandler;
-  onDblClick?: google.maps.MapMouseEventHandler;
-  onDrag?: google.maps.MapMouseEventHandler;
-  onDragStart?: google.maps.MapMouseEventHandler;
-  onDragEnd?: google.maps.MapMouseEventHandler;
-  onMouseOut?: google.maps.MapMouseEventHandler;
-  onMouseOver?: google.maps.MapMouseEventHandler;
-  onRightClick?: google.maps.MapMouseEventHandler;
-}
-
 export {
   GoogleApiProvider,
   withGoogleApi,
@@ -50,14 +21,14 @@ export {
   withDumbOverlayCtx,
   withSmartOverlayCtx,
   CustomOverlayService,
-} from './components/feature/components/eventless-feature/components/custom-overlay';
+} from './components/feature/components/custom-overlay';
 export {
   TilesOverlay,
   DumbTilesOverlay,
   withDumbTilesCtx,
   withSmartTilesCtx,
   TilesOverlayService,
-} from './components/feature/components/eventless-feature/components/tiles-overlay';
+} from './components/feature/components/tiles-overlay';
 export {
   Polygon,
   DumbPolygon,
