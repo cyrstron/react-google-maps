@@ -13,7 +13,7 @@ import {
   MapsObjectEventProps, 
   MapsObjectHandlerName, 
   MapsObjectEventName 
-} from "../../";
+} from "../../services/maps-eventable-object";
 
 export type MapEventHandler = google.maps.MapMouseEventHandler | 
   google.maps.MapEventHandler | 

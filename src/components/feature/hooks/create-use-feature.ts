@@ -8,10 +8,19 @@ export interface FeatureService<Props> {
   unmount: () => void;
 }
 
-export const useFeature = <
+export type CreateServiceFunction<
   Props, 
   Service extends FeatureService<Props>
->(createService: (googleApi: Google, mapService: MapService) => Service): [
+> = (
+  googleApi: Google, 
+  mapService: MapService, 
+  props: Props
+) => Service
+
+export const createUseFeature = <
+  Props, 
+  Service extends FeatureService<Props>
+>(createService: CreateServiceFunction<Props, Service>) => (): [
   Service | undefined,
   (props: Props) => void
 ] => {
@@ -28,7 +37,7 @@ export const useFeature = <
     if (!googleApi || !mapService) return;
 
     if (!service) {
-      const service = createService(googleApi, mapService);
+      const service = createService(googleApi, mapService, props);
 
       setService(service);
     } else {

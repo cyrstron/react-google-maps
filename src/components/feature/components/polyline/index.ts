@@ -1,60 +1,7 @@
-import {Polyline as PolylineWrapped} from './polyline';
-import {PolylineService} from './services';
-import { 
-  withDumbFeatureCtx, 
-  FeatureServiceProps,
-  withCreateDumbFeatureCtx,
-  withSmartFeatureCtx,
-  withFullFeatureCtx,
-} from '../eventable-feature/hocs';
+import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
+import {PolylineService, createPolylineService} from './services';
 
-export const Polyline = withFullFeatureCtx<
-  PolylineEventName,
-  google.maps.PolylineOptions,
-  PolylineEventHandler,
-  PolylineEventsProps,
-  google.maps.Polyline,
-  PolylineService
->(PolylineService)<PolylineProps>(PolylineWrapped);
-
-export const DumbPolyline = withCreateDumbFeatureCtx<
-  PolylineEventName,
-  google.maps.PolylineOptions,
-  PolylineEventHandler,
-  PolylineEventsProps,
-  google.maps.Polyline,
-  PolylineService,
-  PolylineProps
->(PolylineWrapped);
-
-export const withSmartPolylineCtx = withSmartFeatureCtx<
-  PolylineEventName,
-  google.maps.PolylineOptions,
-  PolylineEventHandler,
-  PolylineEventsProps,
-  google.maps.Polyline,
-  PolylineService
->(PolylineService);
-
-export const withDumbPolylineCtx = <Props extends {}>(
-  Wrapped: React.ComponentType<Props & FeatureServiceProps<PolylineService>>,
-) => (
-  withDumbFeatureCtx<
-    PolylineEventName,
-    google.maps.PolylineOptions,
-    PolylineEventHandler,
-    google.maps.Polyline,
-    PolylineService,
-    Props
-  >(Wrapped)
-);
-
-export {
-  PolylineService,
-};
-import { FeatureEventName, FeatureHandlerName } from "../eventable-feature";
-
-  
 export type PolylineEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
 
@@ -76,3 +23,17 @@ export type PolylineHandlerName = FeatureHandlerName |
 export type PolylineEventNames = {
 	[key in PolylineHandlerName]: PolylineEventName;
 };
+
+export {Polyline} from './polyline';
+export {DumbPolyline} from './dumb-polyline';
+
+export const withSmartPolylineCtx = withSmartFeatureCtx<
+  PolylineProps,
+  PolylineService
+>(createPolylineService);
+
+export const withDumbPolylineCtx = withDumbFeatureCtx<PolylineProps, PolylineService>();
+
+export {usePolylineCtx} from './hooks';
+
+export {PolylineService};

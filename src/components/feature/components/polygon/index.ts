@@ -1,60 +1,7 @@
-import {Polygon as PolygonWrapped} from './polygon';
-import {PolygonService} from './services';
-import { 
-  withDumbFeatureCtx, 
-  FeatureServiceProps,
-  withCreateDumbFeatureCtx,
-  withSmartFeatureCtx,
-  withFullFeatureCtx,
-} from '../eventable-feature/hocs';
+import { withSmartFeatureCtx, withDumbFeatureCtx } from 'components/feature/hocs';
+import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import {PolygonService, createPolygonService} from './services';
 
-export const Polygon = withFullFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService
->(PolygonService)<PolygonProps>(PolygonWrapped);
-
-export const DumbPolygon = withCreateDumbFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService,
-  PolygonProps
->(PolygonWrapped);
-
-export const withSmartPolygonCtx = withSmartFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService
->(PolygonService);
-
-export const withDumbPolygonCtx = <Props extends {}>(
-  Wrapped: React.ComponentType<Props & FeatureServiceProps<PolygonService>>,
-) => (
-  withDumbFeatureCtx<
-    PolygonEventName,
-    google.maps.PolygonOptions,
-    PolygonEventHandler,
-    google.maps.Polygon,
-    PolygonService,
-    Props
-  >(Wrapped)
-);
-
-export {
-  PolygonService,
-};
-
-import { FeatureEventName, FeatureHandlerName } from "../eventable-feature";
-  
 export type PolygonEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
 
@@ -76,3 +23,17 @@ export type PolygonHandlerName = FeatureHandlerName |
 export type PolygonEventNames = {
 	[key in PolygonHandlerName]: PolygonEventName;
 };
+
+export {Polygon} from './polygon';
+export {DumbPolygon} from './dumb-polygon';
+
+export const withSmartPolylineCtx = withSmartFeatureCtx<
+  PolygonProps,
+  PolygonService
+>(createPolygonService);
+
+export const withDumbPolylineCtx = withDumbFeatureCtx<PolygonProps, PolygonService>();
+
+export {usePolygonCtx} from './hooks';
+
+export {PolygonService};
