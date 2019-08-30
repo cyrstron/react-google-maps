@@ -12,8 +12,7 @@ export const useSmartPolyline = createUseSmartFeature<
 >(createPolylineService);
 
 export const useCreatePolylineCtx = createUseCreateFeatureCtx<
-  PolylineProps, 
-  PolylineService
+  PolylineProps
 >();
 
 export const usePolylineCtx = createUseFeatureCtx<

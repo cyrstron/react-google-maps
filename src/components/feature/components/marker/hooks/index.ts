@@ -12,8 +12,7 @@ export const useSmartMarker = createUseSmartFeature<
 >(createMarkerService);
 
 export const useCreateMarkerCtx = createUseCreateFeatureCtx<
-  MarkerProps, 
-  MarkerService
+  MarkerProps
 >();
 
 export const useMarkerCtx = createUseFeatureCtx<

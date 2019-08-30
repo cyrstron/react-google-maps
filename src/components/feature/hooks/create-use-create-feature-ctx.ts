@@ -1,8 +1,8 @@
 import {useContext} from 'react';
-import { FeatureCtx, CreateFeatureCtx } from '../hocs/with-smart-feature-ctx';
+import { CreateFeatureCtx } from '../hocs/with-smart-feature-ctx';
 import { createUseUpdateFeature } from './create-use-update-feature-ctx';
 
-export const createUseCreateFeatureCtx = <Props, Service>() => {
+export const createUseCreateFeatureCtx = <Props>() => {
   const useUpdateFeature = createUseUpdateFeature<Props>();
 
   return (

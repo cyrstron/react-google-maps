@@ -12,8 +12,7 @@ export const useSmartPolygon = createUseSmartFeature<
 >(createPolygonService);
 
 export const useCreatePolygonCtx = createUseCreateFeatureCtx<
-  PolygonProps, 
-  PolygonService
+  PolygonProps
 >();
 
 export const usePolygonCtx = createUseFeatureCtx<
