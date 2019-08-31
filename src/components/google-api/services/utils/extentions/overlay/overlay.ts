@@ -1,5 +1,5 @@
-export const createCustomOverlayClass = (google: Google): google.custom.CustomOverlayConstructor => {
-  class CustomOverlay extends google.maps.OverlayView implements google.custom.CustomOverlay {
+export const createOverlayClass = (google: Google): google.custom.OverlayConstructor => {
+  class Overlay extends google.maps.OverlayView implements google.custom.Overlay {
     private bounds: google.maps.LatLngBounds;
     private container?: HTMLDivElement;
     private map: google.maps.Map | null;
@@ -8,7 +8,7 @@ export const createCustomOverlayClass = (google: Google): google.custom.CustomOv
     constructor({
       bounds,
       map,
-    }: google.custom.CustomOverlayOptions) {
+    }: google.custom.OverlayOptions) {
       super();
 
       this.bounds = this.toBounds(bounds);
@@ -84,7 +84,7 @@ export const createCustomOverlayClass = (google: Google): google.custom.CustomOv
       isHidden,
       bounds,
       map,
-    }: google.custom.CustomOverlayOptions): void {
+    }: google.custom.OverlayOptions): void {
       this.setOpacity(opacity);
       this.setIsHidden(isHidden);
       if (map !== undefined) {
@@ -176,5 +176,5 @@ export const createCustomOverlayClass = (google: Google): google.custom.CustomOv
     }
   }
 
-  return CustomOverlay;
+  return Overlay;
 };

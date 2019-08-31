@@ -1,19 +1,19 @@
 import {MapService} from '../../../../map';
 import { EventlessFeatureService } from '../../../services/eventless-feature-service';
 
-export class CustomOverlayService extends EventlessFeatureService<
-  google.custom.CustomOverlayOptions,
-  google.custom.CustomOverlay
+export class OverlayService extends EventlessFeatureService<
+  google.custom.OverlayOptions,
+  google.custom.Overlay
 > {
   constructor(
     googleApi: Google,
     mapService: MapService,
-    options: google.custom.CustomOverlayOptions,
+    options: google.custom.OverlayOptions,
   ) {
     super(
       googleApi, 
       mapService,
-      new googleApi.custom.CustomOverlay({
+      new googleApi.custom.Overlay({
         map: mapService.getObject(),
         ...options
       }), 
