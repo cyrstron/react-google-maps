@@ -1,9 +1,9 @@
 import React, {Component, ReactNode, ComponentType, Fragment} from 'react';
 import {createPortal} from 'react-dom';
 import {CreateServiceProps} from './hocs/with-full-tiles-ctx';
-import { TilePayload } from './services/tiles-overlay-service';
+import { TilePayload } from './services/tiles-service';
 
-export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
+export type TilesProps = google.custom.TilesOptions & {
   children?: (props: {
     tileCoord: google.maps.Point,
     zoom: number,
@@ -26,18 +26,18 @@ export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
   height?: number,
 }
 
-export type FullTilesOverlayProps = TilesOverlayProps & CreateServiceProps;
+export type FullTilesProps = TilesProps & CreateServiceProps;
 
-export interface TilesOverlayState {
+export interface TilesState {
   tiles: Map<Node, TilePayload & {data?: any}>;
 }
 
-export class TilesOverlay extends Component<
-  FullTilesOverlayProps, 
-  TilesOverlayState
+export class Tiles extends Component<
+  FullTilesProps, 
+  TilesState
 > {
 
-  constructor(props: FullTilesOverlayProps) {
+  constructor(props: FullTilesProps) {
     super(props);
 
     this.state = {
@@ -50,8 +50,8 @@ export class TilesOverlay extends Component<
   }
 
   async componentDidUpdate(
-    _prevProps: FullTilesOverlayProps,
-    prevState: TilesOverlayState,
+    _prevProps: FullTilesProps,
+    prevState: TilesState,
   ) {
     const {
       extendPayload,

@@ -1,6 +1,6 @@
 import {MapService} from '../../../../map/services';
 import debounce from 'lodash/debounce';
-import { tileToKey } from './tiles-overlay-utils';
+import { tileToKey } from './tiles-utils';
 import { EventlessFeatureService } from '../../../services/eventless-feature-service/eventless-feature-service';
 
 export interface TilePayload {
@@ -8,13 +8,13 @@ export interface TilePayload {
   zoom: number,
 }
 
-export type UpdateTilesCallback = (tiles: Map<Node, TilePayload>) => void;
+export type SetTilesCallback = (tiles: Map<Node, TilePayload>) => void;
 
-export class TilesOverlayService<
+export class TilesService<
   ExtendedPayload = any
 > extends EventlessFeatureService<
-  google.custom.TilesOverlayOptions,
-  google.custom.TilesOverlay
+  google.custom.TilesOptions,
+  google.custom.Tiles
 > {
   isUnmounted: boolean = false;
 
@@ -28,27 +28,27 @@ export class TilesOverlayService<
     payload: TilePayload & {data?: ExtendedPayload}
   }> = [];
 
-  updateTiles: UpdateTilesCallback;
+  setTiles: SetTilesCallback;
   extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>;
 
   constructor(
     googleApi: Google,
     mapService: MapService,
-    options: google.custom.TilesOverlayOptions,
-    updateTiles: UpdateTilesCallback,
+    options: google.custom.TilesOptions,
+    setTiles: SetTilesCallback,
     extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>,
   ) {
     super(
       googleApi,
       mapService,
-      new googleApi.custom.TilesOverlay({
+      new googleApi.custom.Tiles({
         map: mapService.getObject(), 
         ...options
       }),
       options,
     );
     
-    this.updateTiles = updateTiles;
+    this.setTiles = setTiles;
     this.extendPayload = extendPayload;
 
     this.object.onRegister(this.registerTile);
@@ -124,7 +124,7 @@ export class TilesOverlayService<
       newTiles.set(node, {...payload, data})
     });
 
-    this.updateTiles(newTiles);
+    this.setTiles(newTiles);
   }
 
   recalcTiles = debounce(() => {
@@ -161,7 +161,7 @@ export class TilesOverlayService<
     }
 
     this.tiles = newTiles;
-    this.updateTiles(newTiles);
+    this.setTiles(newTiles);
   }, 20);
 
   unmount() {
