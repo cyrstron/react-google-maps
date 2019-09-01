@@ -1,7 +1,7 @@
 # react-google-maps
 React components library for google maps.
 
-    import {GoogleApiProvider, Map, Marker} from '@grider/maps';
+    import {GoogleApiProvider, Map, Marker} from 'react-google-maps-ts';
 
     const App = () => (
       <GoogleApiProvider
@@ -11,12 +11,15 @@ React components library for google maps.
       </GoogleApiProvider>
     );
 
+    const geoPoint = {lat: 50, lng: 50};
+
     const MyAwesomeApp = () => (
       <Map
-        defaultCenter={{lat: 50, lng: 50}}
+        defaultCenter={geoPoint}
       >
         <Marker 
-          position={{lat: 50, lng: 50}}
+          position={geoPoint}
+          zoom={8}
           title="My perfect marker"
         />
       </Map>

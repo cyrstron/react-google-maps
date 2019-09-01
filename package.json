@@ -1,8 +1,8 @@
 {
-  "name": "@micelord/maps",
+  "name": "react-google-maps-ts",
   "main": "./.dist/maps.js",
   "types": "./.dist/index.d.ts",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "React components library for google maps.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/cyrstron/react-google-maps.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Kyryl Stronko",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cyrstron/react-google-maps/issues"
   },
