@@ -2,13 +2,23 @@ import {MapService} from '../../../../map/services';
 import debounce from 'lodash/debounce';
 import { tileToKey } from './tiles-utils';
 import { EventlessFeatureService } from '../../../services/eventless-feature-service/eventless-feature-service';
+import { CreateTilesServiceProps } from './create-tiles-service';
 
 export interface TilePayload {
   tileCoord: google.maps.Point,
   zoom: number,
 }
 
-export type SetTilesCallback = (tiles: Map<Node, TilePayload>) => void;
+export type ExtendPayloadCallback<ExtendedPayload = any> = (
+  payload: TilePayload  & {
+    width: number,
+    height: number,
+  }
+) => Promise<ExtendedPayload | undefined>
+
+export type SetTilesCallback<ExtendedPayload> = (
+  tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>
+) => void;
 
 export class TilesService<
   ExtendedPayload = any
@@ -28,15 +38,15 @@ export class TilesService<
     payload: TilePayload & {data?: ExtendedPayload}
   }> = [];
 
-  setTiles: SetTilesCallback;
-  extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>;
+  setTiles: SetTilesCallback<ExtendedPayload>;
+  extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
 
   constructor(
     googleApi: Google,
     mapService: MapService,
     options: google.custom.TilesOptions,
-    setTiles: SetTilesCallback,
-    extendPayload: (payload: TilePayload) => Promise<ExtendedPayload>,
+    setTiles: SetTilesCallback<ExtendedPayload>,
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>,
   ) {
     super(
       googleApi,
@@ -55,13 +65,73 @@ export class TilesService<
     this.object.onUnregister(this.unregisterTile);
   }
 
+  async getExtendedData(
+    payload: TilePayload
+  ): Promise<ExtendedPayload | undefined> {
+    if (!this.extendPayload) return;
+
+    const {width, height} = this.options;
+
+    return this.extendPayload({
+      ...payload,
+      width,
+      height: height || width,
+    });
+  }
+
+  setProps({
+    setTiles,
+    extendPayload,
+    ...props
+  }: CreateTilesServiceProps<ExtendedPayload>): void {
+    this.setTilesCallback(setTiles);
+    this.setExtendPayloadCallback(extendPayload);
+
+    super.setProps(props);
+  }
+
+  updateProps({
+    setTiles,
+    extendPayload,
+    ...props
+  }: CreateTilesServiceProps<ExtendedPayload>): void {
+    this.updateTilesCallback(setTiles);
+    this.updateExtendPayloadCallback(extendPayload);
+
+    super.updateProps(props);
+  }
+
+  updateExtendPayloadCallback(    
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+  ): void {
+    if (extendPayload === this.extendPayload) return;
+
+    this.setExtendPayloadCallback(extendPayload);
+  }
+
+  setExtendPayloadCallback(
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+  ): void {
+    this.extendPayload = extendPayload;
+  }
+
+  updateTilesCallback(setTiles: SetTilesCallback<ExtendedPayload>): void {
+    if (setTiles === this.setTiles) return;
+
+    this.setTilesCallback(setTiles);
+  }
+
+  setTilesCallback(setTiles: SetTilesCallback<ExtendedPayload>): void {
+    this.setTiles = setTiles;
+  }
+
   registerTile = async (
     node: Node, 
     payload: TilePayload, 
   ) => {
     let extendedPayload: ExtendedPayload | undefined;
 
-    extendedPayload = await this.extendPayload(payload) as ExtendedPayload;
+    extendedPayload = await this.getExtendedData(payload) as ExtendedPayload;
 
     const key = tileToKey(payload);
     const tileForAdd = this.tilesForAddByKey[key];
@@ -96,10 +166,10 @@ export class TilesService<
 
   async recalcData() {
     const nodes: Node[] = [];
-    const dataPromises: Promise<ExtendedPayload>[] = [];
+    const dataPromises: Promise<ExtendedPayload | undefined>[] = [];
 
     for (const [node, {data, ...payload}] of this.tiles) {
-      const dataPromise = this.extendPayload(payload)
+      const dataPromise = this.getExtendedData(payload)
       dataPromises.push(dataPromise);
       nodes.push(node);
     }
@@ -108,7 +178,7 @@ export class TilesService<
 
     if (this.isUnmounted) return;
 
-    const newTiles = new Map<Node, TilePayload & {data?: any}>();
+    const newTiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
 
     nodes.forEach((node, index) => {
       const data = dataArray[index];

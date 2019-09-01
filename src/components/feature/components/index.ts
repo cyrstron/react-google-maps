@@ -1,21 +1,3 @@
-/// <reference path="@types/index.d.ts" />
-
-export {
-  GoogleApiProvider,
-  withGoogleApi,
-  useGoogleCtx,
-  useGoogleApi
-} from './components/google-api';
-
-export {
-  Map,
-  DumbMap,
-  MapService,
-  withDumbMapCtx,
-  withSmartMapCtx,
-  useMapCtx,
-} from './components/map';
-
 export {
   Marker,
   DumbMarker,
@@ -23,28 +5,40 @@ export {
   withDumbMarkerCtx,
   useMarkerCtx,
   MarkerService,
+} from './marker';
+
+export {
   Overlay,
   DumbOverlay,
   withSmartOverlayCtx,
   withDumbOverlayCtx,
   useOverlayCtx,
   OverlayService,
+} from './overlay';
+
+export {
   Polygon,
   DumbPolygon,
   withSmartPolygonCtx,
   withDumbPolygonCtx,
   usePolygonCtx,
   PolygonService,
+} from './polygon';
+
+export {
   Polyline,
   DumbPolyline,
   withSmartPolylineCtx,
   withDumbPolylineCtx,
   usePolylineCtx,
   PolylineService,
+} from './polyline';
+
+export {
   Tiles,
   DumbTiles,
   withSmartTilesCtx,
   withDumbTilesCtx,
   useTilesCtx,
   TilesService,
-} from './components/feature';
+} from './tiles';

@@ -1,4 +1,4 @@
-import { withSmartFeatureCtx, withDumbFeatureCtx } from 'components/feature/hocs';
+import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
 import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
 import {PolygonService, createPolygonService} from './services';
 
@@ -27,12 +27,12 @@ export type PolygonEventNames = {
 export {Polygon} from './polygon';
 export {DumbPolygon} from './dumb-polygon';
 
-export const withSmartPolylineCtx = withSmartFeatureCtx<
+export const withSmartPolygonCtx = withSmartFeatureCtx<
   PolygonProps,
   PolygonService
 >(createPolygonService);
 
-export const withDumbPolylineCtx = withDumbFeatureCtx<PolygonProps, PolygonService>();
+export const withDumbPolygonCtx = withDumbFeatureCtx<PolygonProps, PolygonService>();
 
 export {usePolygonCtx} from './hooks';
 

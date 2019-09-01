@@ -17,31 +17,30 @@ export abstract class MapsEventableObjectService<
   constructor(
     google: Google,
     object: MapsObject, {
-    options,
-    handlers,
-  }: {
-    options?: MapsObjectOptions,
-    handlers?: {[key in HandlerName]: MapsObjectEventHandler},
-  }) {
+      options,
+      handlers,
+    }: {
+      options?: MapsObjectOptions,
+      handlers?: {[key in HandlerName]: MapsObjectEventHandler},
+    },
+    public eventNames: {
+      [key in HandlerName]: MapsObjectEventName
+    },  
+    public groupProps: (props: MapsObjectOptions & {
+      [key in HandlerName]?: MapsObjectEventHandler
+    }) => {
+      handlers?: {
+        [key in HandlerName]: MapsObjectEventHandler;
+      },
+      options?: MapsObjectOptions,
+    }
+  ) {
     super(google, object, options);
 
     this.handlers = handlers || {};
 
     this.setHandlers(handlers);
   }
-
-  abstract eventNames: {
-    [key in HandlerName]: MapsObjectEventName
-  };
-  
-  abstract groupProps(props: MapsObjectOptions & {
-    [key in HandlerName]?: MapsObjectEventHandler
-  }): {
-    handlers?: {
-      [key in HandlerName]: MapsObjectEventHandler;
-    },
-    options?: MapsObjectOptions,
-  };
 
   addHandler(    
     handlerName: HandlerName,

@@ -1,14 +1,18 @@
 import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { TilesService, SetTilesCallback } from "./tiles-service";
-import { TilesProps } from "../tiles";
+import { TilesService, SetTilesCallback, ExtendPayloadCallback } from "./tiles-service";
 
-export const createPolylineService: CreateServiceFunction<
-  TilesProps, 
+export interface CreateTilesServiceProps<ExtendedPayload = any> extends google.custom.TilesOptions {
+  setTiles: SetTilesCallback<ExtendedPayload>,
+  extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+};
+
+export const createTilesService: CreateServiceFunction<
+  CreateTilesServiceProps,
   TilesService
 > = (
   googleApi,
   mapService,
-  {extendPayload, setTiles, ...props}: TilesProps & {setTiles: SetTilesCallback},
+  {extendPayload, setTiles, ...props}
 ) => {
-  return new TilesService(googleApi, mapService, props, extendPayload);
+  return new TilesService(googleApi, mapService, props, setTiles, extendPayload);
 }

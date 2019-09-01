@@ -24,10 +24,9 @@ export class MarkerService extends EventableFeatureService<
       google, 
       mapService,
       new google.maps.Marker({map: mapService.getObject(), ...props}),
-      groupMarkerProps(props)
+      groupMarkerProps(props),
+      markerEventNames,
+      groupMarkerProps,
     );
   }
-
-  eventNames = markerEventNames;
-  groupProps = groupMarkerProps;
 }

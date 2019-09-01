@@ -10,7 +10,6 @@ export {withDumbMapCtx} from './hocs/with-dumb-map-ctx';
 export {useMapCtx} from './hooks/use-map-ctx';
 
 import { 
-  MapsObjectEventProps, 
   MapsObjectHandlerName, 
   MapsObjectEventName 
 } from "../../services/maps-eventable-object";
@@ -19,18 +18,8 @@ export type MapEventHandler = google.maps.MapMouseEventHandler |
   google.maps.MapEventHandler | 
   google.maps.MapIconEventHandler;
   
-export type MapEventsProps = MapsObjectEventProps & {
-  onMouseMove?: google.maps.MapMouseEventHandler;
-  onBoundsChanged?: google.maps.MapEventHandler;
-  onCenterChanged?: google.maps.MapEventHandler;
-  onHeadingChanged?: google.maps.MapEventHandler;
-  onIdle?: google.maps.MapEventHandler;
-  onMaptypeIdChanged?: google.maps.MapEventHandler;
-  onProjectionChanged?: google.maps.MapEventHandler;
-  onTilesLoaded?: google.maps.MapEventHandler;
-  onTiltChanged?: google.maps.MapEventHandler;
-  onZoomChanged?: google.maps.MapEventHandler;
-  onClick?: google.maps.MapMouseEventHandler | google.maps.MapIconEventHandler;
+export type MapEventsProps = {
+  [key in MapHandlerName]?: MapEventHandler;
 }
 
 export type MapProps = MapEventsProps & google.maps.MapOptions & {

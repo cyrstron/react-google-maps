@@ -16,11 +16,14 @@ export const useMap = (): [
     return () => service && service.unmount();
   }, [ref.current]);
   
-  const setProps = (props: MapProps) => {
+  const setProps = ({defaultCenter, ...props}: MapProps) => {
     if (!ref.current || !googleApi) return;
 
     if (!service) {
-      const service = new MapService(googleApi, ref.current, props);
+      const service = new MapService(googleApi, ref.current, {
+        center: defaultCenter,
+        ...props,
+      });
 
       setService(service);
     } else {

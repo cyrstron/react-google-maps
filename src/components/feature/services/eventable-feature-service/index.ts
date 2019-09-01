@@ -24,5 +24,5 @@ export type FeatureHandlerName = MapsObjectHandlerName |
 	'onMouseUp';
 
 export type FeatureEventNames = {
-	[key in FeatureHandlerName]?: FeatureEventName;
+	[key in FeatureHandlerName]: FeatureEventName;
 }

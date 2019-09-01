@@ -1,4 +1,4 @@
-import { TilePayload } from "./tiles-overlay-service";
+import { TilePayload } from "./tiles-service";
 
 export function tileToKey({
   tileCoord: {x, y}, 

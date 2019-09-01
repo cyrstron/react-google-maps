@@ -1,7 +1,7 @@
 import { mapEventNames } from './event-names';
 import { groupMapProps } from './group-map-props';
 import { MapEventName, MapEventsProps, MapEventHandler, MapHandlerName } from '../';
-import { MapsEventableObjectService } from 'services/maps-eventable-object';
+import { MapsEventableObjectService } from '../../../services/maps-eventable-object';
 
 export class MapService extends MapsEventableObjectService<
   google.maps.Map,
@@ -18,12 +18,11 @@ export class MapService extends MapsEventableObjectService<
     super(
       googleApi, 
       new googleApi.maps.Map(container, props), 
-      groupMapProps(props)
+      groupMapProps(props),
+      mapEventNames,
+      groupMapProps,
     );
   }
-	
-  eventNames = mapEventNames;	
-  groupProps = groupMapProps;
 
   setCenter(center: google.maps.LatLngLiteral) {
     this.object.setCenter(center);

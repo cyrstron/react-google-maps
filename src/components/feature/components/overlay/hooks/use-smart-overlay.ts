@@ -1,4 +1,4 @@
-import { createUseFeature, createUseUpdateFeature } from "components/feature/hooks";
+import { createUseFeature, createUseUpdateFeature } from "../../../hooks";
 import { OverlayService, createOverlayService } from "../services";
 
 export const useOverlay = createUseFeature<

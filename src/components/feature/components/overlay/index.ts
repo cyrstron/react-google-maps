@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { withSmartFeatureCtx, withDumbFeatureCtx } from 'components/feature/hocs';
+import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
 import {OverlayService, createOverlayService} from './services';
 
 export type OverlayProps = google.custom.OverlayOptions & {
@@ -10,7 +10,7 @@ export type OverlayProps = google.custom.OverlayOptions & {
 export {Overlay} from './overlay';
 export {DumbOverlay} from './dumb-overlay';
 
-export const withSmartPolylineCtx = withSmartFeatureCtx<
+export const withSmartOverlayCtx = withSmartFeatureCtx<
   google.custom.OverlayOptions,
   OverlayService
 >(createOverlayService);
@@ -22,4 +22,4 @@ export const withDumbOverlayCtx = withDumbFeatureCtx<
 
 export {useOverlayCtx} from './hooks';
 
-export {OverlayService} from './services';
+export {OverlayService};

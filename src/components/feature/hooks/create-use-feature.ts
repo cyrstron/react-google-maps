@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
 import {useGoogleCtx} from '../../google-api';
-import {MapService} from '../../map/services';
-import { useMapCtx } from 'components/map';
+import { useMapCtx, MapService } from '../../map';
 
 export interface FeatureService<Props> {
   updateProps: (props: Props) => void;

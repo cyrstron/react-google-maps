@@ -25,9 +25,8 @@ export class PolylineService extends EventableFeatureService<
       mapService,
       new google.maps.Polyline({map: mapService.getObject(), ...props}),
       groupPolylineProps(props),
+      polylineEventNames,
+      groupPolylineProps,
     ); 
   }
-
-  eventNames = polylineEventNames;
-  groupProps = groupPolylineProps;
 }

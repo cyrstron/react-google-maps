@@ -27,11 +27,9 @@ export const withSmartFeatureCtx = <
 >(
   createService: CreateServiceFunction<Props, Service>
 ) => <
-  WrappedProps extends Props
+  WrappedProps extends {}
 >(
-Wrapped: ComponentType<WrappedProps & {
-  service?: Service
-}>
+  Wrapped: ComponentType<WrappedProps>
 ) => {
   const useFeature = createUseFeature<Props, Service>(createService);
 

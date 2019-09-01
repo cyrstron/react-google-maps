@@ -27,9 +27,20 @@ export abstract class EventableFeatureService<
     props: {
       options?: Options, 
       handlers?: {[key in EventHandlerName]: EventHandler}
+    },
+    eventNames: {
+      [key in EventHandlerName]: EventName
+    },  
+    groupProps: (props: Options & {
+      [key in EventHandlerName]?: EventHandler
+    }) => {
+      handlers?: {
+        [key in EventHandlerName]: EventHandler;
+      },
+      options?: Options,
     }
   ) {
-    super(google, object, props);
+    super(google, object, props, eventNames, groupProps);
 
     this.mapService = mapService;
   }

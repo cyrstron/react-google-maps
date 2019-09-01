@@ -25,9 +25,8 @@ export class PolygonService extends EventableFeatureService<
       mapService,
       new google.maps.Polygon({map: mapService.getObject(), ...props}),
       groupPolygonProps(props),
+      polygonEventNames,
+      groupPolygonProps,
     );
   }
-
-  eventNames = polygonEventNames;
-  groupProps = groupPolygonProps;
 }
