@@ -19,6 +19,13 @@
   "bugs": {
     "url": "https://github.com/cyrstron/react-google-maps/issues"
   },
+  "keywords": [
+    "google-maps",
+    "react",
+    "typescript",
+    "javascript",
+    "hooks"
+  ],
   "homepage": "https://github.com/cyrstron/react-google-maps#readme",
   "devDependencies": {
     "@types/google-maps": "^3.2.1",
