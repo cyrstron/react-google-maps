@@ -1,4 +1,4 @@
-import {filterObject} from '../../../services';
+import {filterObject} from '../../../services/maps-object';
 import { MapHandlerName, MapEventHandler, MapEventsProps } from '../';
 
 export interface SortedMapProps {

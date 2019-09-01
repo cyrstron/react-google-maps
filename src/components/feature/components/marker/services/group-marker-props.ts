@@ -1,9 +1,8 @@
-import {filterObject} from '../../../../../services';
-import { 
-  MarkerEventsProps, 
+import {filterObject} from '../../../../../services/maps-object';
+import {  
   MarkerHandlerName, 
   MarkerEventHandler 
-} from '../';
+} from '..';
 
 export interface SortedMarkerProps {
   options?: google.maps.MarkerOptions;
@@ -33,7 +32,7 @@ export const groupMarkerProps = ({
   onVisibleChanged,
   onZIndexChanged,
   ...options
-}: MarkerEventsProps & google.maps.MarkerOptions): SortedMarkerProps => {
+}: {[key in MarkerHandlerName]?: MarkerEventHandler} & google.maps.MarkerOptions): SortedMarkerProps => {
   const result: SortedMarkerProps = {
     options,
   };

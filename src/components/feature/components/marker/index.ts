@@ -1,80 +1,12 @@
-import {
-  Marker as MarkerWrapped,
-} from './marker';
-
-import {MarkerService} from './services';
-import { 
-  withDumbFeatureCtx, 
-  FeatureServiceProps,
-  withCreateDumbFeatureCtx,
-  withSmartFeatureCtx,
-  withFullFeatureCtx,
-} from '../../hocs';
-
-export const Marker = withFullFeatureCtx<
-  MarkerEventName,
-  google.maps.MarkerOptions,
-  MarkerEventHandler,
-  MarkerEventsProps,
-  google.maps.Marker,
-  MarkerService
->(MarkerService)<MarkerProps>(MarkerWrapped);
-export const DumbMarker = withCreateDumbFeatureCtx<
-  MarkerEventName,
-  google.maps.MarkerOptions,
-  MarkerEventHandler,
-  MarkerEventsProps,
-  google.maps.Marker,
-  MarkerService,
-  MarkerProps
->(MarkerWrapped);
-export const withSmartMarkerCtx = withSmartFeatureCtx<
-  MarkerEventName,
-  google.maps.MarkerOptions,
-  MarkerEventHandler,
-  MarkerEventsProps,
-  google.maps.Marker,
-  MarkerService
->(MarkerService);
-export const withDumbMarkerCtx = <Props extends {}>(
-  Wrapped: React.ComponentType<Props & FeatureServiceProps<MarkerService>>,
-) => (
-  withDumbFeatureCtx<
-    MarkerEventName,
-    google.maps.MarkerOptions,
-    MarkerEventHandler,
-    google.maps.Marker,
-    MarkerService,
-    Props
-  >(Wrapped)
-);
-
-export {
-  MarkerService,
-};
-import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
+import {MarkerService, createMarkerService} from './services';
+import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
+import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
 
 export type MarkerEventHandler = google.maps.MapEventHandler | 
   google.maps.MapMouseEventHandler;
 
-export type MarkerEventsProps = FeatureEventsProps & {
-  onAnimationChanged?: google.maps.MapEventHandler;
-  onClickableChanged?: google.maps.MapEventHandler;
-  onCursorChanged?: google.maps.MapEventHandler;
-  onDraggableChanged?: google.maps.MapEventHandler;
-  onFlatChanged?: google.maps.MapEventHandler;
-  onIconChanged?: google.maps.MapEventHandler;
-  onMouseDown?: google.maps.MapEventHandler;
-  onMouseUp?: google.maps.MapEventHandler;
-  onPositionChanged?: google.maps.MapEventHandler;
-  onShapeChanged?: google.maps.MapEventHandler;
-  onTitleChanged?: google.maps.MapEventHandler;
-  onVisibleChanged?: google.maps.MapEventHandler;
-  onZIndexChanged?: google.maps.MapEventHandler;
-}
-
 export type MarkerProps = google.maps.MarkerOptions & 
-  MarkerEventsProps & {
+  {[key in MarkerHandlerName]?: MarkerEventHandler} & {
     position: google.maps.LatLngLiteral;
     title: string;
   };
@@ -112,3 +44,17 @@ export type MarkerHandlerName = FeatureHandlerName |
 export type MarkerEventNames = {
   [key in MarkerHandlerName]: MarkerEventName;
 }
+
+export {Marker} from './marker';
+export {DumbMarker} from './dumb-marker';
+
+export const withSmartMarkerCtx = withSmartFeatureCtx<
+  MarkerProps,
+  MarkerService
+>(createMarkerService);
+
+export const withDumbMarkerCtx = withDumbFeatureCtx<MarkerProps, MarkerService>();
+
+export {useMarkerCtx} from './hooks';
+
+export {MarkerService};

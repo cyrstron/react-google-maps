@@ -1,7 +1,7 @@
-import {featureEventNames} from '../../../services';
+import {featureEventNames} from '../../../services/eventable-feature-service';
 import {
 	 PolylineEventNames 
-	} from '../';
+	} from '..';
 
 export const polylineEventNames: PolylineEventNames = {
 	...featureEventNames,

@@ -1,28 +1,28 @@
-import { MapsObjectService } from '../../../services';
 import { mapEventNames } from './event-names';
 import { groupMapProps } from './group-map-props';
-import { MapEventName, MapEventsProps, MapEventHandler } from '../';
+import { MapEventName, MapEventsProps, MapEventHandler, MapHandlerName } from '../';
+import { MapsEventableObjectService } from '../../../services/maps-eventable-object';
 
-export class MapService extends MapsObjectService<
+export class MapService extends MapsEventableObjectService<
   google.maps.Map,
   MapEventName,
   google.maps.MapOptions,
-  MapEventHandler
+  MapEventHandler,
+  MapHandlerName
 > {
   constructor(
     googleApi: Google,
     container: HTMLDivElement,
-    options: google.maps.MapOptions & MapEventsProps,
+    props: google.maps.MapOptions & MapEventsProps,
   ) {
-    super(googleApi, new googleApi.maps.Map(container, options));
-    
-    const {handlers} = this.groupProps(options);
-
-    this.setListeners(handlers);
+    super(
+      googleApi, 
+      new googleApi.maps.Map(container, props), 
+      groupMapProps(props),
+      mapEventNames,
+      groupMapProps,
+    );
   }
-	
-  eventNames = mapEventNames;	
-  groupProps = groupMapProps;
 
   setCenter(center: google.maps.LatLngLiteral) {
     this.object.setCenter(center);

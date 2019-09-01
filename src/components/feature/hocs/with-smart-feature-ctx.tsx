@@ -1,63 +1,52 @@
-import React, {createContext} from 'react';
-import {MapService} from '../../map';
-import {FeatureService} from '../services';
-import {withFullFeatureCtx, CreateServiceProps} from './with-full-feature-ctx';
+import React, {
+  createContext, 
+  ComponentType,
+} from 'react';
+import { createUseFeature, FeatureService, CreateServiceFunction } from '../hooks/create-use-feature';
 
-export type FeatureCtxValue = any | undefined;
-export type CreateFeatureCtxValue = any | undefined;
+export interface FeatureServiceProps<Service> {
+  service?: Service;
+}
 
-const FeatureCtx = createContext<FeatureCtxValue>(undefined);
-const CreateFeatureCtx = createContext<CreateFeatureCtxValue>(undefined);
+export interface CreateFeatureProps<Props> {
+  setProps: (props: Props) => void;
+};
 
-export const FeatureCtxProvider = FeatureCtx.Provider;
-export const FeatureCtxConsumer = FeatureCtx.Consumer;
-export const CreateFeatureCtxProvider = CreateFeatureCtx.Provider;
-export const CreateFeatureCtxConsumer = CreateFeatureCtx.Consumer;
+export const FeatureCtx = createContext<any | undefined>(undefined);
+export const CreateFeatureCtx = createContext<((props: any) => void) | undefined>(undefined);
+
+const FeatureProvider = FeatureCtx.Provider;
+const CreateFeatureProvider = CreateFeatureCtx.Provider;
+
+export const FeatureConsumer = FeatureCtx.Consumer;
+export const CreateFeatureConsumer = CreateFeatureCtx.Consumer;
 
 export const withSmartFeatureCtx = <
-  EventName,
-  Options,
-  EventHandler,
-  FeatureHandlers,
-  Feature extends google.maps.Feature<
-    EventName,
-    Options,
-    EventHandler
-  >,
-  Service extends FeatureService<
-    Feature,
-    EventName,
-    Options,
-    EventHandler
-  >
+  Props, 
+  Service extends FeatureService<Props>
 >(
-  ComponentService: new(googleApi: Google, mapService: MapService, props: Options & FeatureHandlers) => Service,
-) => <Props extends {}>(
-  Wrapped: React.ComponentType<Props & {featureService?: Service}>,
-): React.ComponentType<Props> => {
-  const WithSmartFeatureCtx = ({
-    createFeatureService, 
-    ...props
-  }: Props & CreateServiceProps<Options & FeatureHandlers, Service>) => (
-    <CreateFeatureCtxProvider
-      value={createFeatureService}
-    >
-      <FeatureCtxProvider
-        value={props.featureService}
-      >
-        <Wrapped
-          {...props as Props}
-        />
-      </FeatureCtxProvider>
-    </CreateFeatureCtxProvider>
-  );
+  createService: CreateServiceFunction<Props, Service>
+) => <
+  WrappedProps extends {}
+>(
+  Wrapped: ComponentType<WrappedProps>
+) => {
+  const useFeature = createUseFeature<Props, Service>(createService);
 
-  return withFullFeatureCtx<
-    EventName,
-    Options,
-    EventHandler,
-    FeatureHandlers,
-    Feature,
-    Service
-  >(ComponentService)<Props>(WithSmartFeatureCtx);
-};
+  return (props: WrappedProps) => {
+    const [service, setProps] = useFeature();
+
+    return (
+      <CreateFeatureProvider value={setProps}>
+        <FeatureProvider
+          value={service}
+        >
+          <Wrapped
+            service={service}
+            {...props}
+          />
+        </FeatureProvider>
+      </CreateFeatureProvider>
+    );
+  }
+}

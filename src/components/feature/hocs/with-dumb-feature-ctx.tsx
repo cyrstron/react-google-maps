@@ -1,37 +1,27 @@
-import React from 'react';
-import {FeatureService} from '../services';
-import {FeatureCtxConsumer} from './with-smart-feature-ctx';
-
-export interface FeatureServiceProps<FeatureService> {
-  featureService: FeatureService
-}
+import React, {ComponentType} from 'react';
+import { FeatureService } from '../hooks/create-use-feature';
+import { createUseFeatureCtx } from '../hooks';
 
 export const withDumbFeatureCtx = <
-  EventName,
-  Options,
-  EventHandler,
-  Feature extends google.maps.Feature<
-    EventName,
-    Options,
-    EventHandler
-  >,
-  Service extends FeatureService<
-    Feature,
-    EventName,
-    Options,
-    EventHandler
-  >,
-  Props extends {}
->(
-  Wrapped: React.ComponentType<Props & FeatureServiceProps<Service>>,
-): React.ComponentType<Props> => {
-  const WithDumbFeatureCtx = (props: Props) => (
-    <FeatureCtxConsumer>
-      {(featureService?: Service) => featureService && (
-        <Wrapped featureService={featureService as Service} {...props}/>
-      )}
-    </FeatureCtxConsumer>
-  );
+  Props, 
+  Service extends FeatureService<Props>
+>() => {
+  const useFeatureCtx = createUseFeatureCtx<Service>();
+  return <
+    WrappedProps extends {}
+  >(
+  Wrapped: ComponentType<WrappedProps & {
+    service: Service
+  }>) => (props: WrappedProps) => {
+    const service = useFeatureCtx();
 
-  return WithDumbFeatureCtx;
-};
+    if (!service) return null;
+
+    return (
+      <Wrapped
+        service={service}
+        {...props}
+      />
+    );
+  }
+}

@@ -1,34 +1,5 @@
 /// <reference path="@types/index.d.ts" />
 
-export type MapsObjectHandlerName = 'onClick' |
-  'onDblClick' |
-  'onDrag' |
-  'onDragStart' |
-  'onDragEnd' |
-  'onMouseOut' |
-  'onMouseOver' |
-  'onRightClick';
-
-export type MapsObjectEventName = 'click' |
-  'dblclick' |
-  'drag' |
-  'dragstart' |
-  'dragend' |
-  'mouseout' |
-  'mouseover' |
-  'rightclick';
-
-export interface MapsObjectEventProps {
-  onClick?: google.maps.MapMouseEventHandler;
-  onDblClick?: google.maps.MapMouseEventHandler;
-  onDrag?: google.maps.MapMouseEventHandler;
-  onDragStart?: google.maps.MapMouseEventHandler;
-  onDragEnd?: google.maps.MapMouseEventHandler;
-  onMouseOut?: google.maps.MapMouseEventHandler;
-  onMouseOver?: google.maps.MapMouseEventHandler;
-  onRightClick?: google.maps.MapMouseEventHandler;
-}
-
 export {
   GoogleApiProvider,
   withGoogleApi,
@@ -42,47 +13,38 @@ export {
   MapService,
   withDumbMapCtx,
   withSmartMapCtx,
-  withDumbCreateMapCtx,
+  useMapCtx,
 } from './components/map';
+
 export {
-  CustomOverlay,
-  DumbCustomOverlay,
-  withDumbOverlayCtx,
+  Marker,
+  DumbMarker,
+  withSmartMarkerCtx,
+  withDumbMarkerCtx,
+  useMarkerCtx,
+  MarkerService,
+  Overlay,
+  DumbOverlay,
   withSmartOverlayCtx,
-  CustomOverlayService,
-} from './components/custom-overlay';
-export {
-  TilesOverlay,
-  DumbTilesOverlay,
-  withDumbTilesCtx,
-  withSmartTilesCtx,
-  TilesOverlayService,
-} from './components/tiles-overlay';
-export {
+  withDumbOverlayCtx,
+  useOverlayCtx,
+  OverlayService,
   Polygon,
   DumbPolygon,
   withSmartPolygonCtx,
   withDumbPolygonCtx,
+  usePolygonCtx,
   PolygonService,
   Polyline,
   DumbPolyline,
   withSmartPolylineCtx,
   withDumbPolylineCtx,
+  usePolylineCtx,
   PolylineService,
-  Marker,
-  DumbMarker,
-  withSmartMarkerCtx,
-  withDumbMarkerCtx,
-  MarkerService,
-  FeatureCtxProvider,
-  FeatureCtxConsumer,
-  CreateFeatureCtxProvider,
-  CreateFeatureCtxConsumer,
-  withSmartFeatureCtx,
-  withFullFeatureCtx,
-  CreateServiceProps,
-  CreateFeatureService,
-  withDumbFeatureCtx,
-  FeatureServiceProps,
-  withCreateDumbFeatureCtx,
+  Tiles,
+  DumbTiles,
+  withSmartTilesCtx,
+  withDumbTilesCtx,
+  useTilesCtx,
+  TilesService,
 } from './components/feature';

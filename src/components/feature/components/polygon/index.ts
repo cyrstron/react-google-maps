@@ -1,75 +1,12 @@
-import {Polygon as PolygonWrapped} from './polygon';
-import {PolygonService} from './services';
-import { 
-  withDumbFeatureCtx, 
-  FeatureServiceProps,
-  withCreateDumbFeatureCtx,
-  withSmartFeatureCtx,
-  withFullFeatureCtx,
-} from '../../hocs';
+import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
+import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import {PolygonService, createPolygonService} from './services';
 
-export const Polygon = withFullFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService
->(PolygonService)<PolygonProps>(PolygonWrapped);
-
-export const DumbPolygon = withCreateDumbFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService,
-  PolygonProps
->(PolygonWrapped);
-
-export const withSmartPolygonCtx = withSmartFeatureCtx<
-  PolygonEventName,
-  google.maps.PolygonOptions,
-  PolygonEventHandler,
-  PolygonEventsProps,
-  google.maps.Polygon,
-  PolygonService
->(PolygonService);
-
-export const withDumbPolygonCtx = <Props extends {}>(
-  Wrapped: React.ComponentType<Props & FeatureServiceProps<PolygonService>>,
-) => (
-  withDumbFeatureCtx<
-    PolygonEventName,
-    google.maps.PolygonOptions,
-    PolygonEventHandler,
-    google.maps.Polygon,
-    PolygonService,
-    Props
-  >(Wrapped)
-);
-
-export {
-  PolygonService,
-};
-import { FeatureEventsProps, FeatureEventName, FeatureHandlerName } from "../../types.d";
-
-export type PolygonEventsProps = FeatureEventsProps & {
-	onMouseDown?: google.maps.MapPolyEventHandler,
-	onMouseMove?: google.maps.MapPolyEventHandler,
-	onMouseUp?: google.maps.MapPolyEventHandler,    
-	onClick?: google.maps.MapPolyEventHandler,
-	onDblClick?: google.maps.MapPolyEventHandler,
-	onMouseOut?: google.maps.MapPolyEventHandler,
-	onMouseOver?: google.maps.MapPolyEventHandler,
-	onRightClick?: google.maps.MapPolyEventHandler,
-}
-  
 export type PolygonEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
 
 export type PolygonProps = google.maps.PolygonOptions & 
-	PolygonEventsProps & {
+	{[key in PolygonHandlerName]?: PolygonEventHandler} & {
 		paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][]
 	};
   
@@ -86,3 +23,17 @@ export type PolygonHandlerName = FeatureHandlerName |
 export type PolygonEventNames = {
 	[key in PolygonHandlerName]: PolygonEventName;
 };
+
+export {Polygon} from './polygon';
+export {DumbPolygon} from './dumb-polygon';
+
+export const withSmartPolygonCtx = withSmartFeatureCtx<
+  PolygonProps,
+  PolygonService
+>(createPolygonService);
+
+export const withDumbPolygonCtx = withDumbFeatureCtx<PolygonProps, PolygonService>();
+
+export {usePolygonCtx} from './hooks';
+
+export {PolygonService};

@@ -1,15 +1,15 @@
 import { createBoundsUtils } from './bounds-utils';
-import { createCustomOverlayClass } from './custom-overlay';
-import { createTilesOverlayClass } from './tiles-overlay';
+import { createOverlayClass } from './overlay';
+import { createTilesClass } from './tiles';
 
 export const extendGoogleApi = (google: Google) => {
-  const CustomOverlay = createCustomOverlayClass(google);
-  const TilesOverlay = createTilesOverlayClass(google);
+  const Overlay = createOverlayClass(google);
+  const Tiles = createTilesClass(google);
   const boundsUtils = createBoundsUtils(google);
 
   google.custom = {
-    CustomOverlay,
-    TilesOverlay,
+    Overlay,
+    Tiles,
     ...boundsUtils,
   };
 };
