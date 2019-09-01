@@ -1,9 +1,9 @@
 import React, { ReactNode} from 'react';
 import { useGoogleApi } from './hooks/use-google-api';
 import { GoogleApiCtxProvider } from './hooks/use-google-ctx';
+import { GoogleApiOptions } from './services/google-api-service';
 
-export interface GoogleProps {
-  apiKey: string;
+export interface GoogleProps extends GoogleApiOptions {
   children: ReactNode;
 }
 
@@ -14,14 +14,14 @@ export interface GoogleState {
 }
 
 export const GoogleApiProvider = ({
-  apiKey, 
-  children
+  children,
+  ...props
 }: GoogleProps) => {
   const {
     isPending,
     err,
     googleApi
-  } = useGoogleApi(apiKey);
+  } = useGoogleApi(props);
 
   if (isPending) return <div>Loading...</div>;
 
