@@ -58,5 +58,11 @@ export {
   withDumbRectangleCtx,
   withSmartRectangleCtx,
   useRectangleCtx,
-  RectangleService,
+  RectangleService,  
+  GroundOverlay,
+  DumbGroundOverlay,
+  withSmartGroundOverlayCtx,
+  withDumbGroundOverlayCtx,
+  useGroundOverlayCtx,
+  GroundOverlayService,
 } from './components/feature';

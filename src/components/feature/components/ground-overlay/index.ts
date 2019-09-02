@@ -3,8 +3,14 @@ import {GroundOverlayService, createGroundOverlayService} from './services';
 
 export type GroundOverlayEventHandler = google.maps.MapMouseEventHandler;
 
-export type GroundOverlayProps = google.maps.GroundOverlayOptions & 
-	{[key in GroundOverlayHandlerName]?: GroundOverlayEventHandler};
+export type GroundOverlaySettings = google.maps.GroundOverlayOptions & {
+	bounds: google.maps.LatLngBoundsLiteral;
+	url: string;
+}
+
+export type GroundOverlayProps = GroundOverlaySettings &	{
+	[key in GroundOverlayHandlerName]?: GroundOverlayEventHandler
+};
   
 export type GroundOverlayEventName = 'click' | 'dblclick';
 	

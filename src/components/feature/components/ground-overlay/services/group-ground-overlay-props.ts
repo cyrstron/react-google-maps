@@ -1,11 +1,12 @@
 import {filterObject} from '../../../../../services/maps-object';
 import { 
   GroundOverlayEventHandler, 
-  GroundOverlayHandlerName
+  GroundOverlayHandlerName,
+  GroundOverlaySettings
 } from '..';
 
 export interface SortedGroundOverlayProps {
-  options?: google.maps.GroundOverlayOptions;
+  options?: GroundOverlaySettings;
   handlers?: {[key in GroundOverlayHandlerName]: GroundOverlayEventHandler};
 }
 
@@ -13,7 +14,7 @@ export const groupGroundOverlayProps = ({
   onClick,
   onDblClick,
   ...options
-}: {[key in GroundOverlayHandlerName]?: GroundOverlayEventHandler} & google.maps.GroundOverlayOptions): SortedGroundOverlayProps => {
+}: {[key in GroundOverlayHandlerName]?: GroundOverlayEventHandler} & GroundOverlaySettings): SortedGroundOverlayProps => {
   const result: SortedGroundOverlayProps = {
     options,
   };

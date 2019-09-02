@@ -60,3 +60,12 @@ export {
   useTilesOverlayCtx,
   TilesOverlayService,
 } from './tiles-overlay';
+
+export {
+  GroundOverlay,
+  DumbGroundOverlay,
+  withSmartGroundOverlayCtx,
+  withDumbGroundOverlayCtx,
+  useGroundOverlayCtx,
+  GroundOverlayService,
+} from './ground-overlay';

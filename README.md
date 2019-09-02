@@ -37,10 +37,10 @@ const MyAwesomeApp = () => (
 * Rectangle
 * TilesOverlay (MapType)
 * DomOverlay (OverlayView)
+* GroundOverlay
 
 ##### Features to be implemented:
 
-* GroundOverlay
 * Heatmap
 * InfoWindow
 
@@ -85,7 +85,7 @@ const App = () => (
 
 ### Custom loading callback
 
-You can load Google API using your own proxy
+You can load Google API using your own loading method
 
 ```javascript
 import {GoogleApiProvider} from 'react-google-maps-ts';
@@ -107,7 +107,7 @@ const App = () => (
 
 ### Extending library with you own classes
 
-You can load Google API using your own proxy
+You can extend Google API with your custom objects
 
 ```javascript
 import {GoogleApiProvider} from 'react-google-maps-ts';
