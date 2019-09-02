@@ -1,1 +1,0 @@
-export {createTilesClass} from './tiles';

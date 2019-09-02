@@ -6,13 +6,10 @@ export const buildUrlString = ({
   drawing,
   places,
   visualization,
-  proxy,
   language,
   region,
   version,
 }:GoogleApiOptions): string => {
-  const host = proxy || 'https://maps.google.com/maps/api/js';
-
   const libParams: {[key in string]?: boolean} = {  
     geometry,
     drawing,
@@ -37,5 +34,5 @@ export const buildUrlString = ({
     .map((key) => `${key}=${queryParams[key]}`)
     .join('&');
 
-  return `${host}?${paramsString}`;
+  return `https://maps.google.com/maps/api/js?${paramsString}`;
 }

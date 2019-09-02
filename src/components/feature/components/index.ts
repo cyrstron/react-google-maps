@@ -8,13 +8,13 @@ export {
 } from './marker';
 
 export {
-  Overlay,
-  DumbOverlay,
-  withSmartOverlayCtx,
-  withDumbOverlayCtx,
-  useOverlayCtx,
-  OverlayService,
-} from './overlay';
+  DomOverlay,
+  DumbDomOverlay,
+  withSmartDomOverlayCtx,
+  withDumbDomOverlayCtx,
+  useDomOverlayCtx,
+  DomOverlayService,
+} from './dom-overlay';
 
 export {
   Polygon,
@@ -35,10 +35,10 @@ export {
 } from './polyline';
 
 export {
-  Tiles,
-  DumbTiles,
-  withSmartTilesCtx,
-  withDumbTilesCtx,
-  useTilesCtx,
-  TilesService,
-} from './tiles';
+  TilesOverlay,
+  DumbTilesOverlay,
+  withSmartTilesOverlayCtx,
+  withDumbTilesOverlayCtx,
+  useTilesOverlayCtx,
+  TilesOverlayService,
+} from './tiles-overlay';

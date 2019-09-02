@@ -98,7 +98,7 @@ declare namespace google.maps {
 }
 
 declare namespace google.custom {
-  export interface Tiles {
+  export interface TilesOverlay {
     index: number;
     map: google.maps.Map | null;
     getTile(
@@ -120,7 +120,7 @@ declare namespace google.custom {
     onUnregister(callback: (node: Node) => void): void;
   }
 
-  export interface TilesOptions {
+  export interface TilesOverlayOptions {
     tagName?: string,
     width: number,
     height?: number,
@@ -132,14 +132,14 @@ declare namespace google.custom {
     map?: google.maps.Map,
   }
 
-  export type TilesConstructor = new(
-    options: TilesOptions & {      
+  export type TilesOverlayConstructor = new(
+    options: TilesOverlayOptions & {      
       registerTile?: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
       unregisterTile?: (node: Node) => void,
     }
-  ) => Tiles;
+  ) => TilesOverlay;
 
-  export interface OverlayOptions {
+  export interface DomOverlayOptions {
     map?: google.maps.Map;
     bounds: google.maps.LatLngBounds | 
       google.maps.LatLngBoundsLiteral |
@@ -148,11 +148,11 @@ declare namespace google.custom {
     isHidden?: boolean;
   }
   
-  export type OverlayConstructor = new(
-    options: OverlayOptions,
-  ) => Overlay;
+  export type DomOverlayConstructor = new(
+    options: DomOverlayOptions,
+  ) => DomOverlay;
   
-  export interface Overlay extends google.maps.OverlayView {
+  export interface DomOverlay extends google.maps.OverlayView {
     getContainer(): HTMLDivElement | void;
     setOpacity(opacity?: number): void;
     setIsHidden(isHidden?: boolean): void;
@@ -166,7 +166,7 @@ declare namespace google.custom {
       isHidden,
       bounds,
       map,
-    }: google.custom.OverlayOptions): void
+    }: google.custom.DomOverlayOptions): void
   }
 }
 
@@ -183,8 +183,8 @@ declare namespace google {
     Size: google.maps.SizeConstructor;
   }
   export interface Custom {
-    Tiles: google.custom.TilesConstructor;
-    Overlay: google.custom.OverlayConstructor;
+    TilesOverlay: google.custom.TilesOverlayConstructor;
+    DomOverlay: google.custom.DomOverlayConstructor;
     boundsToLiteral(
       bounds: google.maps.LatLngBounds,
     ): google.maps.LatLngBoundsLiteral;
