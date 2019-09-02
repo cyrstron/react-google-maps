@@ -168,7 +168,7 @@ interface AwesomeAppProps {
 const geoPoint = {lat: 50, lng: 50};
 
 const MyAwesomeApp = (
-  {mapService}: AwesomeAppProps & {mapService: MapService}
+  {mapService}: AwesomeAppProps & {mapService: MapService | undefined}
 ) => {  
   const googleApi = useGoogleCtx();
 
