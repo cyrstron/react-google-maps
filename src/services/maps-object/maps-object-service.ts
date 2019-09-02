@@ -30,7 +30,7 @@ export abstract class MapsObjectService<
 
     this.options = {
       ...this.options,
-      options
+      ...options,
     };
 
     this.object.setOptions(options);
