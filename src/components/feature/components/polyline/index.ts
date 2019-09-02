@@ -10,15 +10,9 @@ export type PolylineProps = google.maps.PolylineOptions &
 		path: google.maps.LatLngLiteral[]
 	};
   
-export type PolylineEventName = FeatureEventName |  
-	'mousedown' |
-	'mousemove'	|
-	'mouseup';
+export type PolylineEventName = FeatureEventName;
 	
-export type PolylineHandlerName = FeatureHandlerName |
-	'onMouseDown' |
-	'onMouseMove' | 
-	'onMouseUp';
+export type PolylineHandlerName = FeatureHandlerName;
 
 export type PolylineEventNames = {
 	[key in PolylineHandlerName]: PolylineEventName;

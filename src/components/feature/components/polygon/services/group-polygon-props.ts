@@ -33,11 +33,12 @@ export const groupPolygonProps = ({
     onDrag,
     onDragEnd,
     onDragStart,
-    onMouseDown,
     onMouseOut,
     onMouseOver,
-    onMouseUp,
     onRightClick,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
   });
 
   if (handlers) {

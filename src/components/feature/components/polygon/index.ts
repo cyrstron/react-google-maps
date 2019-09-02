@@ -10,15 +10,9 @@ export type PolygonProps = google.maps.PolygonOptions &
 		paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][]
 	};
   
-export type PolygonEventName = FeatureEventName |  
-	'mousedown' |
-	'mousemove'	|
-	'mouseup';
+export type PolygonEventName = FeatureEventName;
 	
-export type PolygonHandlerName = FeatureHandlerName |
-	'onMouseDown' |
-	'onMouseMove' | 
-	'onMouseUp';
+export type PolygonHandlerName = FeatureHandlerName;
 
 export type PolygonEventNames = {
 	[key in PolygonHandlerName]: PolygonEventName;
