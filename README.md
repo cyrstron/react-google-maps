@@ -33,16 +33,16 @@ const MyAwesomeApp = () => (
 * Marker
 * Polygon
 * Polyline
+* Circle
+* Rectangle
 * TilesOverlay
 * DomOverlay
 
 ##### Features to be implemented:
 
-* Circle
 * GroundOverlay
 * Heatmap
 * InfoWindow
-* Rectangle
 
 ## `GoogleMapsProvider`
 
