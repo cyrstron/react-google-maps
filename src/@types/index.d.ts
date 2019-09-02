@@ -22,6 +22,10 @@ declare namespace google.maps {
     new(options: google.maps.CircleOptions): google.maps.Circle;
   }
 
+  export interface RectangleConstructor {
+    new(options: google.maps.RectangleOptions): google.maps.Rectangle;
+  }
+
   export interface PolylineConstructor {
     new(options: google.maps.PolylineOptions): google.maps.Polyline;
   }
@@ -181,6 +185,7 @@ declare namespace google {
     Polygon: google.maps.PolygonConstructor;
     Polyline: google.maps.PolylineConstructor;
     Circle: google.maps.CircleConstructor;
+    Rectangle: google.maps.RectangleConstructor;
     LatLng: google.maps.LatLngConstructor;
     LatLngBounds: google.maps.LatLngBoundsConstructor;
     OverlayView: google.maps.OverlayViewConstructor;
