@@ -125,3 +125,75 @@ const App = () => (
   </GoogleApiProvider>
 );
 ```
+
+## Smart vs Dumb components
+
+Main purpose of this library is combining of declarative React syntax with free accessibility to Google Maps objects without doubtful workarounds.
+
+Each component has smart and dumb implementations.
+
+### Smart components
+
+Smart components are self-contained. They have their own encapsulated Google Maps objects and you can't access them. But they are extremely simple to use and their intarfaces are similar to corresponding Google Maps object.
+
+```javascript
+import {Map, Marker} from 'react-google-maps-ts';
+
+const geoPoint = {lat: 50, lng: 50};
+
+const MyAwesomeApp = () => (
+  <Map
+    defaultCenter={geoPoint}
+  >
+    <Marker 
+      position={geoPoint}
+      zoom={8}
+      title="My perfect marker"
+    />
+  </Map>
+);
+```
+
+### Dumb components
+
+Dumb components use Google Maps objects from external context. So you can access it if you need.
+
+```javascript
+import {DumbMap, withSmartMapCtx, MapService, useGoogleCtx} from 'react-google-maps-ts';
+
+interface AwesomeAppProps {
+  ...
+};
+
+const geoPoint = {lat: 50, lng: 50};
+
+const MyAwesomeApp = (
+  {mapService}: AwesomeAppProps & {mapService: MapService}
+) => {  
+  const googleApi = useGoogleCtx();
+
+  const centerMap = () => { 
+    // Notice that such approach creates new function on each render
+    // It is provided only as example. It is recomended to avoid it.
+
+    if (!mapService || !googleApi) return;
+
+    const {object} = mapService; // Google Maps object;
+
+    const defaultCenter = new googleApi.maps.LatLng(geoPoint.lat, geoPoint.lng);
+
+    object.setCenter(defaultCenter);
+  }
+
+  return (
+    <>
+      <button onClick={centerMap}>Center map</button>
+      <DumbMap
+        defaultCenter={geoPoint}
+      />
+    </>
+  );
+}
+
+withSmartMapCtx<AwesomeAppProps>(MyAwesomeApp);
+```
