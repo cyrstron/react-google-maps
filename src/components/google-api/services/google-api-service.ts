@@ -13,28 +13,46 @@ export interface GoogleApiOptions {
   drawing?: boolean;
   places?: boolean;
   visualization?: boolean;
-  proxy?: string;
   language?: string;
   region?: string;
   version?: string;
+};
+
+export interface GoogleLoadOptions {
+  load: () => Promise<Google>;
 }
 
-export interface GoogleApiProps extends GoogleApiOptions {
+export interface GoogleProxyOptions {
+  proxy: string;
+}
+
+export type GoogleLoadSettings = GoogleApiOptions | GoogleLoadOptions | GoogleProxyOptions;
+
+export type GoogleApiProps = GoogleLoadSettings & {
   custom?: boolean;
   extend?: (googleApi: Google) => void;
 }
 
 export class GoogleApiService {
-  url: string;
+  url?: string;
+  proxy?: string;
+  load?: () => Promise<Google>;
+
   custom: boolean;
   extend?: (googleApi: Google) => void;
 
   constructor({
-    extend,
     custom = true,
-    ...options
+    extend,
+    ...props
   }: GoogleApiProps) {
-    this.url = buildUrlString(options);
+    if ('proxy' in props) {
+      this.proxy = props.proxy;
+    } else if ('load' in props) {
+      this.load = props.load;
+    } else {
+      this.url = buildUrlString(props);
+    }
 
     this.custom = custom;
     this.extend = extend;
@@ -43,9 +61,20 @@ export class GoogleApiService {
   loadApi(): Promise<Google> {
     if (window.google) return Promise.resolve(window.google);
 
+    if (this.load) {
+      return this.load();
+    }
+
+    const src = this.proxy || this.url;
+
+    if (!src) {
+      throw new Error('You must provide Google API key, proxy url or load function');
+    }
+
     const script: HTMLScriptElement = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = this.url;
+
+    script.type = 'text/javascript';    
+    script.src = src
 
     document.body.append(script);
 

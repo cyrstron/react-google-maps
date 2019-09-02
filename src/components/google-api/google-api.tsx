@@ -1,10 +1,12 @@
-import React, { ReactNode} from 'react';
+import React, { ReactNode, ComponentType} from 'react';
 import { useGoogleApi } from './hooks/use-google-api';
 import { GoogleApiCtxProvider } from './hooks/use-google-ctx';
-import { GoogleApiOptions } from './services/google-api-service';
+import { GoogleApiProps } from './services/google-api-service';
 
-export interface GoogleProps extends GoogleApiOptions {
+export type GoogleProps = GoogleApiProps & {
   children: ReactNode;
+  ErrorMessage?: ComponentType<{error: Error}>;
+  Loader?: ComponentType<{}>;
 }
 
 export interface GoogleState {
@@ -15,6 +17,8 @@ export interface GoogleState {
 
 export const GoogleApiProvider = ({
   children,
+  ErrorMessage,
+  Loader,
   ...props
 }: GoogleProps) => {
   const {
@@ -23,9 +27,13 @@ export const GoogleApiProvider = ({
     googleApi
   } = useGoogleApi(props);
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return Loader ? (
+    <Loader />
+  ) : null;
 
-  if (err) return <div>{err.message}</div>;
+  if (err) return ErrorMessage ? (
+    <ErrorMessage error={err} />
+  ): null;
 
   return (    
     <GoogleApiCtxProvider

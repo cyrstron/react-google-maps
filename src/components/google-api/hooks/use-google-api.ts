@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GoogleApiService, GoogleApiOptions } from "../services/google-api-service";
+import { GoogleApiService, GoogleApiProps } from "../services/google-api-service";
 
 export interface GoogleState {
   isPending: boolean;
@@ -7,7 +7,7 @@ export interface GoogleState {
   err: Error | null;
 }
 
-export function useGoogleApi(props: GoogleApiOptions): GoogleState {  
+export function useGoogleApi(props: GoogleApiProps): GoogleState {  
   const [googleApi, setGoogleApi] = useState<Google | undefined>(undefined);
   const [err, setError] = useState<Error | null>(null);
   const [isPending, setIsPending] = useState<boolean>(true);
@@ -20,6 +20,8 @@ export function useGoogleApi(props: GoogleApiOptions): GoogleState {
 
       setGoogleApi(googleApi);
     } catch (err) {
+      console.error(err);
+
       setError(err);
     } 
 
