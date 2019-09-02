@@ -1,6 +1,6 @@
 import {MapService} from '../../../../map';
 import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { polygonEventNames } from './event-names';
+import { rectangleEventNames } from './event-names';
 import { groupRectangleProps } from './group-rectangle-props';
 import {
   RectangleEventName, 
@@ -25,7 +25,7 @@ export class RectangleService extends EventableFeatureService<
       mapService,
       new google.maps.Rectangle({map: mapService.getObject(), ...props}),
       groupRectangleProps(props),
-      polygonEventNames,
+      rectangleEventNames,
       groupRectangleProps,
     );
   }

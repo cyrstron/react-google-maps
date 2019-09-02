@@ -35,6 +35,24 @@ export {
 } from './polyline';
 
 export {
+  Circle,
+  DumbCircle,
+  withDumbCircleCtx,
+  withSmartCircleCtx,
+  useCircleCtx,
+  CircleService,
+} from './circle';
+
+export {
+  Rectangle,
+  DumbRectangle,
+  withDumbRectangleCtx,
+  withSmartRectangleCtx,
+  useRectangleCtx,
+  RectangleService,
+} from './rectangle';
+
+export {
   TilesOverlay,
   DumbTilesOverlay,
   withSmartTilesOverlayCtx,

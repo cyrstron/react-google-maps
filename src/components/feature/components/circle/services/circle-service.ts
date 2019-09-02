@@ -1,6 +1,6 @@
 import {MapService} from '../../../../map';
 import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { polygonEventNames } from './event-names';
+import { circleEventNames } from './event-names';
 import { groupCircleProps } from './group-circle-props';
 import {
   CircleEventName, 
@@ -25,7 +25,7 @@ export class CircleService extends EventableFeatureService<
       mapService,
       new google.maps.Circle({map: mapService.getObject(), ...props}),
       groupCircleProps(props),
-      polygonEventNames,
+      circleEventNames,
       groupCircleProps,
     );
   }

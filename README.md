@@ -35,8 +35,8 @@ const MyAwesomeApp = () => (
 * Polyline
 * Circle
 * Rectangle
-* TilesOverlay
-* DomOverlay
+* TilesOverlay (MapType)
+* DomOverlay (OverlayView)
 
 ##### Features to be implemented:
 
