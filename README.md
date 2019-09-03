@@ -2,6 +2,8 @@
 
 React components library for google maps.
 
+__Library is under active development. It is not recomended for production usage so far.__
+
 ```javascript
 import {GoogleApiProvider, Map, Marker} from 'react-google-maps-ts';
 
