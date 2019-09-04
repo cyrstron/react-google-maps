@@ -8,7 +8,7 @@ import {
   InfoWindowProps,
   InfoWindowSettings
 } from '..';
-import { MapsEventableObjectService } from 'services/maps-eventable-object';
+import { MapsEventableObjectService } from '../../../../../services/maps-eventable-object';
 
 export class InfoWindowService extends MapsEventableObjectService<
   google.maps.InfoWindow,

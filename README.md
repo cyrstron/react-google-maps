@@ -40,10 +40,6 @@ const MyAwesomeApp = () => (
 * TilesOverlay (MapType)
 * DomOverlay (OverlayView)
 * GroundOverlay
-
-##### Features to be implemented:
-
-* Heatmap
 * InfoWindow
 
 ## `GoogleMapsProvider`
