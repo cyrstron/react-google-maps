@@ -69,3 +69,12 @@ export {
   useGroundOverlayCtx,
   GroundOverlayService,
 } from './ground-overlay';
+
+export {
+  InfoWindow,
+  DumbInfoWindow,
+  withDumbInfoWindowCtx,
+  withSmartInfoWindowCtx,
+  useInfoWindowCtx,
+  InfoWindowService,
+} from './info-window';

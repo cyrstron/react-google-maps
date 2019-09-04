@@ -66,6 +66,10 @@ declare namespace google.maps {
     ): google.maps.GroundOverlay;
   }
 
+  export interface InfoWindowConstructor {
+    new(options: InfoWindowOptions): google.maps.InfoWindow;
+  }
+
   export interface LatLngBoundsConstructor {
     new(): google.maps.LatLngBounds;
     new(southWest: LatLngLiteral, northEast: LatLngLiteral): google.maps.LatLngBounds;
@@ -190,6 +194,7 @@ declare namespace google {
     LatLngBounds: google.maps.LatLngBoundsConstructor;
     OverlayView: google.maps.OverlayViewConstructor;
     GroundOverlay: google.maps.GroundOverlayConstructor;
+    InfoWindow: google.maps.InfoWindowConstructor;
     Size: google.maps.SizeConstructor;
   }
   export interface Custom {

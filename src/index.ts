@@ -65,4 +65,10 @@ export {
   withDumbGroundOverlayCtx,
   useGroundOverlayCtx,
   GroundOverlayService,
+  InfoWindow,
+  DumbInfoWindow,
+  withDumbInfoWindowCtx,
+  withSmartInfoWindowCtx,
+  useInfoWindowCtx,
+  InfoWindowService,
 } from './components/feature';

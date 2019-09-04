@@ -53,7 +53,7 @@ export class GroundOverlayService extends EventableFeatureService<
 
     const {bounds, url} = props;
 
-    if (bounds && !isEqual(bounds, this.options.bounds)) {
+    if ('bounds' in props && !isEqual(bounds, this.options.bounds)) {
       const {north, east, south, west} = bounds;
 
       const latLngBounds = new this.google.maps.LatLngBounds(      
@@ -64,11 +64,10 @@ export class GroundOverlayService extends EventableFeatureService<
       this.object.set('bounds', latLngBounds);
     }
 
-    if (url !== undefined) {
+    if ('url' in props) {
       this.object.set('url', url);
     }
 
     super.setOptions(props);
   }
-
 }
