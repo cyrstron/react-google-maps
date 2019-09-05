@@ -8,7 +8,7 @@ export const createUseCreateFeatureCtx = <Props>() => {
   return (
     props: Props
   ): void => {
-    const setProps = useContext(CreateFeatureCtx) as (props: Props) => void;
+    const setProps = useContext(CreateFeatureCtx);
 
     useUpdateFeature(props, setProps);
   }
