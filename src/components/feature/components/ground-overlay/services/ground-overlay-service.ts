@@ -51,23 +51,79 @@ export class GroundOverlayService extends EventableFeatureService<
   setOptions(props: GroundOverlaySettings | undefined) {
     if (!props) return;
 
-    const {bounds, url} = props;
+    const {
+      bounds, 
+      url,
+      ...options
+    } = props;
 
-    if ('bounds' in props && !isEqual(bounds, this.options.bounds)) {
-      const {north, east, south, west} = bounds;
+    const hasNewBounds = 'bounds' in props;
+    const hasNewUrl = 'url' in props;
 
-      const latLngBounds = new this.google.maps.LatLngBounds(      
-        {lat: south, lng: west}, 
-        {lat: north, lng: east}
-      );
-
-      this.object.set('bounds', latLngBounds);
+    if (hasNewBounds) {
+      this.setBounds(bounds);
     }
 
-    if ('url' in props) {
-      this.object.set('url', url);
+    if (hasNewUrl) {
+      this.setUrl(url);
     }
 
-    super.setOptions(props);
+    if ('clickable' in options) {
+      this.object.set('clickable', options.clickable);
+    }
+
+    if (options.map) {
+      this.object.setMap(options.map);
+    }
+
+    if (options.opacity) {      
+      this.object.setOpacity(options.opacity);
+    }
+
+    this.options = {
+      ...this.options,
+      ...options,
+    };
+  }
+
+  setBounds(bounds: google.maps.LatLngBoundsLiteral) {
+    const {north, east, south, west} = bounds;
+
+    const latLngBounds = new this.google.maps.LatLngBounds(      
+      {lat: south, lng: west}, 
+      {lat: north, lng: east}
+    );
+
+    this.object.set('bounds', latLngBounds);
+
+    this.options.bounds = bounds;
+
+    this.object.map_changed();
+  }
+
+  getBounds(): google.maps.LatLngBoundsLiteral {
+    const bounds = this.object.get('bounds') as google.maps.LatLngBounds;
+
+    const northEast = bounds.getNorthEast();
+    const southWest = bounds.getSouthWest();
+
+    return {
+      north: northEast.lat(),
+      east: northEast.lng(),
+      south: southWest.lat(),
+      west: southWest.lng(),
+    };
+  }
+
+  setUrl(url: string) {
+    this.object.set('url', url);
+
+    this.options.url = url;
+
+    this.object.map_changed();
+  }
+
+  getUrl(): string {
+    return this.object.getUrl();
   }
 }

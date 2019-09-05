@@ -58,6 +58,10 @@ declare namespace google.maps {
     new(): google.maps.OverlayView;
   }
 
+  export interface GroundOverlay {
+    map_changed(): void;
+  }
+
   export interface GroundOverlayConstructor {
     new(
       url: string, 
