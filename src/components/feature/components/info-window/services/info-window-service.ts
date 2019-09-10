@@ -9,6 +9,7 @@ import {
   InfoWindowSettings
 } from '..';
 import { MapsEventableObjectService } from '../../../../../services/maps-eventable-object';
+import { MarkerService } from '../../marker';
 
 export class InfoWindowService extends MapsEventableObjectService<
   google.maps.InfoWindow,
@@ -18,11 +19,13 @@ export class InfoWindowService extends MapsEventableObjectService<
   InfoWindowHandlerName
 > {
   mapService: MapService;
+  markerService: MarkerService;
 
   constructor(
     google: Google,
     mapService: MapService, {
       anchor,
+      open,
       ...props
     }: InfoWindowProps
   ) {    
@@ -31,6 +34,7 @@ export class InfoWindowService extends MapsEventableObjectService<
       new google.maps.InfoWindow(props),
       groupInfoWindowProps({
         anchor,
+        open,
         ...props
       }), 
       infoWindowEventNames, 
@@ -43,8 +47,12 @@ export class InfoWindowService extends MapsEventableObjectService<
     container.style.height = '100%';
 
     this.object.setContent(container);
-    this.object.open(mapService.getObject(), anchor);
 
+    if (open) {
+      this.object.open(mapService.getObject(), anchor.getObject());
+    }
+
+    this.markerService = anchor;
     this.mapService = mapService;
   }
 
@@ -59,7 +67,7 @@ export class InfoWindowService extends MapsEventableObjectService<
   }
 
   show() {    
-    this.object.open(this.mapService.getObject(), this.options.anchor);
+    this.object.open(this.mapService.getObject(), this.markerService.getObject());
   }
 
   setOptions(props: InfoWindowSettings | undefined) {
@@ -68,10 +76,23 @@ export class InfoWindowService extends MapsEventableObjectService<
     const {anchor} = props;
 
     if ('anchor' in props) {
-      this.object.open(this.mapService.getObject(), anchor);
+      this.object.open(this.mapService.getObject(), anchor.getObject());
+      this.markerService = anchor;
+    }
+
+    if ('open' in props) {
+      this.setOpen(props.open);
     }
 
     super.setOptions(props);
+  }
+
+  setOpen(isOpen: boolean) {
+    if (isOpen) {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   getContainer(): Element {

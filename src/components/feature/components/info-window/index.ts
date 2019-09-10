@@ -1,11 +1,13 @@
 import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
 import {InfoWindowService, createInfoWindowService} from './services';
+import { MarkerService } from '../marker';
 
 export type InfoWindowEventHandler = google.maps.MapMouseEventHandler;
 
 export type InfoWindowSettings = google.maps.InfoWindowOptions & {
 	content: undefined;
-	anchor?: google.maps.MVCObject;
+	open: boolean;
+	anchor: MarkerService;
 }
 
 export type InfoWindowProps = InfoWindowSettings &	{
