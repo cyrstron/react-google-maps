@@ -29,8 +29,10 @@ export const createUseFeature = <
   const [service, setService] = useState<Service | undefined>(undefined);
 
   useEffect(() => {
-    return () => service && service.unmount();
-  }, []);
+    return service && (() => {
+      service.unmount();
+    })
+  }, [service]);
   
   const setProps = (props: Props) => {
     if (!googleApi || !mapService) return;

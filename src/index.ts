@@ -14,6 +14,7 @@ export {
   withDumbMapCtx,
   withSmartMapCtx,
   useMapCtx,
+  MapBroadcaster,
 } from './components/map';
 
 export {

@@ -2,6 +2,7 @@ import {Map as DumbMap} from './map';
 import {withSmartMapCtx} from './hocs/with-smart-map-ctx';
 
 export {withSmartMapCtx, DumbMap};
+export {MapBroadcaster} from './components/map-broadcaster';
 
 export const Map = withSmartMapCtx<MapProps>(DumbMap);
 

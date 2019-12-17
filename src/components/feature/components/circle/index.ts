@@ -6,9 +6,7 @@ export type CircleEventHandler = google.maps.MapMouseEventHandler |
 	google.maps.MapPolyEventHandler;
 
 export type CircleProps = google.maps.CircleOptions & 
-	{[key in CircleHandlerName]?: CircleEventHandler} & {
-		paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][]
-	};
+	{[key in CircleHandlerName]?: CircleEventHandler};
   
 export type CircleEventName = FeatureEventName |  
 	'center_changed' |
