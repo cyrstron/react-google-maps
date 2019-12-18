@@ -16,7 +16,6 @@ const MapBroadcasterComponent = ({
     useEffect(() => {
         const prevHandlers = mapService.handlers;
         const eventKeys = Object.keys(props) as MapHandlerName[];
-        const prevEventKeys = Object.keys(prevHandlers) as MapHandlerName[];
 
         eventKeys.forEach((eventName) => {
             const handler = props[eventName] as MapEventHandler | null;
@@ -41,13 +40,16 @@ const MapBroadcasterComponent = ({
                     eventName as MapHandlerName,
                     props[eventName] as MapEventHandler,
                 );
-            });
 
-            prevEventKeys.forEach((eventName) => {
+                const prevHandler = prevHandlers[eventName];
+
+                if (!prevHandler) return;
+
                 mapService.addHandler(
                     eventName as MapHandlerName,
-                    prevHandlers[eventName] as MapEventHandler,
+                    prevHandler as MapEventHandler,
                 );
+
             });
         }
     }, []);
