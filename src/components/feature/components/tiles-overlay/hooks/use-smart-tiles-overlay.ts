@@ -16,7 +16,8 @@ export const useUpdateTilesOverlay = createUseUpdateFeature<CreateTilesOverlaySe
 
 export const useSmartTilesOverlay = <ExtendedPayload = any>(
   props: google.custom.TilesOverlayOptions & {
-    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
+    watchProps?: any[];
   }
 ): Map<Node, TilePayload & {data?: ExtendedPayload}> => {
   const [service, setProps] = useTilesOverlay();

@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import { withDumbMapCtx } from '../hocs/with-dumb-map-ctx';
 import { MapService } from '../services';
-import { MapEventsProps, MapHandlerName, MapEventHandler } from '..';
+import { MapHandlerName, MapEventHandler } from '../';
 
 export type MapBroadcasterProps = {
     [key in MapHandlerName]: MapEventHandler | null;
