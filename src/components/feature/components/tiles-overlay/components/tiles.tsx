@@ -52,7 +52,7 @@ export const Tiles = <ExtendedPayload extends {} = any>({
             />
           )
         } else {
-          node =  null;
+          node = null;
         }
 
         const {tileCoord: {x, y}, zoom} = payload;
