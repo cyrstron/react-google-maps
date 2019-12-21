@@ -63,6 +63,8 @@ export class TilesOverlayService<
 
     this.object.onRegister(this.registerTile);
     this.object.onUnregister(this.unregisterTile);
+
+    this.object.triggerRender();
   }
 
   async getExtendedData(

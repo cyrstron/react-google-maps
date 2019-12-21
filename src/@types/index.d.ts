@@ -114,16 +114,17 @@ declare namespace google.maps {
 }
 
 declare namespace google.custom {
-  export interface TilesOverlay {
+  export interface TilesOverlay extends google.maps.MapType {
     index: number;
     map: google.maps.Map | null;
     getTile(
       tileCoord: google.maps.Point,
       zoom: number,
       ownerDocument: Document,
-    ): Element | null;
+    ): Element;
     setMap(map: google.maps.Map | null): void;
     remove(): void;
+    triggerRender(): void;
     registerTile?: (
       node: Node,      
       payload: {tileCoord: google.maps.Point, zoom: number}

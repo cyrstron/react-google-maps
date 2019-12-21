@@ -51,7 +51,7 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       tileCoord: google.maps.Point,
       zoom: number,
       ownerDocument: Document,
-    ): Element | null {
+    ): Element {
       const container = ownerDocument.createElement(this.tagName);
 
       container.style.width = '100%';
@@ -87,16 +87,32 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       }
 
       if (map) {
-        map.overlayMapTypes.insertAt(this.index, this as google.maps.MapType);
+        map.overlayMapTypes.insertAt(this.index, this);
       }
 
       this.map = map;
     }
 
+    triggerRender() {
+      if (!this.map) return;
+
+      const index = this.map.overlayMapTypes
+        .getArray()
+        .indexOf(this);
+
+      this.map.overlayMapTypes.setAt(index, this);
+    }
+
     remove() {
       if (!this.map) return;
 
-      this.map.overlayMapTypes.removeAt(this.index);
+      const index = this.map.overlayMapTypes
+        .getArray()
+        .indexOf(this);
+
+      this.map.overlayMapTypes.removeAt(index);
+
+      this.map = null;
     }
 
     private calcTileSize({
