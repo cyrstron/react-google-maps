@@ -93,7 +93,7 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       this.map = map;
     }
 
-    triggerRender() {
+    refreshTiles() {
       if (!this.map) return;
 
       const index = this.map.overlayMapTypes

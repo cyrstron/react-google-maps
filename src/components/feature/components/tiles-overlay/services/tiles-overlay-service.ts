@@ -64,7 +64,7 @@ export class TilesOverlayService<
     this.object.onRegister(this.registerTile);
     this.object.onUnregister(this.unregisterTile);
 
-    this.object.triggerRender();
+    this.object.refreshTiles();
   }
 
   async getExtendedData(
@@ -125,6 +125,11 @@ export class TilesOverlayService<
 
   setTilesCallback(setTiles: SetTilesCallback<ExtendedPayload>): void {
     this.setTiles = setTiles;
+  }
+
+  updateTiles(tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>) {
+    this.tiles = tiles;
+    this.setTiles(tiles);
   }
 
   registerTile = async (
@@ -196,7 +201,7 @@ export class TilesOverlayService<
       newTiles.set(node, {...payload, data})
     });
 
-    this.setTiles(newTiles);
+    this.updateTiles(newTiles);
   }
 
   recalcTiles = debounce(() => {
@@ -232,8 +237,7 @@ export class TilesOverlayService<
       this.tilesByKey[key] = node;
     }
 
-    this.tiles = newTiles;
-    this.setTiles(newTiles);
+    this.updateTiles(newTiles);
   }, 20);
 
   unmount() {

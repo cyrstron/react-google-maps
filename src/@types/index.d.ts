@@ -124,7 +124,7 @@ declare namespace google.custom {
     ): Element;
     setMap(map: google.maps.Map | null): void;
     remove(): void;
-    triggerRender(): void;
+    refreshTiles(): void;
     registerTile?: (
       node: Node,      
       payload: {tileCoord: google.maps.Point, zoom: number}
