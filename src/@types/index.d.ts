@@ -18,6 +18,10 @@ declare namespace google.maps {
     new(options: google.maps.PolygonOptions): google.maps.Polygon;
   }
 
+  export interface PointConstructor {
+    new(x: number, y: number): google.maps.Point;
+  }
+
   export interface CircleConstructor {
     new(options: google.maps.CircleOptions): google.maps.Circle;
   }
@@ -201,6 +205,7 @@ declare namespace google {
     GroundOverlay: google.maps.GroundOverlayConstructor;
     InfoWindow: google.maps.InfoWindowConstructor;
     Size: google.maps.SizeConstructor;
+    Point: google.maps.PointConstructor;
   }
   export interface Custom {
     TilesOverlay: google.custom.TilesOverlayConstructor;

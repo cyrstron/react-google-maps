@@ -4,7 +4,7 @@ import { MapService } from '../services';
 import { MapHandlerName, MapEventHandler } from '../';
 
 export type MapBroadcasterProps = {
-    [key in MapHandlerName]: MapEventHandler | null;
+    [key in MapHandlerName]?: MapEventHandler | null;
 };
 
 const MapBroadcasterComponent = ({

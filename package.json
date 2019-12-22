@@ -42,9 +42,7 @@
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "mobx": "^5.13.0",
-    "mobx-react": "^6.1.1"
+    "react-dom": "^16.8.6"
   },
   "dependencies": {
     "lodash": "^4.17.15"
