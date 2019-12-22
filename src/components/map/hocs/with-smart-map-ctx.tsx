@@ -30,7 +30,7 @@ export const withSmartMapCtx = <Props extends {}>(
 ): ComponentType<Props> => (props: Props) => {
   const [ref, service, setProps] = useMap();
 
-  return (
+  const WithSmartMapCtx = (
     <CreateMapProvider value={{
       ref,
       setProps
@@ -45,4 +45,6 @@ export const withSmartMapCtx = <Props extends {}>(
       </MapProvider>
     </CreateMapProvider>
   );
+
+  return WithSmartMapCtx;
 }
