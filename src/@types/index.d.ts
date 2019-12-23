@@ -206,6 +206,13 @@ declare namespace google {
     InfoWindow: google.maps.InfoWindowConstructor;
     Size: google.maps.SizeConstructor;
     Point: google.maps.PointConstructor;
+    SymbolPath: {
+      CIRCLE: google.maps.SymbolPath.CIRCLE;
+      BACKWARD_CLOSED_ARROW: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW;
+      BACKWARD_OPEN_ARROW: google.maps.SymbolPath.BACKWARD_OPEN_ARROW;
+      FORWARD_CLOSED_ARROW: google.maps.SymbolPath.FORWARD_CLOSED_ARROW;
+      FORWARD_OPEN_ARROW: google.maps.SymbolPath.FORWARD_OPEN_ARROW;
+    };
   }
   export interface Custom {
     TilesOverlay: google.custom.TilesOverlayConstructor;
