@@ -205,6 +205,8 @@ export class TilesOverlayService<
   }
 
   recalcTiles = debounce(() => {
+    if (this.isUnmounted) return;
+    
     const newTiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
 
     for (const [node, payload] of this.tiles) {
