@@ -1,5 +1,6 @@
 const path = require('path');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = (env, argv) => {  
   const isDevelopment = argv.mode === 'development';
@@ -8,7 +9,7 @@ module.exports = (env, argv) => {
     entry: './src/index.ts',
     output: {      
         path: path.join(__dirname, './.dist'),      
-        filename: 'maps.js',
+        filename: 'index.js',
         library: '@micelord/maps',     
         libraryTarget: 'umd',      
         publicPath: '/.dist/',
@@ -39,14 +40,15 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
-    plugins: isDevelopment ? [
-      new CircularDependencyPlugin({
+    devtool: isDevelopment ? 'eval-source-map' : false,
+    plugins: [
+      isDevelopment && new CircularDependencyPlugin({
         exclude: /a\.js|node_modules/,
         failOnError: true,
         allowAsyncCycles: false,
         cwd: process.cwd(),
-      })
-    ] : []
+      }),
+      new CleanWebpackPlugin()
+    ].filter((plugin) => !!plugin),
   }
 }
