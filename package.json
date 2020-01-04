@@ -2,7 +2,7 @@
   "name": "react-google-maps-ts",
   "main": "./.dist/index.js",
   "types": "./.dist/index.d.ts",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "React components library for google maps.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -42,6 +42,7 @@
     "webpack-cli": "^3.3.6"
   },
   "peerDependencies": {
+    "@types/google-maps": "^3.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

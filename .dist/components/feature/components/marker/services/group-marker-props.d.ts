@@ -18,15 +18,15 @@ export declare const groupMarkerProps: ({ onClick, onDblClick, onDrag, onDragEnd
     onMouseMove?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onMouseDown?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onMouseUp?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
-    onPositionChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
-    onZIndexChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onAnimationChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onClickableChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onCursorChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onDraggableChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onFlatChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onIconChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
+    onPositionChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onShapeChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onTitleChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onVisibleChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
+    onZIndexChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
 } & google.maps.MarkerOptions) => SortedMarkerProps;
