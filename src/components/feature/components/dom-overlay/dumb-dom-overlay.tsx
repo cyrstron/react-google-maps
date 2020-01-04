@@ -3,7 +3,7 @@ import { useDumbDomOverlay } from './hooks';
 import { DomOverlayProps } from '.';
 import { Overlay } from './components/overlay';
 
-export const DumbDomOverlay = ({children, ...props}: DomOverlayProps) => {
+const DumbDomOverlay = ({children, ...props}: DomOverlayProps) => {
   const service = useDumbDomOverlay(props);
 
   return (
@@ -12,3 +12,5 @@ export const DumbDomOverlay = ({children, ...props}: DomOverlayProps) => {
     </Overlay>
   );
 }
+
+export {DumbDomOverlay};

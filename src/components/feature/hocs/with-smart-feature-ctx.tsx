@@ -33,7 +33,7 @@ export const withSmartFeatureCtx = <
 ) => {
   const useFeature = createUseFeature<Props, Service>(createService);
 
-  return (props: WrappedProps) => {
+  const WithSmartFeatureCtx = (props: WrappedProps) => {
     const [service, setProps] = useFeature();
 
     return (
@@ -49,4 +49,6 @@ export const withSmartFeatureCtx = <
       </CreateFeatureProvider>
     );
   }
+
+  return WithSmartFeatureCtx;
 }

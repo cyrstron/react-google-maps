@@ -1,8 +1,10 @@
 import { MarkerProps} from './';
 import { useSmartMarker } from './hooks';
 
-export const Marker = (props: MarkerProps) => {
+const Marker = (props: MarkerProps) => {
   useSmartMarker(props);
 
   return null;
 }
+
+export {Marker};

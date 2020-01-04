@@ -7,7 +7,8 @@ export const withDumbFeatureCtx = <
   Service extends FeatureService<Props>
 >() => {
   const useFeatureCtx = createUseFeatureCtx<Service>();
-  return <
+
+  const WithDumbFeatureCtx = <
     WrappedProps extends {}
   >(
   Wrapped: ComponentType<WrappedProps & {
@@ -24,4 +25,6 @@ export const withDumbFeatureCtx = <
       />
     );
   }
+
+  return WithDumbFeatureCtx;
 }

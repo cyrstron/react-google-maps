@@ -13,7 +13,8 @@ export const useTilesOverlayCtx = createUseFeatureCtx<
 
 export const useDumbTilesOverlay = <ExtendedPayload = any>(
   props: google.custom.TilesOverlayOptions & {
-    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
+    watchProps?: any[];
   }
 ): Map<Node, TilePayload & {data?: ExtendedPayload}> => {
   const service = useTilesOverlayCtx();

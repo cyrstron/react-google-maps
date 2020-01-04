@@ -2,7 +2,7 @@ import { useDumbInfoWindow } from './hooks';
 import { createPortal } from 'react-dom';
 import { FullInfoWindowProps } from './info-window';
 
-export const DumbInfoWindow = ({children, ...props}: FullInfoWindowProps) => {
+const DumbInfoWindow = ({children, ...props}: FullInfoWindowProps) => {
   const service = useDumbInfoWindow(props);
   
   if (!service) return null;
@@ -11,3 +11,5 @@ export const DumbInfoWindow = ({children, ...props}: FullInfoWindowProps) => {
 
   return createPortal(children, container);
 }
+
+export {DumbInfoWindow};

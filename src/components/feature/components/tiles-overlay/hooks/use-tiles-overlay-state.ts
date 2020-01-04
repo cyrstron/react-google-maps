@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 export const useTilesOverlayState = <ExtendedPayload = any>(
   service: TilesOverlayService<ExtendedPayload> | undefined,
   props: google.custom.TilesOverlayOptions & {
-    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
+    watchProps?: any[];
   }
 ): [
   Map<Node, TilePayload & {data?: ExtendedPayload}>, 
@@ -15,13 +16,17 @@ export const useTilesOverlayState = <ExtendedPayload = any>(
     Map<Node, TilePayload & {data?: ExtendedPayload}>
   >(new Map());
 
-  const {extendPayload, ...effectProps} = props;
+  const {
+    extendPayload, 
+    watchProps = [],
+     ...effectProps
+  } = props;
   
   useEffect(() => {
     if (!service || !extendPayload) return;
 
     service.recalcData();
-  }, Object.values(effectProps));
+  }, [...Object.values(effectProps), ...watchProps]);
 
   return [tiles, setTiles];
 }

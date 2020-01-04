@@ -7,15 +7,19 @@ export interface GoogleApiProps {
 
 export const withGoogleApi = <Props extends {}>(
   Wrapped: ComponentType<GoogleApiProps & Props>
-) => (props: Props) => {
-  const googleApi = useGoogleCtx();
+) => {
+  const WithGoogleApi = (props: Props) => {
+    const googleApi = useGoogleCtx();
 
-  if (!googleApi) return null;
+    if (!googleApi) return null;
 
-  return (
-    <Wrapped 
-      googleApi={googleApi}
-      {...props}
-    />
-  )
-};
+    return (
+      <Wrapped 
+        googleApi={googleApi}
+        {...props}
+      />
+    )
+  };
+
+  return WithGoogleApi;
+}

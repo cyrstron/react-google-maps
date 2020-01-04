@@ -2,7 +2,7 @@ import React, { ReactNode, ComponentType, Fragment } from 'react'
 import { TilePayload } from "../services/tiles-overlay-service";
 import { createPortal } from 'react-dom';
 
-export const Tiles = <ExtendedPayload extends {} = any>({
+const Tiles = <ExtendedPayload extends {} = any>({
   TileComponent,
   children,
   tiles,
@@ -52,7 +52,7 @@ export const Tiles = <ExtendedPayload extends {} = any>({
             />
           )
         } else {
-          node =  null;
+          node = null;
         }
 
         const {tileCoord: {x, y}, zoom} = payload;
@@ -66,3 +66,5 @@ export const Tiles = <ExtendedPayload extends {} = any>({
     </>
   );
 }
+
+export {Tiles};

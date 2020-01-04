@@ -9,7 +9,7 @@ export type MapComponentProps = MapProps & {
 
 export type Props = MapComponentProps;
 
-export const Map = ({
+const Map = ({
   children,
   className,
   ...props
@@ -22,4 +22,6 @@ export const Map = ({
       {service && children}
     </div>
   )
-}
+};
+
+export {Map};

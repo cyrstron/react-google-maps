@@ -15,7 +15,7 @@ export interface GoogleState {
   err: Error | null;
 }
 
-export const GoogleApiProvider = ({
+const GoogleApiProvider = ({
   children,
   ErrorMessage,
   Loader,
@@ -43,3 +43,5 @@ export const GoogleApiProvider = ({
     </GoogleApiCtxProvider>
   )
 }
+
+export {GoogleApiProvider};

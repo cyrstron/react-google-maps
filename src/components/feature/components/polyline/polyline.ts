@@ -1,8 +1,10 @@
 import { PolylineProps} from './';
 import {useSmartPolyline } from './hooks';
 
-export const Polyline = (props: PolylineProps) => {
+const Polyline = (props: PolylineProps) => {
   useSmartPolyline(props);
 
   return null;
 }
+
+export {Polyline};

@@ -18,6 +18,10 @@ declare namespace google.maps {
     new(options: google.maps.PolygonOptions): google.maps.Polygon;
   }
 
+  export interface PointConstructor {
+    new(x: number, y: number): google.maps.Point;
+  }
+
   export interface CircleConstructor {
     new(options: google.maps.CircleOptions): google.maps.Circle;
   }
@@ -114,16 +118,17 @@ declare namespace google.maps {
 }
 
 declare namespace google.custom {
-  export interface TilesOverlay {
+  export interface TilesOverlay extends google.maps.MapType {
     index: number;
     map: google.maps.Map | null;
     getTile(
       tileCoord: google.maps.Point,
       zoom: number,
       ownerDocument: Document,
-    ): Element | null;
+    ): Element;
     setMap(map: google.maps.Map | null): void;
     remove(): void;
+    refreshTiles(): void;
     registerTile?: (
       node: Node,      
       payload: {tileCoord: google.maps.Point, zoom: number}
@@ -200,6 +205,14 @@ declare namespace google {
     GroundOverlay: google.maps.GroundOverlayConstructor;
     InfoWindow: google.maps.InfoWindowConstructor;
     Size: google.maps.SizeConstructor;
+    Point: google.maps.PointConstructor;
+    SymbolPath: {
+      CIRCLE: google.maps.SymbolPath.CIRCLE;
+      BACKWARD_CLOSED_ARROW: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW;
+      BACKWARD_OPEN_ARROW: google.maps.SymbolPath.BACKWARD_OPEN_ARROW;
+      FORWARD_CLOSED_ARROW: google.maps.SymbolPath.FORWARD_CLOSED_ARROW;
+      FORWARD_OPEN_ARROW: google.maps.SymbolPath.FORWARD_OPEN_ARROW;
+    };
   }
   export interface Custom {
     TilesOverlay: google.custom.TilesOverlayConstructor;

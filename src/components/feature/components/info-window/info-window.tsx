@@ -7,7 +7,7 @@ export type FullInfoWindowProps = InfoWindowProps & {
   children?: ReactNode
 }
 
-export const InfoWindow = ({
+const InfoWindow = ({
   children, 
   ...props
 }: FullInfoWindowProps) => {
@@ -19,3 +19,6 @@ export const InfoWindow = ({
 
   return createPortal(children, container);
 }
+
+export {InfoWindow};
+

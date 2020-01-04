@@ -7,7 +7,7 @@ export interface OverlayProps {
   service?: DomOverlayService;
 }
 
-export const Overlay = ({children, service}: OverlayProps) => {
+const Overlay = ({children, service}: OverlayProps) => {
   if (!service) return null;
 
   const container = service.getContainer();
@@ -16,3 +16,5 @@ export const Overlay = ({children, service}: OverlayProps) => {
 
   return createPortal(children || null, container);
 }
+
+export {Overlay};
