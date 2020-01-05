@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 
 export const createUseUpdateFeature = <Props>() => (
-  props: Props, 
-  setProps?: (props: Props) => void
+  props: Props,
+  setProps?: (props: Props) => void,
 ): void => {
   useEffect(() => {
     if (!setProps) return;

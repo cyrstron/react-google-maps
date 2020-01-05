@@ -1,8 +1,8 @@
 export const createTilesOverlayClass = (google: Google): google.custom.TilesOverlayConstructor => {
   class TilesOverlay implements google.custom.TilesOverlay {
     registerTile?: (
-      node: Node,      
-      payload: {tileCoord: google.maps.Point, zoom: number}
+      node: Node,
+      payload: {tileCoord: google.maps.Point; zoom: number}
     ) => void;
     unregisterTile?: (node: Node) => void;
     index: number;
@@ -21,8 +21,8 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       tagName,
       map,
     }: google.custom.TilesOverlayOptions & {
-      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
-      unregisterTile?: (node: Node) => void,
+      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point; zoom: number}) => void;
+      unregisterTile?: (node: Node) => void;
     }) {
       this.index = index;
       this.tagName = tagName || 'div';
@@ -64,15 +64,15 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       return container;
     }
 
-    releaseTile(tile: Node) {
+    releaseTile(tile: Node): void {
       if (!this.unregisterTile) return;
 
       this.unregisterTile(tile);
     }
 
     onRegister(callback: (
-      node: Node,      
-      payload: {tileCoord: google.maps.Point, zoom: number}
+      node: Node,
+      payload: {tileCoord: google.maps.Point; zoom: number}
     ) => void): void {
       this.registerTile = callback;
     }
@@ -81,7 +81,7 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       this.unregisterTile = callback;
     }
 
-    setMap(map: google.maps.Map | null) {
+    setMap(map: google.maps.Map | null): void {
       if (map === null || this.map !== map) {
         this.remove();
       }
@@ -93,7 +93,7 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       this.map = map;
     }
 
-    refreshTiles() {
+    refreshTiles(): void {
       if (!this.map) return;
 
       const index = this.map.overlayMapTypes
@@ -103,7 +103,7 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       this.map.overlayMapTypes.setAt(index, this);
     }
 
-    remove() {
+    remove(): void {
       if (!this.map) return;
 
       const index = this.map.overlayMapTypes
@@ -121,11 +121,11 @@ export const createTilesOverlayClass = (google: Google): google.custom.TilesOver
       widthUnit,
       heightUnit,
     }: {
-      width: number,
-      height?: number,
-      widthUnit?: string,
-      heightUnit?: string,
-    }) {
+      width: number;
+      height?: number;
+      widthUnit?: string;
+      heightUnit?: string;
+    }): google.maps.Size {
       if (widthUnit && heightUnit) {
         return new google.maps.Size(
           width,

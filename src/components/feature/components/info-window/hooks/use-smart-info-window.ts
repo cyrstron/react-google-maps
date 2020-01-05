@@ -1,10 +1,10 @@
-import { createUseFeature, createUseUpdateFeature } from "../../../hooks";
-import { InfoWindowService, createInfoWindowService } from "../services";
-import { InfoWindowSettings } from "..";
-import { useMarkerCtx } from "../../marker";
+import {createUseFeature, createUseUpdateFeature} from '../../../hooks';
+import {InfoWindowService, createInfoWindowService} from '../services';
+import {InfoWindowSettings} from '..';
+import {useMarkerCtx} from '../../marker';
 
 export const useInfoWindow = createUseFeature<
-  InfoWindowSettings, 
+  InfoWindowSettings,
   InfoWindowService
 >(createInfoWindowService);
 
@@ -13,7 +13,7 @@ export const useUpdateInfoWindow = createUseUpdateFeature<
 >();
 
 export const useSmartInfoWindow = (
-  props: InfoWindowSettings
+  props: InfoWindowSettings,
 ): InfoWindowService | undefined => {
   const markerService = useMarkerCtx();
 
@@ -21,8 +21,8 @@ export const useSmartInfoWindow = (
 
   useUpdateInfoWindow({
     anchor: markerService,
-    ...props
+    ...props,
   }, setProps);
 
   return service;
-}
+};

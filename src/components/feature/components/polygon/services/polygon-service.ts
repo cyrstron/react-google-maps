@@ -1,11 +1,11 @@
 import {MapService} from '../../../../map';
-import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { polygonEventNames } from './event-names';
-import { groupPolygonProps } from './group-polygon-props';
+import {EventableFeatureService} from '../../../services/eventable-feature-service';
+import {polygonEventNames} from './event-names';
+import {groupPolygonProps} from './group-polygon-props';
 import {
-  PolygonEventName, 
+  PolygonEventName,
   PolygonEventHandler,
-  PolygonHandlerName
+  PolygonHandlerName,
 } from '..';
 
 export class PolygonService extends EventableFeatureService<
@@ -18,10 +18,10 @@ export class PolygonService extends EventableFeatureService<
   constructor(
     google: Google,
     mapService: MapService,
-    props: google.maps.PolygonOptions & {[key in PolygonHandlerName]?: PolygonEventHandler}
+    props: google.maps.PolygonOptions & {[key in PolygonHandlerName]?: PolygonEventHandler},
   ) {
     super(
-      google, 
+      google,
       mapService,
       new google.maps.Polygon({map: mapService.getObject(), ...props}),
       groupPolygonProps(props),

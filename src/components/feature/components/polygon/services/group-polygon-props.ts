@@ -1,7 +1,7 @@
 import {filterObject} from '../../../../../services/maps-object';
-import { 
-  PolygonEventHandler, 
-  PolygonHandlerName
+import {
+  PolygonEventHandler,
+  PolygonHandlerName,
 } from '..';
 
 export interface SortedPolygonProps {
@@ -22,7 +22,9 @@ export const groupPolygonProps = ({
   onMouseMove,
   onMouseUp,
   ...options
-}: {[key in PolygonHandlerName]?: PolygonEventHandler} & google.maps.PolygonOptions): SortedPolygonProps => {
+}: google.maps.PolygonOptions & {
+  [key in PolygonHandlerName]?: PolygonEventHandler
+}): SortedPolygonProps => {
   const result: SortedPolygonProps = {
     options,
   };

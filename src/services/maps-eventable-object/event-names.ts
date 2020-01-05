@@ -1,4 +1,4 @@
-import { MapsObjectHandlerName, MapsObjectEventName } from "./";
+import {MapsObjectHandlerName, MapsObjectEventName} from './';
 
 export const mapsObjectEventNames: {
   [key in MapsObjectHandlerName]: MapsObjectEventName;
@@ -6,7 +6,7 @@ export const mapsObjectEventNames: {
   onClick: 'click',
   onDblClick: 'dblclick',
   onDrag: 'drag',
-  onDragStart: 'dragstart', 
+  onDragStart: 'dragstart',
   onDragEnd: 'dragend',
   onMouseOut: 'mouseout',
   onMouseOver: 'mouseover',

@@ -1,33 +1,32 @@
-import React, { ReactNode, ComponentType, Fragment } from 'react'
-import { TilePayload } from "../services/tiles-overlay-service";
-import { createPortal } from 'react-dom';
+import React, {ReactNode, ComponentType, Fragment} from 'react';
+import {TilePayload} from '../services/tiles-overlay-service';
+import {createPortal} from 'react-dom';
 
 const Tiles = <ExtendedPayload extends {} = any>({
   TileComponent,
   children,
   tiles,
   width,
-  height
+  height,
 }: {
   children?: (props: {
-    tileCoord: google.maps.Point,
-    zoom: number,
-    width: number,
-    height: number,
-    data?: any,
+    tileCoord: google.maps.Point;
+    zoom: number;
+    width: number;
+    height: number;
+    data?: any;
   }) => ReactNode | null;
   TileComponent?: ComponentType<TilePayload & {
-    width: number,
-    height: number,
-    data?: any,
-  }>;  
-  tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>,
-  width: number,
-  height?: number
+    width: number;
+    height: number;
+    data?: any;
+  }>;
+  tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>;
+  width: number;
+  height?: number;
 }) => {
-  
-  const tileNodes = [...tiles.keys()];  
-  
+  const tileNodes = [...tiles.keys()];
+
   return (
     <>
       {tileNodes.map((tile) => {
@@ -42,15 +41,15 @@ const Tiles = <ExtendedPayload extends {} = any>({
             ...payload,
             width: width,
             height: height || width,
-          })
+          });
         } else if (TileComponent) {
-          node = (                  
+          node = (
             <TileComponent
               {...payload}
               width={width}
               height={height || width}
             />
-          )
+          );
         } else {
           node = null;
         }
@@ -65,6 +64,6 @@ const Tiles = <ExtendedPayload extends {} = any>({
       })}
     </>
   );
-}
+};
 
 export {Tiles};

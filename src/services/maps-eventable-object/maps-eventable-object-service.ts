@@ -1,4 +1,4 @@
-import { MapsObjectService } from "../maps-object";
+import {MapsObjectService} from '../maps-object';
 
 export abstract class MapsEventableObjectService<
   MapsObject extends google.maps.MapsObject<
@@ -20,20 +20,20 @@ export abstract class MapsEventableObjectService<
       options,
       handlers,
     }: {
-      options?: MapsObjectOptions,
-      handlers?: {[key in HandlerName]: MapsObjectEventHandler},
+      options?: MapsObjectOptions;
+      handlers?: {[key in HandlerName]: MapsObjectEventHandler};
     },
     public eventNames: {
       [key in HandlerName]: MapsObjectEventName
-    },  
+    },
     public groupProps: (props: MapsObjectOptions & {
       [key in HandlerName]?: MapsObjectEventHandler
     }) => {
       handlers?: {
         [key in HandlerName]: MapsObjectEventHandler;
-      },
-      options?: MapsObjectOptions,
-    }
+      };
+      options?: MapsObjectOptions;
+    },
   ) {
     super(google, object, options);
 
@@ -42,10 +42,10 @@ export abstract class MapsEventableObjectService<
     this.setHandlers(handlers);
   }
 
-  addHandler(    
+  addHandler(
     handlerName: HandlerName,
     handler: MapsObjectEventHandler,
-  ) {
+  ): void {
     this.handlers[handlerName as HandlerName] = handler;
 
     const eventName = this.eventNames[handlerName];
@@ -55,10 +55,10 @@ export abstract class MapsEventableObjectService<
     this.listeners.set(handler, listener);
   }
 
-  removeHandler(    
+  removeHandler(
     handlerName: HandlerName,
     handler: MapsObjectEventHandler,
-  ) {
+  ): void {
     this.handlers[handlerName as HandlerName] = undefined;
 
     const listener = this.listeners.get(handler);
@@ -69,7 +69,7 @@ export abstract class MapsEventableObjectService<
     this.listeners.delete(handler);
   }
 
-  resetHandlers() {
+  resetHandlers(): void {
     this.handlers = {};
 
     this.listeners.forEach((listener) => {
@@ -81,7 +81,7 @@ export abstract class MapsEventableObjectService<
 
   setHandlers(handlers: {
     [key in HandlerName]: MapsObjectEventHandler;
-  } | undefined) {
+  } | undefined): void {
     if (!handlers) return;
 
     (Object.keys(handlers)).forEach((handlerName) => {
@@ -93,7 +93,7 @@ export abstract class MapsEventableObjectService<
 
   setProps(props: MapsObjectOptions & {
     [key in HandlerName]?: MapsObjectEventHandler
-  }) {
+  }): void {
     const {
       handlers,
       options,
@@ -106,13 +106,13 @@ export abstract class MapsEventableObjectService<
   updateProps(
     props: MapsObjectOptions & {
       [key in HandlerName]?: MapsObjectEventHandler;
-    }
-  ) {
+    },
+  ): void {
     const {
-      options, 
-      handlers
+      options,
+      handlers,
     } = this.groupProps(props);
-    
+
     this.updateOptions(options);
     this.updateHandlers(handlers);
   }

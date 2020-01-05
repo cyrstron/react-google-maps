@@ -1,8 +1,8 @@
 import {filterObject} from '../../../../../services/maps-object';
-import { 
-  GroundOverlayEventHandler, 
+import {
+  GroundOverlayEventHandler,
   GroundOverlayHandlerName,
-  GroundOverlaySettings
+  GroundOverlaySettings,
 } from '..';
 
 export interface SortedGroundOverlayProps {
@@ -14,7 +14,9 @@ export const groupGroundOverlayProps = ({
   onClick,
   onDblClick,
   ...options
-}: {[key in GroundOverlayHandlerName]?: GroundOverlayEventHandler} & GroundOverlaySettings): SortedGroundOverlayProps => {
+}: GroundOverlaySettings & {
+  [key in GroundOverlayHandlerName]?: GroundOverlayEventHandler
+}): SortedGroundOverlayProps => {
   const result: SortedGroundOverlayProps = {
     options,
   };

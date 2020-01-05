@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { RectangleProps } from "..";
-import { RectangleService } from "./rectangle-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {RectangleProps} from '..';
+import {RectangleService} from './rectangle-service';
 
 export const createRectangleService: CreateServiceFunction<
-  RectangleProps, 
+  RectangleProps,
   RectangleService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createRectangleService: CreateServiceFunction<
   props,
 ) => {
   return new RectangleService(googleApi, mapService, props);
-}
+};

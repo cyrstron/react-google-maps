@@ -10,21 +10,21 @@ export {MapService} from './services';
 export {withDumbMapCtx} from './hocs/with-dumb-map-ctx';
 export {useMapCtx} from './hooks/use-map-ctx';
 
-import { 
-  MapsObjectHandlerName, 
-  MapsObjectEventName 
-} from "../../services/maps-eventable-object";
+import {
+  MapsObjectHandlerName,
+  MapsObjectEventName,
+} from '../../services/maps-eventable-object';
 
-export type MapEventHandler = google.maps.MapMouseEventHandler | 
-  google.maps.MapEventHandler | 
+export type MapEventHandler = google.maps.MapMouseEventHandler |
+  google.maps.MapEventHandler |
   google.maps.MapIconEventHandler;
-  
+
 export type MapEventsProps = {
   [key in MapHandlerName]?: MapEventHandler;
 }
 
 export type MapProps = MapEventsProps & google.maps.MapOptions & {
-  className?: string; 
+  className?: string;
   bounds?: google.maps.LatLngBoundsLiteral;
   defaultCenter: google.maps.LatLngLiteral;
   zoom: number;
@@ -45,7 +45,7 @@ export type MapOtherHandlerName = 'onBoundsChanged' |
 
 export type MapHandlerName = MapMouseHandlerName | MapOtherHandlerName;
 
-export type MapEventName = MapsObjectEventName | 
+export type MapEventName = MapsObjectEventName |
   'bounds_changed' |
   'center_changed' |
   'heading_changed' |

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDumbDomOverlay } from './hooks';
-import { DomOverlayProps } from '.';
-import { Overlay } from './components/overlay';
+import {useDumbDomOverlay} from './hooks';
+import {DomOverlayProps} from '.';
+import {Overlay} from './components/overlay';
 
 const DumbDomOverlay = ({children, ...props}: DomOverlayProps) => {
   const service = useDumbDomOverlay(props);
@@ -11,6 +11,6 @@ const DumbDomOverlay = ({children, ...props}: DomOverlayProps) => {
       {children}
     </Overlay>
   );
-}
+};
 
 export {DumbDomOverlay};

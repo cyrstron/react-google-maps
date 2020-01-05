@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { CircleProps } from "..";
-import { CircleService } from "./circle-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {CircleProps} from '..';
+import {CircleService} from './circle-service';
 
 export const createCircleService: CreateServiceFunction<
-  CircleProps, 
+  CircleProps,
   CircleService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createCircleService: CreateServiceFunction<
   props,
 ) => {
   return new CircleService(googleApi, mapService, props);
-}
+};

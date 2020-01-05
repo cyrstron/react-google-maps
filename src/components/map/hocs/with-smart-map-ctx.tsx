@@ -1,11 +1,11 @@
 import React, {
-  createContext, 
+  createContext,
   ComponentType,
   Ref,
 } from 'react';
-import { MapService } from '../services';
-import { MapProps } from '../';
-import { useMap } from '../hooks/use-map';
+import {MapService} from '../services';
+import {MapProps} from '../';
+import {useMap} from '../hooks/use-map';
 
 export interface MapServiceProps {
   mapService?: MapService;
@@ -14,7 +14,7 @@ export interface MapServiceProps {
 export interface CreateMapCtxValue {
   ref: Ref<HTMLDivElement>;
   setProps: (props: MapProps) => void;
-};
+}
 
 export const MapCtx = createContext<MapService | undefined>(undefined);
 export const CreateMapCtx = createContext<CreateMapCtxValue | undefined>(undefined);
@@ -26,25 +26,26 @@ export const MapConsumer = MapCtx.Consumer;
 export const CreateMapConsumer = CreateMapCtx.Consumer;
 
 export const withSmartMapCtx = <Props extends {}>(
-  Wrapped: ComponentType<Props & MapServiceProps>
+  Wrapped: ComponentType<Props & MapServiceProps>,
 ): ComponentType<Props> => (props: Props) => {
-  const [ref, service, setProps] = useMap();
+    const [ref, service, setProps] = useMap();
 
-  const WithSmartMapCtx = (
-    <CreateMapProvider value={{
-      ref,
-      setProps
-    }}>
-      <MapProvider
-        value={service}
+    const WithSmartMapCtx = (
+      <CreateMapProvider value={{
+        ref,
+        setProps,
+      }}
       >
-        <Wrapped
-          mapService={service}
-          {...props as Props}
-        />
-      </MapProvider>
-    </CreateMapProvider>
-  );
+        <MapProvider
+          value={service}
+        >
+          <Wrapped
+            mapService={service}
+            {...props as Props}
+          />
+        </MapProvider>
+      </CreateMapProvider>
+    );
 
-  return WithSmartMapCtx;
-}
+    return WithSmartMapCtx;
+  };

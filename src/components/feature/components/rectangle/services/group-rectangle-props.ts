@@ -1,7 +1,7 @@
 import {filterObject} from '../../../../../services/maps-object';
-import { 
-  RectangleEventHandler, 
-  RectangleHandlerName
+import {
+  RectangleEventHandler,
+  RectangleHandlerName,
 } from '..';
 
 export interface SortedRectangleProps {
@@ -23,7 +23,9 @@ export const groupRectangleProps = ({
   onMouseUp,
   onBoundChanged,
   ...options
-}: {[key in RectangleHandlerName]?: RectangleEventHandler} & google.maps.RectangleOptions): SortedRectangleProps => {
+}: google.maps.RectangleOptions & {
+  [key in RectangleHandlerName]?: RectangleEventHandler
+}): SortedRectangleProps => {
   const result: SortedRectangleProps = {
     options,
   };

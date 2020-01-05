@@ -1,8 +1,8 @@
 import React, {
-  createContext, 
+  createContext,
   ComponentType,
 } from 'react';
-import { createUseFeature, FeatureService, CreateServiceFunction } from '../hooks/create-use-feature';
+import {createUseFeature, FeatureService, CreateServiceFunction} from '../hooks/create-use-feature';
 
 export interface FeatureServiceProps<Service> {
   service?: Service;
@@ -10,7 +10,7 @@ export interface FeatureServiceProps<Service> {
 
 export interface CreateFeatureProps<Props> {
   setProps: (props: Props) => void;
-};
+}
 
 export const FeatureCtx = createContext<any | undefined>(undefined);
 export const CreateFeatureCtx = createContext<((props: any) => void) | undefined>(undefined);
@@ -22,33 +22,33 @@ export const FeatureConsumer = FeatureCtx.Consumer;
 export const CreateFeatureConsumer = CreateFeatureCtx.Consumer;
 
 export const withSmartFeatureCtx = <
-  Props, 
+  Props,
   Service extends FeatureService<Props>
 >(
-  createService: CreateServiceFunction<Props, Service>
-) => <
+    createService: CreateServiceFunction<Props, Service>,
+  ) => <
   WrappedProps extends {}
 >(
-  Wrapped: ComponentType<WrappedProps>
-) => {
-  const useFeature = createUseFeature<Props, Service>(createService);
+      Wrapped: ComponentType<WrappedProps>,
+    ) => {
+    const useFeature = createUseFeature<Props, Service>(createService);
 
-  const WithSmartFeatureCtx = (props: WrappedProps) => {
-    const [service, setProps] = useFeature();
+    const WithSmartFeatureCtx = (props: WrappedProps) => {
+      const [service, setProps] = useFeature();
 
-    return (
-      <CreateFeatureProvider value={setProps}>
-        <FeatureProvider
-          value={service}
-        >
-          <Wrapped
-            service={service}
-            {...props}
-          />
-        </FeatureProvider>
-      </CreateFeatureProvider>
-    );
-  }
+      return (
+        <CreateFeatureProvider value={setProps}>
+          <FeatureProvider
+            value={service}
+          >
+            <Wrapped
+              service={service}
+              {...props}
+            />
+          </FeatureProvider>
+        </CreateFeatureProvider>
+      );
+    };
 
-  return WithSmartFeatureCtx;
-}
+    return WithSmartFeatureCtx;
+  };

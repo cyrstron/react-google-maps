@@ -1,13 +1,13 @@
-import { 
-  createUseCreateFeatureCtx, 
+import {
+  createUseCreateFeatureCtx,
   createUseFeatureCtx,
-  createUseSmartFeature
-} from "../../../hooks";
-import { createRectangleService, RectangleService } from "../services";
-import { RectangleProps} from "../";
+  createUseSmartFeature,
+} from '../../../hooks';
+import {createRectangleService, RectangleService} from '../services';
+import {RectangleProps} from '../';
 
 export const useSmartRectangle = createUseSmartFeature<
-  RectangleProps, 
+  RectangleProps,
   RectangleService
 >(createRectangleService);
 

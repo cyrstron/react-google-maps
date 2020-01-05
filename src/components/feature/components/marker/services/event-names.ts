@@ -1,5 +1,5 @@
 import {featureEventNames} from '../../../services/eventable-feature-service';
-import { MarkerEventNames } from '../';
+import {MarkerEventNames} from '../';
 
 export const markerEventNames: MarkerEventNames = {
   ...featureEventNames,

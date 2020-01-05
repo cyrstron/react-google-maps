@@ -1,4 +1,4 @@
-import { useContext, createContext } from "react";
+import {useContext, createContext} from 'react';
 
 export interface GoogleState {
   isPending: boolean;
@@ -10,6 +10,6 @@ const GoogleApiCtx = createContext<Google | undefined>(undefined);
 
 export const GoogleApiCtxProvider = GoogleApiCtx.Provider;
 
-export function useGoogleCtx(): Google | undefined {  
+export function useGoogleCtx(): Google | undefined {
   return useContext(GoogleApiCtx);
 }

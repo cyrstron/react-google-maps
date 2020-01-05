@@ -1,5 +1,5 @@
 export {
-  useSmartInfoWindow, 
+  useSmartInfoWindow,
 } from './use-smart-info-window';
 
 export {

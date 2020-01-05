@@ -1,4 +1,4 @@
-import { GoogleApiOptions } from "../google-api-service";
+import {GoogleApiOptions} from '../google-api-service';
 
 export const buildUrlString = ({
   apiKey,
@@ -9,8 +9,8 @@ export const buildUrlString = ({
   language,
   region,
   version,
-}:GoogleApiOptions): string => {
-  const libParams: {[key in string]?: boolean} = {  
+}: GoogleApiOptions): string => {
+  const libParams: {[key in string]?: boolean} = {
     geometry,
     drawing,
     places,
@@ -35,4 +35,4 @@ export const buildUrlString = ({
     .join('&');
 
   return `https://maps.google.com/maps/api/js?${paramsString}`;
-}
+};

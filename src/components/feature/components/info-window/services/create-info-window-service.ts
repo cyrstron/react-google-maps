@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { InfoWindowProps } from "..";
-import { InfoWindowService } from "./info-window-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {InfoWindowProps} from '..';
+import {InfoWindowService} from './info-window-service';
 
 export const createInfoWindowService: CreateServiceFunction<
-  InfoWindowProps, 
+  InfoWindowProps,
   InfoWindowService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createInfoWindowService: CreateServiceFunction<
   props,
 ) => {
   return new InfoWindowService(googleApi, mapService, props);
-}
+};

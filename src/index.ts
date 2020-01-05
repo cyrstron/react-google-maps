@@ -1,10 +1,11 @@
+// eslint-disable-next-line
 /// <reference path="@types/index.d.ts" />
 
 export {
   GoogleApiProvider,
   withGoogleApi,
   useGoogleCtx,
-  useGoogleApi
+  useGoogleApi,
 } from './components/google-api';
 
 export {
@@ -59,7 +60,7 @@ export {
   withDumbRectangleCtx,
   withSmartRectangleCtx,
   useRectangleCtx,
-  RectangleService,  
+  RectangleService,
   GroundOverlay,
   DumbGroundOverlay,
   withSmartGroundOverlayCtx,

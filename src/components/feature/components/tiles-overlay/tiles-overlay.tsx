@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSmartTilesOverlay } from './hooks';
-import { Tiles } from './components/tiles';
-import { TilesOverlayProps } from '.';
+import {useSmartTilesOverlay} from './hooks';
+import {Tiles} from './components/tiles';
+import {TilesOverlayProps} from '.';
 
 const TilesOverlay = ({
   TileComponent,
@@ -15,12 +15,13 @@ const TilesOverlay = ({
   return (
     <Tiles
       tiles={tiles}
-      children={children}
       TileComponent={TileComponent}
       width={width}
       height={height}
-    />
+    >
+      {children}
+    </Tiles>
   );
-}
+};
 
 export {TilesOverlay};

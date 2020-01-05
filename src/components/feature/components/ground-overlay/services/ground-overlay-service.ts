@@ -1,15 +1,14 @@
 import {MapService} from '../../../../map';
-import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { groundOverlayEventNames } from './event-names';
-import { groupGroundOverlayProps } from './group-ground-overlay-props';
+import {EventableFeatureService} from '../../../services/eventable-feature-service';
+import {groundOverlayEventNames} from './event-names';
+import {groupGroundOverlayProps} from './group-ground-overlay-props';
 import {
-  GroundOverlayEventName, 
+  GroundOverlayEventName,
   GroundOverlayEventHandler,
   GroundOverlayHandlerName,
   GroundOverlayProps,
-  GroundOverlaySettings
+  GroundOverlaySettings,
 } from '../';
-import isEqual from 'lodash/isEqual';
 
 export class GroundOverlayService extends EventableFeatureService<
   google.maps.GroundOverlay,
@@ -25,34 +24,34 @@ export class GroundOverlayService extends EventableFeatureService<
       bounds,
       url,
       ...props
-    }: GroundOverlayProps
+    }: GroundOverlayProps,
   ) {
     super(
-      google, 
+      google,
       mapService,
       new google.maps.GroundOverlay(
-        url, 
+        url,
         new google.maps.LatLngBounds(
-          {lat: bounds.south, lng: bounds.west}, 
-          {lat: bounds.north, lng: bounds.east}
+          {lat: bounds.south, lng: bounds.west},
+          {lat: bounds.north, lng: bounds.east},
         ),
-        {map: mapService.getObject(), ...props}
+        {map: mapService.getObject(), ...props},
       ),
       groupGroundOverlayProps({
         bounds,
         url,
-        ...props
+        ...props,
       }),
       groundOverlayEventNames,
       groupGroundOverlayProps,
     );
   }
 
-  setOptions(props: GroundOverlaySettings | undefined) {
+  setOptions(props: GroundOverlaySettings | undefined): void {
     if (!props) return;
 
     const {
-      bounds, 
+      bounds,
       url,
       ...options
     } = props;
@@ -76,7 +75,7 @@ export class GroundOverlayService extends EventableFeatureService<
       this.object.setMap(options.map);
     }
 
-    if (options.opacity) {      
+    if (options.opacity) {
       this.object.setOpacity(options.opacity);
     }
 
@@ -86,12 +85,12 @@ export class GroundOverlayService extends EventableFeatureService<
     };
   }
 
-  setBounds(bounds: google.maps.LatLngBoundsLiteral) {
+  setBounds(bounds: google.maps.LatLngBoundsLiteral): void {
     const {north, east, south, west} = bounds;
 
-    const latLngBounds = new this.google.maps.LatLngBounds(      
-      {lat: south, lng: west}, 
-      {lat: north, lng: east}
+    const latLngBounds = new this.google.maps.LatLngBounds(
+      {lat: south, lng: west},
+      {lat: north, lng: east},
     );
 
     this.object.set('bounds', latLngBounds);
@@ -115,7 +114,7 @@ export class GroundOverlayService extends EventableFeatureService<
     };
   }
 
-  setUrl(url: string) {
+  setUrl(url: string): void {
     this.object.set('url', url);
 
     this.options.url = url;

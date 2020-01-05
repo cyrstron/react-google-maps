@@ -1,8 +1,8 @@
 import {filterObject} from '../../../../../services/maps-object';
-import { 
-  InfoWindowEventHandler, 
+import {
+  InfoWindowEventHandler,
   InfoWindowHandlerName,
-  InfoWindowSettings
+  InfoWindowSettings,
 } from '..';
 
 export interface SortedInfoWindowProps {
@@ -11,13 +11,15 @@ export interface SortedInfoWindowProps {
 }
 
 export const groupInfoWindowProps = ({
-	onCloseClick,
-	onContentChanged,
-	onDomReady,
-	onPositionChanged,
-	onZIndexChanged,
+  onCloseClick,
+  onContentChanged,
+  onDomReady,
+  onPositionChanged,
+  onZIndexChanged,
   ...options
-}: {[key in InfoWindowHandlerName]?: InfoWindowEventHandler} & InfoWindowSettings): SortedInfoWindowProps => {
+}: InfoWindowSettings & {
+  [key in InfoWindowHandlerName]?: InfoWindowEventHandler
+}): SortedInfoWindowProps => {
   const result: SortedInfoWindowProps = {
     options,
   };

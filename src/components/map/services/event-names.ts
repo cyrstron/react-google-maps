@@ -1,5 +1,5 @@
 import {mapsObjectEventNames} from '../../../services/maps-eventable-object';
-import { MapEventNames } from '../';
+import {MapEventNames} from '../';
 
 export const mapEventNames: MapEventNames = {
   ...mapsObjectEventNames,
@@ -13,4 +13,4 @@ export const mapEventNames: MapEventNames = {
   onTilesLoaded: 'tilesloaded',
   onTiltChanged: 'tilt_changed',
   onZoomChanged: 'zoom_changed',
-}
+};

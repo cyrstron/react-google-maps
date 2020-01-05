@@ -1,8 +1,8 @@
-import { createUseFeature, createUseUpdateFeature } from "../../../hooks";
-import { DomOverlayService, createDomOverlayService } from "../services";
+import {createUseFeature, createUseUpdateFeature} from '../../../hooks';
+import {DomOverlayService, createDomOverlayService} from '../services';
 
 export const useDomOverlay = createUseFeature<
-  google.custom.DomOverlayOptions, 
+  google.custom.DomOverlayOptions,
   DomOverlayService
 >(createDomOverlayService);
 
@@ -11,11 +11,11 @@ export const useUpdateDomOverlay = createUseUpdateFeature<
 >();
 
 export const useSmartDomOverlay = (
-  props: google.custom.DomOverlayOptions
+  props: google.custom.DomOverlayOptions,
 ): DomOverlayService | undefined => {
   const [service, setProps] = useDomOverlay();
 
   useUpdateDomOverlay(props, setProps);
 
   return service;
-}
+};

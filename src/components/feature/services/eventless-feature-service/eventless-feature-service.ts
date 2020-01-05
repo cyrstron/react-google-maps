@@ -1,6 +1,6 @@
 import {MapService} from '../../../map';
-import { MapsObjectService } from '../../../../services/maps-object';
-import { MapsObject } from 'services/maps-object/maps-object-service';
+import {MapsObjectService} from '../../../../services/maps-object';
+import {MapsObject} from 'services/maps-object/maps-object-service';
 
 export interface EventlessFeature<Options> extends MapsObject<Options> {
   setMap: (map: google.maps.Map | null) => void;
@@ -19,19 +19,19 @@ export class EventlessFeatureService<
     options: Options,
   ) {
     super(
-      googleApi, 
+      googleApi,
       object,
-      options
+      options,
     );
 
     this.mapService = mapService;
   }
 
-  remove() {
+  remove(): void {
     this.object.setMap(null);
   }
 
-  unmount() {
+  unmount(): void {
     this.remove();
   }
 }

@@ -1,8 +1,8 @@
-import { createBoundsUtils } from './bounds-utils';
-import { createDomOverlayClass } from './dom-overlay';
-import { createTilesOverlayClass } from './tiles-overlay';
+import {createBoundsUtils} from './bounds-utils';
+import {createDomOverlayClass} from './dom-overlay';
+import {createTilesOverlayClass} from './tiles-overlay';
 
-export const extendGoogleApi = (google: Google) => {
+export const extendGoogleApi = (google: Google): void => {
   const DomOverlay = createDomOverlayClass(google);
   const TilesOverlay = createTilesOverlayClass(google);
   const boundsUtils = createBoundsUtils(google);

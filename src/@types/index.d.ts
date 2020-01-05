@@ -41,21 +41,21 @@ declare namespace google.maps {
   export interface SizeConstructor {
     new(width: number, height: number): google.maps.Size;
     new(
-      width: number, 
-      height: number, 
+      width: number,
+      height: number,
       widthUnit: string,
       heightUnit: string,
       ): google.maps.Size;
   }
 
   export type SizeOptions = {
-    width: number, 
-    height: number, 
+    width: number;
+    height: number;
   } | {
-    width: number, 
-    height: number, 
-    widthUnit: string,
-    heightUnit: string,
+    width: number;
+    height: number;
+    widthUnit: string;
+    heightUnit: string;
   }
 
   export interface OverlayViewConstructor {
@@ -63,12 +63,12 @@ declare namespace google.maps {
   }
 
   export interface GroundOverlay {
-    map_changed(): void;
+    'map_changed'(): void;
   }
 
   export interface GroundOverlayConstructor {
     new(
-      url: string, 
+      url: string,
       bounds: LatLngBounds | LatLngBoundsLiteral,
       options: GroundOverlayOptions,
     ): google.maps.GroundOverlay;
@@ -88,10 +88,10 @@ declare namespace google.maps {
   }
 
   export type MapEventHandler = () => void;
-  export type MapMouseEventHandler = (e:google.maps.MouseEvent) => void;
-  export type MapIconEventHandler = (e:google.maps.IconMouseEvent) => void;
-  export type MapPolyEventHandler = (e:google.maps.PolyMouseEvent) => void;
-  
+  export type MapMouseEventHandler = (e: google.maps.MouseEvent) => void;
+  export type MapIconEventHandler = (e: google.maps.IconMouseEvent) => void;
+  export type MapPolyEventHandler = (e: google.maps.PolyMouseEvent) => void;
+
   export interface MapsObject<
     MapsObjectEventName,
     MapsObjectOptions,
@@ -108,7 +108,7 @@ declare namespace google.maps {
     FeatureEventName,
     FeatureOptions,
     FeatureEventHandler
-  > extends MapsObject<  
+  > extends MapsObject<
     FeatureEventName,
     FeatureOptions,
     FeatureEventHandler
@@ -130,49 +130,49 @@ declare namespace google.custom {
     remove(): void;
     refreshTiles(): void;
     registerTile?: (
-      node: Node,      
-      payload: {tileCoord: google.maps.Point, zoom: number}
+      node: Node,
+      payload: {tileCoord: google.maps.Point; zoom: number}
     ) => void;
     unregisterTile?: (node: Node) => void;
     onRegister(callback: (
-      node: Node,      
-      payload: {tileCoord: google.maps.Point, zoom: number}
+      node: Node,
+      payload: {tileCoord: google.maps.Point; zoom: number}
     ) => void): void;
     onUnregister(callback: (node: Node) => void): void;
   }
 
   export interface TilesOverlayOptions {
-    tagName?: string,
-    width: number,
-    height?: number,
-    widthUnit?: string,
-    heightUnit?: string,
-    maxZoom?: number,
-    minZoom?: number,
-    index: number,
-    map?: google.maps.Map,
+    tagName?: string;
+    width: number;
+    height?: number;
+    widthUnit?: string;
+    heightUnit?: string;
+    maxZoom?: number;
+    minZoom?: number;
+    index: number;
+    map?: google.maps.Map;
   }
 
   export type TilesOverlayConstructor = new(
-    options: TilesOverlayOptions & {      
-      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point, zoom: number}) => void,
-      unregisterTile?: (node: Node) => void,
+    options: TilesOverlayOptions & {
+      registerTile?: (node: Node, payload: {tileCoord: google.maps.Point; zoom: number}) => void;
+      unregisterTile?: (node: Node) => void;
     }
   ) => TilesOverlay;
 
   export interface DomOverlayOptions {
     map?: google.maps.Map;
-    bounds: google.maps.LatLngBounds | 
+    bounds: google.maps.LatLngBounds |
       google.maps.LatLngBoundsLiteral |
       google.maps.LatLngLiteral[];
     opacity?: number;
     isHidden?: boolean;
   }
-  
+
   export type DomOverlayConstructor = new(
     options: DomOverlayOptions,
   ) => DomOverlay;
-  
+
   export interface DomOverlay extends google.maps.OverlayView {
     getContainer(): HTMLDivElement | void;
     setOpacity(opacity?: number): void;
@@ -187,7 +187,7 @@ declare namespace google.custom {
       isHidden,
       bounds,
       map,
-    }: google.custom.DomOverlayOptions): void
+    }: google.custom.DomOverlayOptions): void;
   }
 }
 
@@ -222,7 +222,7 @@ declare namespace google {
     ): google.maps.LatLngBoundsLiteral;
     pointsToBounds(
       points: google.maps.LatLngLiteral[],
-    ): google.maps.LatLngBounds
+    ): google.maps.LatLngBounds;
   }
 }
 

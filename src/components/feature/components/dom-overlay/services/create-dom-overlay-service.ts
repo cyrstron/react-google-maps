@@ -1,8 +1,8 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { DomOverlayService } from "./dom-overlay-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {DomOverlayService} from './dom-overlay-service';
 
 export const createDomOverlayService: CreateServiceFunction<
-  google.custom.DomOverlayOptions, 
+  google.custom.DomOverlayOptions,
   DomOverlayService
 > = (
   googleApi,
@@ -10,4 +10,4 @@ export const createDomOverlayService: CreateServiceFunction<
   props,
 ) => {
   return new DomOverlayService(googleApi, mapService, props);
-}
+};

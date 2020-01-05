@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { GroundOverlayProps } from "..";
-import { GroundOverlayService } from "./ground-overlay-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {GroundOverlayProps} from '..';
+import {GroundOverlayService} from './ground-overlay-service';
 
 export const createGroundOverlayService: CreateServiceFunction<
-  GroundOverlayProps, 
+  GroundOverlayProps,
   GroundOverlayService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createGroundOverlayService: CreateServiceFunction<
   props,
 ) => {
   return new GroundOverlayService(googleApi, mapService, props);
-}
+};

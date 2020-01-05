@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMapCtx} from '../hooks/use-map-ctx';
-import { MapService } from '../services';
+import {MapService} from '../services';
 
 export interface WrappedProps {
   mapService: MapService;
@@ -15,11 +15,11 @@ export const withDumbMapCtx = <Props extends {}>(
     if (!service) return null;
 
     return (
-      <Wrapped 
-        mapService={service} 
+      <Wrapped
+        mapService={service}
         {...props}
       />
-    )
+    );
   };
 
   return WithDumbMapCtx;

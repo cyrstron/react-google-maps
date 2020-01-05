@@ -1,11 +1,11 @@
 import {MapService} from '../../../../map';
-import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { circleEventNames } from './event-names';
-import { groupCircleProps } from './group-circle-props';
+import {EventableFeatureService} from '../../../services/eventable-feature-service';
+import {circleEventNames} from './event-names';
+import {groupCircleProps} from './group-circle-props';
 import {
-  CircleEventName, 
+  CircleEventName,
   CircleEventHandler,
-  CircleHandlerName
+  CircleHandlerName,
 } from '../';
 
 export class CircleService extends EventableFeatureService<
@@ -18,10 +18,10 @@ export class CircleService extends EventableFeatureService<
   constructor(
     google: Google,
     mapService: MapService,
-    props: google.maps.CircleOptions & {[key in CircleHandlerName]?: CircleEventHandler}
+    props: google.maps.CircleOptions & {[key in CircleHandlerName]?: CircleEventHandler},
   ) {
     super(
-      google, 
+      google,
       mapService,
       new google.maps.Circle({map: mapService.getObject(), ...props}),
       groupCircleProps(props),

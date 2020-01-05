@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 
-import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
+import {withSmartFeatureCtx, withDumbFeatureCtx} from '../../hocs';
 import {DomOverlayService, createDomOverlayService} from './services';
 
 export type DomOverlayProps = google.custom.DomOverlayOptions & {
@@ -16,7 +16,7 @@ export const withSmartDomOverlayCtx = withSmartFeatureCtx<
 >(createDomOverlayService);
 
 export const withDumbDomOverlayCtx = withDumbFeatureCtx<
-  google.custom.DomOverlayOptions, 
+  google.custom.DomOverlayOptions,
   DomOverlayService
 >();
 

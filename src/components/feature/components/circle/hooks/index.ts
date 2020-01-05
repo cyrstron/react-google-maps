@@ -1,13 +1,13 @@
-import { 
-  createUseCreateFeatureCtx, 
+import {
+  createUseCreateFeatureCtx,
   createUseFeatureCtx,
-  createUseSmartFeature
-} from "../../../hooks";
-import { createCircleService, CircleService } from "../services";
-import { CircleProps} from "../";
+  createUseSmartFeature,
+} from '../../../hooks';
+import {createCircleService, CircleService} from '../services';
+import {CircleProps} from '../';
 
 export const useSmartCircle = createUseSmartFeature<
-  CircleProps, 
+  CircleProps,
   CircleService
 >(createCircleService);
 

@@ -1,4 +1,4 @@
-import { pickUpdated } from "./pick-updated";
+import {pickUpdated} from './pick-updated';
 
 export interface MapsObject<Options> {
   setOptions?: (options: Options) => void;
@@ -23,9 +23,9 @@ export abstract class MapsObjectService<
     this.maps = google.maps;
     this.object = object;
     this.options = options || {} as MapsObjectOptions;
-  }  
+  }
 
-  setOptions(options: MapsObjectOptions | undefined) {
+  setOptions(options: MapsObjectOptions | undefined): void {
     if (!options || !this.object.setOptions) return;
 
     this.options = {
@@ -40,19 +40,19 @@ export abstract class MapsObjectService<
     return this.object;
   }
 
-  setProps(props: MapsObjectOptions) {
+  setProps(props: MapsObjectOptions): void {
     this.setOptions(props);
   }
 
-  updateProps(props: MapsObjectOptions) {    
+  updateProps(props: MapsObjectOptions): void {
     this.updateOptions(props);
   }
 
   updateOptions(
     options: MapsObjectOptions & {
-      [key: string]: any,
+      [key: string]: any;
     } | undefined,
-  ) {
+  ): void {
     if (!this.options || !options) return;
 
     const updatedOptions = pickUpdated<MapsObjectOptions>(this.options, options);

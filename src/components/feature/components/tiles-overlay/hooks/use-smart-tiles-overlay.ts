@@ -1,14 +1,14 @@
-import { createUseFeature, createUseUpdateFeature } from "../../../hooks";
-import { 
-  TilesOverlayService, 
-  createTilesOverlayService, 
-  CreateTilesOverlayServiceProps 
-} from "../services";
-import { TilePayload, ExtendPayloadCallback } from "../services/tiles-overlay-service";
-import { useTilesOverlayState } from "./use-tiles-overlay-state";
+import {createUseFeature, createUseUpdateFeature} from '../../../hooks';
+import {
+  TilesOverlayService,
+  createTilesOverlayService,
+  CreateTilesOverlayServiceProps,
+} from '../services';
+import {TilePayload, ExtendPayloadCallback} from '../services/tiles-overlay-service';
+import {useTilesOverlayState} from './use-tiles-overlay-state';
 
 export const useTilesOverlay = createUseFeature<
-  CreateTilesOverlayServiceProps, 
+  CreateTilesOverlayServiceProps,
   TilesOverlayService
 >(createTilesOverlayService);
 
@@ -18,7 +18,7 @@ export const useSmartTilesOverlay = <ExtendedPayload = any>(
   props: google.custom.TilesOverlayOptions & {
     extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
     watchProps?: any[];
-  }
+  },
 ): Map<Node, TilePayload & {data?: ExtendedPayload}> => {
   const [service, setProps] = useTilesOverlay();
 
@@ -26,8 +26,8 @@ export const useSmartTilesOverlay = <ExtendedPayload = any>(
 
   useUpdateTilesOverlay({
     setTiles,
-    ...props
+    ...props,
   }, setProps);
 
   return tiles;
-}
+};

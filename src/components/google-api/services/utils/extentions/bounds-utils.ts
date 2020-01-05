@@ -1,4 +1,11 @@
-export const createBoundsUtils = (google: Google) => ({
+export const createBoundsUtils = (google: Google): {
+  boundsToLiteral: (
+    bounds: google.maps.LatLngBounds
+  ) => google.maps.LatLngBoundsLiteral;
+  pointsToBounds: (
+    points: google.maps.LatLngLiteral[]
+  ) => google.maps.LatLngBounds;
+} => ({
   boundsToLiteral(
     bounds: google.maps.LatLngBounds,
   ): google.maps.LatLngBoundsLiteral {

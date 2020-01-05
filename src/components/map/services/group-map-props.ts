@@ -1,5 +1,5 @@
 import {filterObject} from '../../../services/maps-object';
-import { MapHandlerName, MapEventHandler, MapEventsProps } from '../';
+import {MapHandlerName, MapEventHandler, MapEventsProps} from '../';
 
 export interface SortedMapProps {
   options?: google.maps.MapOptions;

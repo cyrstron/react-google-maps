@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { MarkerProps } from "../";
-import { MarkerService } from "./marker-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {MarkerProps} from '../';
+import {MarkerService} from './marker-service';
 
 export const createMarkerService: CreateServiceFunction<
-  MarkerProps, 
+  MarkerProps,
   MarkerService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createMarkerService: CreateServiceFunction<
   props,
 ) => {
   return new MarkerService(googleApi, mapService, props);
-}
+};

@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef, Ref} from 'react';
 import {useGoogleCtx} from '../../google-api';
 import {MapService} from '../services';
-import { MapProps } from '..';
+import {MapProps} from '..';
 
 export const useMap = (): [
   Ref<HTMLDivElement>,
@@ -13,10 +13,12 @@ export const useMap = (): [
   const [service, setService] = useState<MapService | undefined>(undefined);
 
   useEffect(() => {
-    return () => service && service.unmount();
+    return service &&((): void => {
+      service.unmount();
+    });
   }, [ref.current]);
-  
-  const setProps = ({defaultCenter, ...props}: MapProps) => {
+
+  const setProps = ({defaultCenter, ...props}: MapProps): void => {
     if (!ref.current || !googleApi) return;
 
     if (!service) {
@@ -29,7 +31,7 @@ export const useMap = (): [
     } else {
       service.updateProps(props);
     }
-  }
+  };
 
   return [ref, service, setProps];
-}
+};

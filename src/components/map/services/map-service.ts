@@ -1,7 +1,7 @@
-import { mapEventNames } from './event-names';
-import { groupMapProps } from './group-map-props';
-import { MapEventName, MapEventsProps, MapEventHandler, MapHandlerName } from '../';
-import { MapsEventableObjectService } from '../../../services/maps-eventable-object';
+import {mapEventNames} from './event-names';
+import {groupMapProps} from './group-map-props';
+import {MapEventName, MapEventsProps, MapEventHandler, MapHandlerName} from '../';
+import {MapsEventableObjectService} from '../../../services/maps-eventable-object';
 
 export class MapService extends MapsEventableObjectService<
   google.maps.Map,
@@ -16,23 +16,23 @@ export class MapService extends MapsEventableObjectService<
     props: google.maps.MapOptions & MapEventsProps,
   ) {
     super(
-      googleApi, 
-      new googleApi.maps.Map(container, props), 
+      googleApi,
+      new googleApi.maps.Map(container, props),
       groupMapProps(props),
       mapEventNames,
       groupMapProps,
     );
   }
 
-  setCenter(center: google.maps.LatLngLiteral) {
+  setCenter(center: google.maps.LatLngLiteral): void {
     this.object.setCenter(center);
   }
 
-  panTo(center: google.maps.LatLngLiteral) {
+  panTo(center: google.maps.LatLngLiteral): void {
     this.object.panTo(center);
   }
 
-  setZoom(zoom: number) {
+  setZoom(zoom: number): void {
     this.object.setZoom(zoom);
   }
 
@@ -40,7 +40,7 @@ export class MapService extends MapsEventableObjectService<
     bounds: google.maps.LatLngBounds |
       google.maps.LatLngBoundsLiteral |
       google.maps.LatLngLiteral[],
-  ) {
+  ): void {
     bounds = this.convertToLatLngBounds(bounds);
 
     this.object.fitBounds(bounds);
@@ -50,7 +50,7 @@ export class MapService extends MapsEventableObjectService<
     bounds: google.maps.LatLngBounds |
       google.maps.LatLngBoundsLiteral |
       google.maps.LatLngLiteral[],
-  ) {
+  ): void {
     bounds = this.convertToLatLngBounds(bounds);
 
     this.object.panToBounds(bounds);
@@ -78,8 +78,8 @@ export class MapService extends MapsEventableObjectService<
   }
 
   setOptions({bounds, ...options}: google.maps.MapOptions & {
-    bounds?: google.maps.LatLngBoundsLiteral | google.maps.LatLngLiteral[],
-  }) {
+    bounds?: google.maps.LatLngBoundsLiteral | google.maps.LatLngLiteral[];
+  }): void {
     if (bounds) {
       this.setBounds(bounds);
     }
@@ -87,7 +87,7 @@ export class MapService extends MapsEventableObjectService<
     super.setOptions(options);
   }
 
-  insertMapType(index: number, overlay: google.maps.MapType) {
+  insertMapType(index: number, overlay: google.maps.MapType): void {
     this.object.overlayMapTypes.insertAt(index, overlay);
   }
 

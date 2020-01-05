@@ -1,11 +1,11 @@
 import {MapService} from '../../../../map';
-import { EventableFeatureService } from '../../../services/eventable-feature-service';
-import { rectangleEventNames } from './event-names';
-import { groupRectangleProps } from './group-rectangle-props';
+import {EventableFeatureService} from '../../../services/eventable-feature-service';
+import {rectangleEventNames} from './event-names';
+import {groupRectangleProps} from './group-rectangle-props';
 import {
-  RectangleEventName, 
+  RectangleEventName,
   RectangleEventHandler,
-  RectangleHandlerName
+  RectangleHandlerName,
 } from '..';
 
 export class RectangleService extends EventableFeatureService<
@@ -18,10 +18,12 @@ export class RectangleService extends EventableFeatureService<
   constructor(
     google: Google,
     mapService: MapService,
-    props: google.maps.RectangleOptions & {[key in RectangleHandlerName]?: RectangleEventHandler}
+    props: google.maps.RectangleOptions & {
+      [key in RectangleHandlerName]?: RectangleEventHandler
+    },
   ) {
     super(
-      google, 
+      google,
       mapService,
       new google.maps.Rectangle({map: mapService.getObject(), ...props}),
       groupRectangleProps(props),

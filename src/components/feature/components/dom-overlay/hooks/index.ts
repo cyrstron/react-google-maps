@@ -1,5 +1,5 @@
 export {
-  useSmartDomOverlay, 
+  useSmartDomOverlay,
 } from './use-smart-dom-overlay';
 
 export {

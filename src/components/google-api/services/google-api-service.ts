@@ -1,5 +1,5 @@
-import { extendGoogleApi } from './utils/extentions';
-import { buildUrlString } from './utils/build-url-string';
+import {extendGoogleApi} from './utils/extentions';
+import {buildUrlString} from './utils/build-url-string';
 
 declare global {
   interface Window {
@@ -16,7 +16,7 @@ export interface GoogleApiOptions {
   language?: string;
   region?: string;
   version?: string;
-};
+}
 
 export interface GoogleLoadOptions {
   load: () => Promise<Google>;
@@ -73,13 +73,13 @@ export class GoogleApiService {
 
     const script: HTMLScriptElement = document.createElement('script');
 
-    script.type = 'text/javascript';    
-    script.src = src
+    script.type = 'text/javascript';
+    script.src = src;
 
     document.body.append(script);
 
     return new Promise<Google>((res, rej) => {
-      script.addEventListener('load', () => {     
+      script.addEventListener('load', () => {
         const {google} = window;
 
         extendGoogleApi(google);

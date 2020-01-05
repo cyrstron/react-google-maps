@@ -1,15 +1,15 @@
 import {MapService} from '../../../../map';
-import { infoWindowEventNames } from './event-names';
-import { groupInfoWindowProps } from './group-info-window-props';
+import {infoWindowEventNames} from './event-names';
+import {groupInfoWindowProps} from './group-info-window-props';
 import {
-  InfoWindowEventName, 
+  InfoWindowEventName,
   InfoWindowEventHandler,
   InfoWindowHandlerName,
   InfoWindowProps,
-  InfoWindowSettings
+  InfoWindowSettings,
 } from '..';
-import { MapsEventableObjectService } from '../../../../../services/maps-eventable-object';
-import { MarkerService } from '../../marker';
+import {MapsEventableObjectService} from '../../../../../services/maps-eventable-object';
+import {MarkerService} from '../../marker';
 
 export class InfoWindowService extends MapsEventableObjectService<
   google.maps.InfoWindow,
@@ -27,18 +27,18 @@ export class InfoWindowService extends MapsEventableObjectService<
       anchor,
       open,
       ...props
-    }: InfoWindowProps
-  ) {    
+    }: InfoWindowProps,
+  ) {
     super(
-      google, 
+      google,
       new google.maps.InfoWindow(props),
       groupInfoWindowProps({
         anchor,
         open,
-        ...props
-      }), 
-      infoWindowEventNames, 
-      groupInfoWindowProps
+        ...props,
+      }),
+      infoWindowEventNames,
+      groupInfoWindowProps,
     );
 
     const container = document.createElement('div');
@@ -56,21 +56,21 @@ export class InfoWindowService extends MapsEventableObjectService<
     this.mapService = mapService;
   }
 
-  unmount() {
+  unmount(): void {
     this.object.close();
 
     super.unmount();
   }
 
-  hide() {    
+  hide(): void {
     this.object.close();
   }
 
-  show() {    
+  show(): void {
     this.object.open(this.mapService.getObject(), this.markerService.getObject());
   }
 
-  setOptions(props: InfoWindowSettings | undefined) {
+  setOptions(props: InfoWindowSettings | undefined): void {
     if (!props) return;
 
     const {anchor} = props;
@@ -87,7 +87,7 @@ export class InfoWindowService extends MapsEventableObjectService<
     super.setOptions(props);
   }
 
-  setOpen(isOpen: boolean) {
+  setOpen(isOpen: boolean): void {
     if (isOpen) {
       this.show();
     } else {

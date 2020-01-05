@@ -27,7 +27,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       return this.container;
     }
 
-    onAdd() {
+    onAdd(): void {
       const panes = this.getPanes();
       const {container} = this;
 
@@ -36,7 +36,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       panes.overlayLayer.appendChild(container);
     }
 
-    onRemove() {
+    onRemove(): void {
       const {container} = this;
 
       const parentNode = container && container.parentNode;
@@ -104,7 +104,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       const overlayProjection = this.getProjection();
 
       if (!overlayProjection) return;
-      
+
       const southWest = bounds.getSouthWest();
       const northEast = bounds.getNorthEast();
 
@@ -124,7 +124,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       container.style.height = `${top - bottom}px`;
     }
 
-    hide() {
+    hide(): void {
       const {container} = this;
 
       if (!container) return;
@@ -132,7 +132,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       container.style.visibility = 'hidden';
     }
 
-    show() {
+    show(): void {
       const {container} = this;
 
       if (!container) return;
@@ -140,7 +140,7 @@ export const createDomOverlayClass = (google: Google): google.custom.DomOverlayC
       container.style.visibility = 'visible';
     }
 
-    toggle() {
+    toggle(): void {
       if (this.getMap()) {
         this.setMap(null);
       } else {

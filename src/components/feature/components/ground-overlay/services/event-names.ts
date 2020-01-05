@@ -1,6 +1,6 @@
-import { GroundOverlayEventNames } from '../';
+import {GroundOverlayEventNames} from '../';
 
 export const groundOverlayEventNames: GroundOverlayEventNames = {
-	onClick: 'click',
-	onDblClick: 'dblclick',
+  onClick: 'click',
+  onDblClick: 'dblclick',
 };

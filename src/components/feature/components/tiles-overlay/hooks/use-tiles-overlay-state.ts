@@ -1,15 +1,15 @@
-import { TilesOverlayService} from "../services";
-import { TilePayload, ExtendPayloadCallback } from "../services/tiles-overlay-service";
-import { useState, useEffect } from "react";
+import {TilesOverlayService} from '../services';
+import {TilePayload, ExtendPayloadCallback} from '../services/tiles-overlay-service';
+import {useState, useEffect} from 'react';
 
 export const useTilesOverlayState = <ExtendedPayload = any>(
   service: TilesOverlayService<ExtendedPayload> | undefined,
   props: google.custom.TilesOverlayOptions & {
     extendPayload?: ExtendPayloadCallback<ExtendedPayload>;
     watchProps?: any[];
-  }
+  },
 ): [
-  Map<Node, TilePayload & {data?: ExtendedPayload}>, 
+  Map<Node, TilePayload & {data?: ExtendedPayload}>,
   (tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>) => void
 ] => {
   const [tiles, setTiles] = useState<
@@ -17,11 +17,11 @@ export const useTilesOverlayState = <ExtendedPayload = any>(
   >(new Map());
 
   const {
-    extendPayload, 
+    extendPayload,
     watchProps = [],
-     ...effectProps
+    ...effectProps
   } = props;
-  
+
   useEffect(() => {
     if (!service || !extendPayload) return;
 
@@ -29,4 +29,4 @@ export const useTilesOverlayState = <ExtendedPayload = any>(
   }, [...Object.values(effectProps), ...watchProps]);
 
   return [tiles, setTiles];
-}
+};

@@ -1,18 +1,18 @@
 import {MapService} from '../../../../map/services';
 import debounce from 'lodash/debounce';
-import { tileToKey } from './tiles-overlay-utils';
-import { EventlessFeatureService } from '../../../services/eventless-feature-service/eventless-feature-service';
-import { CreateTilesOverlayServiceProps } from './create-tiles-overlay-service';
+import {tileToKey} from './tiles-overlay-utils';
+import {EventlessFeatureService} from '../../../services/eventless-feature-service/eventless-feature-service';
+import {CreateTilesOverlayServiceProps} from './create-tiles-overlay-service';
 
 export interface TilePayload {
-  tileCoord: google.maps.Point,
-  zoom: number,
+  tileCoord: google.maps.Point;
+  zoom: number;
 }
 
 export type ExtendPayloadCallback<ExtendedPayload = any> = (
-  payload: TilePayload  & {
-    width: number,
-    height: number,
+  payload: TilePayload & {
+    width: number;
+    height: number;
   }
 ) => Promise<ExtendedPayload | undefined>
 
@@ -26,7 +26,7 @@ export class TilesOverlayService<
   google.custom.TilesOverlayOptions,
   google.custom.TilesOverlay
 > {
-  isUnmounted: boolean = false;
+  isUnmounted = false;
 
   tiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
   tilesByKey: {[key: string]: Node | undefined} = {};
@@ -34,8 +34,8 @@ export class TilesOverlayService<
 
   tilesForDelete: Node[] = [];
   tilesForAdd: Array<{
-    node: Node,
-    payload: TilePayload & {data?: ExtendedPayload}
+    node: Node;
+    payload: TilePayload & {data?: ExtendedPayload};
   }> = [];
 
   setTiles: SetTilesCallback<ExtendedPayload>;
@@ -52,12 +52,12 @@ export class TilesOverlayService<
       googleApi,
       mapService,
       new googleApi.custom.TilesOverlay({
-        map: mapService.getObject(), 
-        ...options
+        map: mapService.getObject(),
+        ...options,
       }),
       options,
     );
-    
+
     this.setTiles = setTiles;
     this.extendPayload = extendPayload;
 
@@ -68,7 +68,7 @@ export class TilesOverlayService<
   }
 
   async getExtendedData(
-    payload: TilePayload
+    payload: TilePayload,
   ): Promise<ExtendedPayload | undefined> {
     if (!this.extendPayload) return;
 
@@ -103,8 +103,8 @@ export class TilesOverlayService<
     super.updateProps(props);
   }
 
-  updateExtendPayloadCallback(    
-    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+  updateExtendPayloadCallback(
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>,
   ): void {
     if (extendPayload === this.extendPayload) return;
 
@@ -112,7 +112,7 @@ export class TilesOverlayService<
   }
 
   setExtendPayloadCallback(
-    extendPayload?: ExtendPayloadCallback<ExtendedPayload>
+    extendPayload?: ExtendPayloadCallback<ExtendedPayload>,
   ): void {
     this.extendPayload = extendPayload;
   }
@@ -127,18 +127,16 @@ export class TilesOverlayService<
     this.setTiles = setTiles;
   }
 
-  updateTiles(tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>) {
+  updateTiles(tiles: Map<Node, TilePayload & {data?: ExtendedPayload}>): void {
     this.tiles = tiles;
     this.setTiles(tiles);
   }
 
   registerTile = async (
-    node: Node, 
-    payload: TilePayload, 
-  ) => {
-    let extendedPayload: ExtendedPayload | undefined;
-
-    extendedPayload = await this.getExtendedData(payload) as ExtendedPayload;
+    node: Node,
+    payload: TilePayload,
+  ): Promise<void> => {
+    const extendedPayload = await this.getExtendedData(payload) as ExtendedPayload;
 
     const key = tileToKey(payload);
     const tileForAdd = this.tilesForAddByKey[key];
@@ -153,30 +151,30 @@ export class TilesOverlayService<
 
     if (addedTile) {
       this.unregisterTile(addedTile);
-    }  
+    }
 
     const fullPayload = {
       ...payload,
-      data: extendedPayload
-    }
-    
+      data: extendedPayload,
+    };
+
     this.tilesForAdd.push({node, payload: fullPayload});
 
     this.recalcTiles();
   }
 
-  unregisterTile = (node: Node) => {
+  unregisterTile = (node: Node): void => {
     this.tilesForDelete.push(node);
 
     this.recalcTiles();
   }
 
-  async recalcData() {
+  async recalcData(): Promise<void> {
     const nodes: Node[] = [];
     const dataPromises: Promise<ExtendedPayload | undefined>[] = [];
 
     for (const [node, {data, ...payload}] of this.tiles) {
-      const dataPromise = this.getExtendedData(payload)
+      const dataPromise = this.getExtendedData(payload);
       dataPromises.push(dataPromise);
       nodes.push(node);
     }
@@ -194,11 +192,11 @@ export class TilesOverlayService<
       if (!value) return;
 
       const {
-        data: prevData, 
+        data: prevData,
         ...payload
-      } = value
+      } = value;
 
-      newTiles.set(node, {...payload, data})
+      newTiles.set(node, {...payload, data});
     });
 
     this.updateTiles(newTiles);
@@ -206,7 +204,7 @@ export class TilesOverlayService<
 
   recalcTiles = debounce(() => {
     if (this.isUnmounted) return;
-    
+
     const newTiles = new Map<Node, TilePayload & {data?: ExtendedPayload}>();
 
     for (const [node, payload] of this.tiles) {
@@ -220,15 +218,15 @@ export class TilesOverlayService<
     this.tilesForAdd.forEach(({node, payload}) => {
       newTiles.set(node, payload);
     });
-    
+
     this.tilesForDelete = [];
-    this.tilesForAdd = [];    
+    this.tilesForAdd = [];
     this.tilesForAddByKey = {};
 
     this.tilesByKey = {};
 
     const tileNodes = newTiles.keys();
-    
+
     for (const node of tileNodes) {
       const payload = newTiles.get(node);
 
@@ -242,7 +240,7 @@ export class TilesOverlayService<
     this.updateTiles(newTiles);
   }, 20);
 
-  unmount() {
+  unmount(): void {
     this.isUnmounted = true;
     super.unmount();
   }

@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { PolygonProps } from "../";
-import { PolygonService } from "./polygon-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {PolygonProps} from '../';
+import {PolygonService} from './polygon-service';
 
 export const createPolygonService: CreateServiceFunction<
-  PolygonProps, 
+  PolygonProps,
   PolygonService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createPolygonService: CreateServiceFunction<
   props,
 ) => {
   return new PolygonService(googleApi, mapService, props);
-}
+};

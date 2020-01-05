@@ -1,14 +1,14 @@
-import { InfoWindowProps} from '.';
-import { useSmartInfoWindow } from './hooks';
-import { ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import {InfoWindowProps} from '.';
+import {useSmartInfoWindow} from './hooks';
+import {ReactNode} from 'react';
+import {createPortal} from 'react-dom';
 
 export type FullInfoWindowProps = InfoWindowProps & {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 const InfoWindow = ({
-  children, 
+  children,
   ...props
 }: FullInfoWindowProps) => {
   const service = useSmartInfoWindow(props);
@@ -18,7 +18,7 @@ const InfoWindow = ({
   const container = service.getContainer();
 
   return createPortal(children, container);
-}
+};
 
 export {InfoWindow};
 

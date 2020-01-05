@@ -1,11 +1,11 @@
-import { ReactNode, ComponentType } from 'react';
-import { TilePayload } from './services/tiles-overlay-service';
-import { 
-  TilesOverlayService, 
-  CreateTilesOverlayServiceProps, 
-  createTilesOverlayService 
+import {ReactNode, ComponentType} from 'react';
+import {TilePayload} from './services/tiles-overlay-service';
+import {
+  TilesOverlayService,
+  CreateTilesOverlayServiceProps,
+  createTilesOverlayService,
 } from './services';
-import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
+import {withSmartFeatureCtx, withDumbFeatureCtx} from '../../hocs';
 
 export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
   children?: (props: {
@@ -21,11 +21,11 @@ export type TilesOverlayProps = google.custom.TilesOverlayOptions & {
     width: number;
     height: number;
     data?: any;
-  }>;  
+  }>;
   extendPayload?: (payload: TilePayload & {
     width: number;
     height: number;
-  }) => Promise<any>,
+  }) => Promise<any>;
   width: number;
   height?: number;
   watchProps?: any[];
@@ -35,12 +35,12 @@ export {TilesOverlay} from './tiles-overlay';
 export {DumbTilesOverlay} from './dumb-tiles-overlay';
 
 export const withSmartTilesOverlayCtx = withSmartFeatureCtx<
-  CreateTilesOverlayServiceProps, 
+  CreateTilesOverlayServiceProps,
   TilesOverlayService
 >(createTilesOverlayService);
 
 export const withDumbTilesOverlayCtx = withDumbFeatureCtx<
-  CreateTilesOverlayServiceProps, 
+  CreateTilesOverlayServiceProps,
   TilesOverlayService
 >();
 

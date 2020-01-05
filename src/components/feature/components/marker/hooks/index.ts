@@ -1,13 +1,13 @@
-import { 
-  createUseCreateFeatureCtx, 
-  createUseFeatureCtx, 
-  createUseSmartFeature
-} from "../../../hooks";
-import { createMarkerService, MarkerService } from "../services";
-import { MarkerProps} from "..";
+import {
+  createUseCreateFeatureCtx,
+  createUseFeatureCtx,
+  createUseSmartFeature,
+} from '../../../hooks';
+import {createMarkerService, MarkerService} from '../services';
+import {MarkerProps} from '..';
 
 export const useSmartMarker = createUseSmartFeature<
-  MarkerProps, 
+  MarkerProps,
   MarkerService
 >(createMarkerService);
 

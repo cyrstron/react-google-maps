@@ -1,5 +1,5 @@
 import {MapService} from '../../../../map';
-import { EventlessFeatureService } from '../../../services/eventless-feature-service';
+import {EventlessFeatureService} from '../../../services/eventless-feature-service';
 
 export class DomOverlayService extends EventlessFeatureService<
   google.custom.DomOverlayOptions,
@@ -11,13 +11,13 @@ export class DomOverlayService extends EventlessFeatureService<
     options: google.custom.DomOverlayOptions,
   ) {
     super(
-      googleApi, 
+      googleApi,
       mapService,
       new googleApi.custom.DomOverlay({
         map: mapService.getObject(),
-        ...options
-      }), 
-      options
+        ...options,
+      }),
+      options,
     );
   }
 

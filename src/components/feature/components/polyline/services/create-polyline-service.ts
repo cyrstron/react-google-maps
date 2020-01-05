@@ -1,9 +1,9 @@
-import { CreateServiceFunction } from "../../../hooks/create-use-feature";
-import { PolylineProps } from "../";
-import { PolylineService } from "./polyline-service";
+import {CreateServiceFunction} from '../../../hooks/create-use-feature';
+import {PolylineProps} from '../';
+import {PolylineService} from './polyline-service';
 
 export const createPolylineService: CreateServiceFunction<
-  PolylineProps, 
+  PolylineProps,
   PolylineService
 > = (
   googleApi,
@@ -11,4 +11,4 @@ export const createPolylineService: CreateServiceFunction<
   props,
 ) => {
   return new PolylineService(googleApi, mapService, props);
-}
+};

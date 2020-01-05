@@ -1,13 +1,13 @@
-import { 
-  createUseCreateFeatureCtx, 
+import {
+  createUseCreateFeatureCtx,
   createUseFeatureCtx,
-  createUseSmartFeature
-} from "../../../hooks";
-import { createPolygonService, PolygonService } from "../services";
-import { PolygonProps} from "..";
+  createUseSmartFeature,
+} from '../../../hooks';
+import {createPolygonService, PolygonService} from '../services';
+import {PolygonProps} from '..';
 
 export const useSmartPolygon = createUseSmartFeature<
-  PolygonProps, 
+  PolygonProps,
   PolygonService
 >(createPolygonService);
 

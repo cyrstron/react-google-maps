@@ -1,21 +1,22 @@
-import { withSmartFeatureCtx, withDumbFeatureCtx } from '../../hocs';
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import {withSmartFeatureCtx, withDumbFeatureCtx} from '../../hocs';
+import {FeatureEventName, FeatureHandlerName} from '../../services/eventable-feature-service';
 import {PolygonService, createPolygonService} from './services';
 
 export type PolygonEventHandler = google.maps.MapMouseEventHandler |
-	google.maps.MapPolyEventHandler;
+  google.maps.MapPolyEventHandler;
 
-export type PolygonProps = google.maps.PolygonOptions & 
-	{[key in PolygonHandlerName]?: PolygonEventHandler} & {
-		paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][]
-	};
-  
+export type PolygonProps = google.maps.PolygonOptions & {
+    [key in PolygonHandlerName]?: PolygonEventHandler
+  } & {
+    paths: google.maps.LatLngLiteral[] | google.maps.LatLngLiteral[][];
+  };
+
 export type PolygonEventName = FeatureEventName;
-	
+
 export type PolygonHandlerName = FeatureHandlerName;
 
 export type PolygonEventNames = {
-	[key in PolygonHandlerName]: PolygonEventName;
+  [key in PolygonHandlerName]: PolygonEventName;
 };
 
 export {Polygon} from './polygon';

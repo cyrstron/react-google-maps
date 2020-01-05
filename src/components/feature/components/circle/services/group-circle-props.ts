@@ -1,7 +1,7 @@
 import {filterObject} from '../../../../../services/maps-object';
-import { 
-  CircleEventHandler, 
-  CircleHandlerName
+import {
+  CircleEventHandler,
+  CircleHandlerName,
 } from '../';
 
 export interface SortedCircleProps {
@@ -24,7 +24,9 @@ export const groupCircleProps = ({
   onCenterChanged,
   onRadiusChanged,
   ...options
-}: {[key in CircleHandlerName]?: CircleEventHandler} & google.maps.CircleOptions): SortedCircleProps => {
+}: google.maps.CircleOptions & {
+  [key in CircleHandlerName]?: CircleEventHandler
+}): SortedCircleProps => {
   const result: SortedCircleProps = {
     options,
   };

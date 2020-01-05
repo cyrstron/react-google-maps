@@ -1,13 +1,13 @@
-import { 
-  createUseCreateFeatureCtx, 
-  createUseFeatureCtx, 
-  createUseSmartFeature
-} from "../../../hooks";
-import { createPolylineService, PolylineService } from "../services";
-import { PolylineProps} from "..";
+import {
+  createUseCreateFeatureCtx,
+  createUseFeatureCtx,
+  createUseSmartFeature,
+} from '../../../hooks';
+import {createPolylineService, PolylineService} from '../services';
+import {PolylineProps} from '..';
 
 export const useSmartPolyline = createUseSmartFeature<
-  PolylineProps, 
+  PolylineProps,
   PolylineService
 >(createPolylineService);
 
