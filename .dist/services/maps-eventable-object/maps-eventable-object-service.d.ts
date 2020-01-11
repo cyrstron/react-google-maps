@@ -1,5 +1,5 @@
 /// <reference types="googlemaps" />
-import { MapsObjectService } from "../maps-object";
+import { MapsObjectService } from '../maps-object';
 export declare abstract class MapsEventableObjectService<MapsObject extends google.maps.MapsObject<MapsObjectEventName, MapsObjectOptions, MapsObjectEventHandler>, MapsObjectEventName, MapsObjectOptions, MapsObjectEventHandler, HandlerName extends string> extends MapsObjectService<MapsObjectOptions, MapsObject> {
     eventNames: {
         [key in HandlerName]: MapsObjectEventName;

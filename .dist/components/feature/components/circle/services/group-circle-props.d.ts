@@ -6,7 +6,7 @@ export interface SortedCircleProps {
         [key in CircleHandlerName]: CircleEventHandler;
     };
 }
-export declare const groupCircleProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, onCenterChanged, onRadiusChanged, ...options }: {
+export declare const groupCircleProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, onCenterChanged, onRadiusChanged, ...options }: google.maps.CircleOptions & {
     onClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDblClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDrag?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
@@ -20,4 +20,4 @@ export declare const groupCircleProps: ({ onClick, onDblClick, onDrag, onDragEnd
     onMouseDown?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onMouseUp?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onRadiusChanged?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
-} & google.maps.CircleOptions) => SortedCircleProps;
+}) => SortedCircleProps;

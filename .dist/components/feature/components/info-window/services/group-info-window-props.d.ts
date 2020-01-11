@@ -6,14 +6,14 @@ export interface SortedInfoWindowProps {
         [key in InfoWindowHandlerName]: InfoWindowEventHandler;
     };
 }
-export declare const groupInfoWindowProps: ({ onCloseClick, onContentChanged, onDomReady, onPositionChanged, onZIndexChanged, ...options }: {
+export declare const groupInfoWindowProps: ({ onCloseClick, onContentChanged, onDomReady, onPositionChanged, onZIndexChanged, ...options }: google.maps.InfoWindowOptions & {
+    content: undefined;
+    open: boolean;
+    anchor: import("../..").MarkerService;
+} & {
     onPositionChanged?: google.maps.MapMouseEventHandler | undefined;
     onZIndexChanged?: google.maps.MapMouseEventHandler | undefined;
     onCloseClick?: google.maps.MapMouseEventHandler | undefined;
     onContentChanged?: google.maps.MapMouseEventHandler | undefined;
     onDomReady?: google.maps.MapMouseEventHandler | undefined;
-} & google.maps.InfoWindowOptions & {
-    content: undefined;
-    open: boolean;
-    anchor: import("../..").MarkerService;
 }) => SortedInfoWindowProps;

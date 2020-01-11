@@ -1,6 +1,6 @@
 /// <reference types="googlemaps" />
 /// <reference types="react" />
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { FeatureEventName, FeatureHandlerName } from '../../services/eventable-feature-service';
 import { PolygonService } from './services';
 export declare type PolygonEventHandler = google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler;
 export declare type PolygonProps = google.maps.PolygonOptions & {

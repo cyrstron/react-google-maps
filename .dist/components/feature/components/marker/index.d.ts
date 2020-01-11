@@ -1,7 +1,7 @@
 /// <reference types="googlemaps" />
 /// <reference types="react" />
 import { MarkerService } from './services';
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { FeatureEventName, FeatureHandlerName } from '../../services/eventable-feature-service';
 export declare type MarkerEventHandler = google.maps.MapEventHandler | google.maps.MapMouseEventHandler;
 export declare type MarkerProps = google.maps.MarkerOptions & {
     [key in MarkerHandlerName]?: MarkerEventHandler;

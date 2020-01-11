@@ -1,6 +1,6 @@
 /// <reference types="googlemaps" />
 /// <reference types="react" />
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { FeatureEventName, FeatureHandlerName } from '../../services/eventable-feature-service';
 import { CircleService } from './services';
 export declare type CircleEventHandler = google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler;
 export declare type CircleProps = google.maps.CircleOptions & {

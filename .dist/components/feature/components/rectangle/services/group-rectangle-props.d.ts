@@ -6,7 +6,7 @@ export interface SortedRectangleProps {
         [key in RectangleHandlerName]: RectangleEventHandler;
     };
 }
-export declare const groupRectangleProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, onBoundChanged, ...options }: {
+export declare const groupRectangleProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, onBoundChanged, ...options }: google.maps.RectangleOptions & {
     onClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDblClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDrag?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
@@ -19,4 +19,4 @@ export declare const groupRectangleProps: ({ onClick, onDblClick, onDrag, onDrag
     onMouseDown?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onMouseUp?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onBoundChanged?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
-} & google.maps.RectangleOptions) => SortedRectangleProps;
+}) => SortedRectangleProps;

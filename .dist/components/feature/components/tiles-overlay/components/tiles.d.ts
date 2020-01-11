@@ -1,7 +1,7 @@
 /// <reference types="googlemaps" />
 import React from 'react';
-import { TilePayload } from "../services/tiles-overlay-service";
-declare const Tiles: <ExtendedPayload extends {} = any>({ TileComponent, children, tiles, width, height }: {
+import { TilePayload } from '../services/tiles-overlay-service';
+declare const Tiles: <ExtendedPayload extends {} = any>({ TileComponent, children, tiles, width, height, }: {
     children?: ((props: {
         tileCoord: google.maps.Point;
         zoom: number;

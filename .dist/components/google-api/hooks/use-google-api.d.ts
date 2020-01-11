@@ -1,4 +1,4 @@
-import { GoogleApiProps } from "../services/google-api-service";
+import { GoogleApiProps } from '../services/google-api-service';
 export interface GoogleState {
     isPending: boolean;
     googleApi?: Google;

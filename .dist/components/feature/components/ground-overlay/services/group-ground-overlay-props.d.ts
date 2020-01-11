@@ -6,10 +6,10 @@ export interface SortedGroundOverlayProps {
         [key in GroundOverlayHandlerName]: GroundOverlayEventHandler;
     };
 }
-export declare const groupGroundOverlayProps: ({ onClick, onDblClick, ...options }: {
-    onClick?: google.maps.MapMouseEventHandler | undefined;
-    onDblClick?: google.maps.MapMouseEventHandler | undefined;
-} & google.maps.GroundOverlayOptions & {
+export declare const groupGroundOverlayProps: ({ onClick, onDblClick, ...options }: google.maps.GroundOverlayOptions & {
     bounds: google.maps.LatLngBoundsLiteral;
     url: string;
+} & {
+    onClick?: google.maps.MapMouseEventHandler | undefined;
+    onDblClick?: google.maps.MapMouseEventHandler | undefined;
 }) => SortedGroundOverlayProps;

@@ -1,6 +1,6 @@
 /// <reference types="googlemaps" />
 /// <reference types="react" />
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { FeatureEventName, FeatureHandlerName } from '../../services/eventable-feature-service';
 import { RectangleService } from './services';
 export declare type RectangleEventHandler = google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler;
 export declare type RectangleProps = google.maps.RectangleOptions & {

@@ -8,7 +8,7 @@ export declare const Map: import("react").ComponentType<MapProps>;
 export { MapService } from './services';
 export { withDumbMapCtx } from './hocs/with-dumb-map-ctx';
 export { useMapCtx } from './hooks/use-map-ctx';
-import { MapsObjectHandlerName, MapsObjectEventName } from "../../services/maps-eventable-object";
+import { MapsObjectHandlerName, MapsObjectEventName } from '../../services/maps-eventable-object';
 export declare type MapEventHandler = google.maps.MapMouseEventHandler | google.maps.MapEventHandler | google.maps.MapIconEventHandler;
 export declare type MapEventsProps = {
     [key in MapHandlerName]?: MapEventHandler;

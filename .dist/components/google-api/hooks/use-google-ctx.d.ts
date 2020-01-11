@@ -4,5 +4,5 @@ export interface GoogleState {
     googleApi?: Google;
     err: Error | null;
 }
-export declare const GoogleApiCtxProvider: import("react").ProviderExoticComponent<import("react").ProviderProps<Google | undefined>>;
+export declare const GoogleApiCtxProvider: import("react").Provider<Google | undefined>;
 export declare function useGoogleCtx(): Google | undefined;

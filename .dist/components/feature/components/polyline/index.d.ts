@@ -1,6 +1,6 @@
 /// <reference types="googlemaps" />
 /// <reference types="react" />
-import { FeatureEventName, FeatureHandlerName } from "../../services/eventable-feature-service";
+import { FeatureEventName, FeatureHandlerName } from '../../services/eventable-feature-service';
 import { PolylineService } from './services';
 export declare type PolylineEventHandler = google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler;
 export declare type PolylineProps = google.maps.PolylineOptions & {

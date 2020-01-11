@@ -9,18 +9,18 @@
     ],
     "moduleResolution": "node",
     "downlevelIteration": true,
-    "sourceMap": true,
     "strict": true,
     "noImplicitAny": true,   
     "removeComments": true,  
     "preserveConstEnums": true,
+    "sourceMap": true,
     "outDir": "./.dist",
     "jsx": "react",
-    "baseUrl": "src",
     "typeRoots": [
       "node_modules/@types",
-      "./src/**/*",
+      "./src/@types/*",
     ],
+    "sourceRoot": "./src",    
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -31,5 +31,10 @@
   "include": [
     "./src/**/*",
     "tsconfig.json"
+  ],
+  "exclude": [
+    "node_modules/**/*", 
+    "./.dist/**/*", 
+    "./**/*.js"
   ]
 }

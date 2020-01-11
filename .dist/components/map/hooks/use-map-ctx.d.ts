@@ -1,1 +1,2 @@
-export declare const useMapCtx: () => import("..").MapService | undefined;
+import { MapService } from '../services';
+export declare const useMapCtx: () => MapService | undefined;

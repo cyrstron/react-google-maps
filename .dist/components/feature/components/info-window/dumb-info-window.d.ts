@@ -1,4 +1,4 @@
-/// <reference types="react" />
 import { FullInfoWindowProps } from './info-window';
-declare const DumbInfoWindow: ({ children, ...props }: FullInfoWindowProps) => import("react").ReactPortal | null;
+import { ReactPortal } from 'react';
+declare const DumbInfoWindow: ({ children, ...props }: FullInfoWindowProps) => ReactPortal | null;
 export { DumbInfoWindow };

@@ -6,7 +6,7 @@ export interface SortedMarkerProps {
         [key in MarkerHandlerName]: MarkerEventHandler;
     };
 }
-export declare const groupMarkerProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onAnimationChanged, onClickableChanged, onCursorChanged, onDraggableChanged, onFlatChanged, onIconChanged, onMouseDown, onMouseUp, onPositionChanged, onShapeChanged, onTitleChanged, onVisibleChanged, onZIndexChanged, ...options }: {
+export declare const groupMarkerProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onAnimationChanged, onClickableChanged, onCursorChanged, onDraggableChanged, onFlatChanged, onIconChanged, onMouseDown, onMouseUp, onPositionChanged, onShapeChanged, onTitleChanged, onVisibleChanged, onZIndexChanged, ...options }: google.maps.MarkerOptions & {
     onClick?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onDblClick?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onDrag?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
@@ -29,4 +29,4 @@ export declare const groupMarkerProps: ({ onClick, onDblClick, onDrag, onDragEnd
     onTitleChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onVisibleChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
     onZIndexChanged?: google.maps.MapMouseEventHandler | google.maps.MapEventHandler | undefined;
-} & google.maps.MarkerOptions) => SortedMarkerProps;
+}) => SortedMarkerProps;

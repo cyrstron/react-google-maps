@@ -1,5 +1,8 @@
 // eslint-disable-next-line
-/// <reference path="@types/index.d.ts" />
+/// <reference path="./@types/index.d.ts" />
+
+// eslint-disable-next-line
+/// <reference path="../node_modules/@types/google-maps/index.d.ts" />
 
 export {
   GoogleApiProvider,

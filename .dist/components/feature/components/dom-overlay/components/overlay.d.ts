@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, ReactPortal } from 'react';
 import { DomOverlayService } from '../services';
 export interface OverlayProps {
     children?: ReactNode;
     service?: DomOverlayService;
 }
-declare const Overlay: ({ children, service }: OverlayProps) => import("react").ReactPortal | null;
+declare const Overlay: ({ children, service }: OverlayProps) => ReactPortal | null;
 export { Overlay };

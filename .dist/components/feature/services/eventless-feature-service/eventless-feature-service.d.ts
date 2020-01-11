@@ -1,7 +1,7 @@
 /// <reference types="googlemaps" />
 import { MapService } from '../../../map';
 import { MapsObjectService } from '../../../../services/maps-object';
-import { MapsObject } from 'services/maps-object/maps-object-service';
+import { MapsObject } from '../../../../services/maps-object/maps-object-service';
 export interface EventlessFeature<Options> extends MapsObject<Options> {
     setMap: (map: google.maps.Map | null) => void;
 }

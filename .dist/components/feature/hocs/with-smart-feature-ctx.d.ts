@@ -8,6 +8,6 @@ export interface CreateFeatureProps<Props> {
 }
 export declare const FeatureCtx: React.Context<any>;
 export declare const CreateFeatureCtx: React.Context<((props: any) => void) | undefined>;
-export declare const FeatureConsumer: React.ExoticComponent<React.ConsumerProps<any>>;
-export declare const CreateFeatureConsumer: React.ExoticComponent<React.ConsumerProps<((props: any) => void) | undefined>>;
+export declare const FeatureConsumer: React.Consumer<any>;
+export declare const CreateFeatureConsumer: React.Consumer<((props: any) => void) | undefined>;
 export declare const withSmartFeatureCtx: <Props, Service extends FeatureService<Props>>(createService: CreateServiceFunction<Props, Service>) => <WrappedProps extends {}>(Wrapped: React.ComponentType<WrappedProps>) => (props: WrappedProps) => JSX.Element;

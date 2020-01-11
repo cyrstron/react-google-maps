@@ -6,7 +6,7 @@ export interface SortedPolylineProps {
         [key in PolylineHandlerName]: PolylineEventHandler;
     };
 }
-export declare const groupPolylineProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, ...options }: {
+export declare const groupPolylineProps: ({ onClick, onDblClick, onDrag, onDragEnd, onDragStart, onMouseOut, onMouseOver, onRightClick, onMouseDown, onMouseMove, onMouseUp, ...options }: google.maps.PolylineOptions & {
     onClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDblClick?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onDrag?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
@@ -18,4 +18,4 @@ export declare const groupPolylineProps: ({ onClick, onDblClick, onDrag, onDragE
     onMouseMove?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onMouseDown?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
     onMouseUp?: google.maps.MapMouseEventHandler | google.maps.MapPolyEventHandler | undefined;
-} & google.maps.PolylineOptions) => SortedPolylineProps;
+}) => SortedPolylineProps;
